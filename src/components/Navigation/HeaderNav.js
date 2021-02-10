@@ -3,6 +3,7 @@ import { graphql, useStaticQuery } from "gatsby"
 import styled from "styled-components"
 
 import HeaderNavItem from "./HeaderNavItem"
+import HeaderAppNavItems from "./HeaderAppNavItems"
 
 const getData = graphql`
   {
@@ -30,6 +31,7 @@ const HeaderNav = () => {
           {navItems.map(item => (
             <HeaderNavItem key={item.id} item={item} />
           ))}
+          <HeaderAppNavItems />
         </ul>
       </HeaderNavStyled>
     ) : null
@@ -46,6 +48,7 @@ const HeaderNavStyled = styled.nav`
 
   ul {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     justify-content: space-evenly;
   }

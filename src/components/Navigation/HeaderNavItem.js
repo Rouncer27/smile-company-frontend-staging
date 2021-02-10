@@ -12,6 +12,7 @@ const HeaderNavItem = ({ item }) => {
 }
 
 const HeaderNavItemStyled = styled.li`
+  align-self: center;
   a {
     ${Nav1White};
     padding: 1rem;

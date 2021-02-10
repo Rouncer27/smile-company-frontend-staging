@@ -11,10 +11,12 @@ const Footer = () => {
           <h3>Sign Up Today!</h3>
           <ul>
             <li>
-              <Link to="/">Dental Clinic Sign up</Link>
+              <Link to="/dental-clinic-signup">Dental Clinic Sign up</Link>
             </li>
             <li>
-              <Link to="/">Dental Professional Sign up</Link>
+              <Link to="/dental-professionals-signup">
+                Dental Professional Sign up
+              </Link>
             </li>
           </ul>
         </div>
