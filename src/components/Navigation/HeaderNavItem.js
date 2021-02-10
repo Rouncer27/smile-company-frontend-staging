@@ -1,17 +1,49 @@
 import { Link } from "gatsby"
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { colors, Nav1White } from "../../styles/helpers"
 
+import HeaderSubMenu from "./HeaderSubMenu"
+
 const HeaderNavItem = ({ item }) => {
+  const slug = item.url
+    .split("/")
+    .filter(item => item !== "")
+    .join("/")
+
+  console.log(slug)
+  const [subActive, setSubActive] = useState(false)
+
+  const handleIsActiveOn = () => {
+    setSubActive(true)
+  }
+  const handleIsActiveOff = () => {
+    setSubActive(false)
+  }
+
   return (
     <HeaderNavItemStyled>
-      <Link to={item.url}>{item.label}</Link>
+      <Link
+        to={`/${slug}`}
+        onMouseEnter={handleIsActiveOn}
+        onMouseLeave={handleIsActiveOff}
+      >
+        {item.label}
+      </Link>
+      {item.subItems.length > 0 && (
+        <HeaderSubMenu
+          handleIsActiveOn={handleIsActiveOn}
+          handleIsActiveOff={handleIsActiveOff}
+          subActive={subActive}
+          items={item.subItems}
+        />
+      )}
     </HeaderNavItemStyled>
   )
 }
 
 const HeaderNavItemStyled = styled.li`
+  position: relative;
   align-self: center;
   a {
     ${Nav1White};

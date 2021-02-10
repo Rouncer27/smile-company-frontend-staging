@@ -9,6 +9,7 @@ exports.createPages = async ({ graphql, actions }) => {
             node {
               id
               slug
+              uri
             }
           }
         }
@@ -18,6 +19,7 @@ exports.createPages = async ({ graphql, actions }) => {
             node {
               id
               slug
+              uri
             }
           }
         }
@@ -32,8 +34,13 @@ exports.createPages = async ({ graphql, actions }) => {
           component: path.resolve(`./src/pages/index.js`),
         })
       } else {
+        const pageSlug = node.uri
+          .split("/")
+          .filter(item => item !== "")
+          .join("/")
+
         createPage({
-          path: `/${node.slug}`,
+          path: `/${pageSlug}`,
           component: path.resolve(`./src/templates/page.js`),
           context: {
             id: node.id,

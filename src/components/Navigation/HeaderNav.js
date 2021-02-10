@@ -11,9 +11,12 @@ const getData = graphql`
       name
       menuItems {
         nodes {
-          id
           label
           url
+          parentDatabaseId
+          parentId
+          id
+          databaseId
         }
       }
     }
@@ -23,12 +26,21 @@ const getData = graphql`
 const HeaderNav = () => {
   const data = useStaticQuery(getData)
   const { headerMenu } = data
-  const navItems = headerMenu.menuItems.nodes
+  const allNavItems = headerMenu.menuItems.nodes
+  const navItems = allNavItems.filter(item => item.parentDatabaseId === 0)
+  const subItems = allNavItems.filter(item => item.parentDatabaseId !== 0)
+  const navItemsWithSubs = navItems.map(item => {
+    const itemWithSubs = subItems.filter(
+      subItem => subItem.parentDatabaseId === item.databaseId
+    )
+    item.subItems = itemWithSubs
+    return item
+  })
   const headerNavigation = navItems ? (
-    navItems.length > 0 ? (
+    navItemsWithSubs.length > 0 ? (
       <HeaderNavStyled>
         <ul>
-          {navItems.map(item => (
+          {navItemsWithSubs.map(item => (
             <HeaderNavItem key={item.id} item={item} />
           ))}
           <HeaderAppNavItems />
