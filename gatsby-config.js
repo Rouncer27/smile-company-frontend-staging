@@ -37,6 +37,15 @@ module.exports = {
         url: process.env.WORDPRESS_URL,
       },
     },
+    {
+      resolve: `gatsby-source-strapi`,
+      options: {
+        apiURL: process.env.GATSBY_API_URL,
+        queryLimit: 1000, // Default to 100
+        contentTypes: [],
+        singleTypes: [],
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
