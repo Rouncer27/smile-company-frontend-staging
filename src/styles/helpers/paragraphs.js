@@ -33,3 +33,8 @@ export const B2CharcoalGrey = css`
   ${B2Base};
   color: ${colors.colorAlt};
 `
+
+export const B2White = css`
+  ${B2Base};
+  color: ${colors.white};
+`

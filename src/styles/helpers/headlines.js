@@ -74,3 +74,8 @@ export const H4DarkPurple = css`
   ${H4Base};
   color: ${colors.colorPrimary};
 `
+
+export const H4Lavender = css`
+  ${H4Base};
+  color: ${colors.colorSecondary};
+`

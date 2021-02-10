@@ -1,0 +1,31 @@
+import React from "react"
+
+import IntroSection from "./PageComponents/IntroSection"
+
+const ComponentGroups = props => {
+  const { components } = props
+  console.log("components", components)
+  const allPageComponents =
+    components?.acfMainTemplateFields?.pageComponents?.length > 0 ? (
+      <>
+        {components?.acfMainTemplateFields?.pageComponents.map(
+          (component, index) => {
+            switch (component?.fieldGroupName) {
+              case "page_Acfmaintemplatefields_PageComponents_IntroSection":
+                return <IntroSection key={index} data={component} />
+              default:
+                return (
+                  <p>Cannot find this component {component.fieldGroupName}</p>
+                )
+            }
+          }
+        )}
+      </>
+    ) : (
+      <p>This page has no content</p>
+    )
+
+  return <>{allPageComponents}</>
+}
+
+export default ComponentGroups

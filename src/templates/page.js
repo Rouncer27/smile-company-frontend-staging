@@ -1,23 +1,24 @@
 import React from "react"
+import { graphql } from "gatsby"
 
 import Layout from "../components/Layout"
 import SEO from "../components/SEO"
 
 import ComponentGroups from "../components/PageComponentGroups"
 
-const IndexPage = props => {
+const page = props => {
   const { components } = props.data
   return (
-    <Layout>
-      <SEO title="Smile and Copmany" />
+    <Layout location={props?.location?.pathname}>
+      <SEO title="Page Template" />
       <ComponentGroups components={components} />
     </Layout>
   )
 }
 
-export const homeQuery = graphql`
-  {
-    components: wpPage(slug: { eq: "home" }) {
+export const pageTempQuery = graphql`
+  query pageTempPage($id: String!) {
+    components: wpPage(id: { eq: $id }) {
       acfMainTemplateFields {
         pageComponents {
           ... on WpPage_Acfmaintemplatefields_PageComponents_IntroSection {
@@ -35,4 +36,4 @@ export const homeQuery = graphql`
   }
 `
 
-export default IndexPage
+export default page
