@@ -29,6 +29,60 @@ export const homeQuery = graphql`
             mainTitle
             secondaryTitle
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_ThreeBlocks {
+            fieldGroupName
+            leftBlockContent
+            leftBlockTitle
+            leftBlockIcon {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 250) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            leftBlockBackgroundImage {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            rightBottomButtonSlug
+            rightBottomButtonText
+            rightBottomContent
+            rightBottomTitle
+            rightTopBackgroundImage {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            rightBottomBackgroundImage {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            rightTopButtonSlug
+            rightTopButtonText
+            rightTopContent
+            rightTopTitle
+          }
         }
       }
     }
