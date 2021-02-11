@@ -68,7 +68,7 @@ const StepCardStyled = styled.div`
   }
 
   .content {
-    padding: 3rem;\
+    padding: 3rem;
     transition: all 0.3s ease-out;
     background-color: ${colors.white};
 
