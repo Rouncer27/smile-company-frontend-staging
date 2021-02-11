@@ -83,6 +83,32 @@ export const homeQuery = graphql`
             rightTopContent
             rightTopTitle
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_ThreeSteps {
+            bannerButtonSlug
+            bannerButtonText
+            bannerContent
+            fieldGroupName
+            mainContent
+            mainTitle
+            steps {
+              content
+              fieldGroupName
+              title
+              graphic {
+                altText
+                localFile {
+                  childImageSharp {
+                    fixed {
+                      ...GatsbyImageSharpFixed_withWebp
+                      width
+                      height
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

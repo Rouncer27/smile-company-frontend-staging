@@ -119,10 +119,12 @@ const ThreeBlocksSection = styled.section`
     justify-content: center;
     position: relative;
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 2rem;
 
     @media (min-width: 768px) {
       margin-right: 1rem;
+      margin-top: 0;
+      margin-bottom: 0;
     }
 
     &__content {
