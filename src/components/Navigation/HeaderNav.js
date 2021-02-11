@@ -39,10 +39,12 @@ const HeaderNav = () => {
   const headerNavigation = navItems ? (
     navItemsWithSubs.length > 0 ? (
       <HeaderNavStyled>
-        <ul>
+        <ul className="mainNav">
           {navItemsWithSubs.map(item => (
             <HeaderNavItem key={item.id} item={item} />
           ))}
+        </ul>
+        <ul className="appNav">
           <HeaderAppNavItems />
         </ul>
       </HeaderNavStyled>
@@ -56,7 +58,8 @@ const HeaderNavStyled = styled.nav`
   width: 100%;
 
   @media (min-width: 768px) {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
     width: calc(100%);
   }
 
@@ -69,6 +72,25 @@ const HeaderNavStyled = styled.nav`
     align-items: center;
     justify-content: space-between;
     justify-content: space-evenly;
+  }
+
+  .mainNav {
+    width: calc(100%);
+    margin-top: 2.5rem;
+    @media (min-width: 1025px) {
+      width: calc(60%);
+      margin-top: 0;
+    }
+  }
+
+  .appNav {
+    width: calc(100%);
+    margin-top: 2.5rem;
+
+    @media (min-width: 1025px) {
+      width: calc(40%);
+      margin-top: 0;
+    }
   }
 `
 

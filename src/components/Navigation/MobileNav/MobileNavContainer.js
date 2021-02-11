@@ -36,7 +36,9 @@ const MobileNavContainer = ({ navitems }) => {
 }
 
 const MobileNavContainerStyled = styled.nav`
+  display: block;
   width: 100%;
+  padding-bottom: 5rem;
 
   ul {
     display: flex;
