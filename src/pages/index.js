@@ -109,6 +109,32 @@ export const homeQuery = graphql`
               }
             }
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_ImageBlocks {
+            fieldGroupName
+
+            imageOne {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+
+            imageTwo {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
