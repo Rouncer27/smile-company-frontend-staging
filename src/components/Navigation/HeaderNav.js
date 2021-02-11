@@ -52,9 +52,15 @@ const HeaderNav = () => {
 }
 
 const HeaderNavStyled = styled.nav`
+  display: none;
   width: 100%;
 
   @media (min-width: 768px) {
+    display: block;
+    width: calc(100%);
+  }
+
+  @media (min-width: 1200px) {
     width: calc(80%);
   }
 

@@ -2,7 +2,7 @@ import { colors } from "./index"
 import { fonts, fontSizer } from "./index"
 
 export const Nav1Base = `
-  ${fontSizer(1.4, 1.4, 76.8, 150, 1.6)};
+  ${fontSizer(1.4, 1.4, 76.8, 150, 1.8)};
   font-family: ${fonts.fontSecondary};
   font-weight: bold;
   font-stretch: normal;

@@ -4,6 +4,7 @@ import { Link } from "gatsby"
 
 import MainLogo from "./Logo/MainLogo"
 import HeaderNav from "./Navigation/HeaderNav"
+import MobileNav from "./Navigation/MobileNav/MobileNav"
 import { colors, BigWrapper } from "../styles/helpers"
 
 const Header = () => {
@@ -16,6 +17,7 @@ const Header = () => {
           </Link>
         </div>
         <HeaderNav />
+        <MobileNav />
       </div>
     </HeaderStyled>
   )
@@ -35,6 +37,21 @@ const HeaderStyled = styled.header`
 
     @media (min-width: 768px) {
       width: calc(20%);
+      margin: 0 auto;
+    }
+
+    @media (min-width: 1200px) {
+      width: calc(20%);
+      margin: 0;
+    }
+
+    .gatsby-image-wrapper {
+      max-width: 25rem;
+      margin: 0 auto;
+
+      @media (min-width: 768px) {
+        max-width: 100%;
+      }
     }
   }
 `
