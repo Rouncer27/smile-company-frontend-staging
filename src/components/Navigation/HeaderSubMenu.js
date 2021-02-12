@@ -9,7 +9,6 @@ const HeaderSubMenu = ({
   handleIsActiveOn,
   handleIsActiveOff,
 }) => {
-  console.log("items", items, subActive)
   return (
     <HeaderSubMenuStyled
       isactive={subActive}

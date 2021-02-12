@@ -26,7 +26,6 @@ const getData = graphql`
 
 const MainLogo = () => {
   const data = useStaticQuery(getData)
-  console.log(data)
   const logoFluid =
     data.logo.siteWideSettings.acfSiteWideSettings.sacMainLogo.localFile
       .childImageSharp.fluid

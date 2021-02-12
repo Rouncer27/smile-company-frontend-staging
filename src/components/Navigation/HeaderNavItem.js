@@ -10,13 +10,12 @@ const HeaderNavItem = ({ item }) => {
     .split("/")
     .filter(item => item !== "")
     .join("/")
-
-  console.log(slug)
   const [subActive, setSubActive] = useState(false)
 
   const handleIsActiveOn = () => {
     setSubActive(true)
   }
+
   const handleIsActiveOff = () => {
     setSubActive(false)
   }

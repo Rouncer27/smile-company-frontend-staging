@@ -37,7 +37,7 @@ const Testimonials = () => {
 
   useEffect(() => {
     setTotalCards(cards.length)
-  }, [])
+  }, [cards.length])
 
   const handleDisableNav = () => {
     setDisabledNav(true)

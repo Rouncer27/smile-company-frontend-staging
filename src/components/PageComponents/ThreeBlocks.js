@@ -13,7 +13,6 @@ import {
 } from "../../styles/helpers"
 
 const ThreeBlocks = ({ data }) => {
-  console.log("THREE BLOCKS:", data)
   return (
     <ThreeBlocksSection>
       <div className="wrapper">

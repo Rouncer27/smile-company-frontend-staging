@@ -1,20 +1,11 @@
 import React from "react"
 import styled from "styled-components"
 import BGImage from "gatsby-background-image"
-import {
-  B2CharcoalGrey,
-  H4Lavender,
-  colors,
-  H4DarkPurple,
-} from "../../styles/helpers"
+import { B2CharcoalGrey, colors, H4DarkPurple } from "../../styles/helpers"
 
 const StepCard = ({ step }) => {
   const graphicWidth = step.graphic.localFile.childImageSharp.fixed.width
   const graphicHeight = step.graphic.localFile.childImageSharp.fixed.height
-
-  console.log({ graphicWidth })
-  console.log({ graphicHeight })
-
   return (
     <StepCardStyled graphicwidth={graphicWidth} graphicheight={graphicHeight}>
       <div className="graphic">

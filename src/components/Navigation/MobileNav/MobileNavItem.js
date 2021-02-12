@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Link } from "gatsby"
 import styled from "styled-components"
-import { colors, Nav1CharcoalGrey, Nav1White } from "../../../styles/helpers"
+import { colors, Nav1White } from "../../../styles/helpers"
 
 import MobileSubMenu from "./MobileSubMenu"
 
@@ -11,15 +11,11 @@ const MobileNavItem = ({ item }) => {
     .filter(item => item !== "")
     .join("/")
 
-  console.log({ item })
-
   const [subActive, setSubActive] = useState(false)
 
   const handleToggleActive = () => {
     setSubActive(!subActive)
   }
-
-  console.log({ subActive })
   return (
     <MobileNavItemStyled>
       <Link to={`/${slug === "home" ? "" : slug}`}>{item.label}</Link>

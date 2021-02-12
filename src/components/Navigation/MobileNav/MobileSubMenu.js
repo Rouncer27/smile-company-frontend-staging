@@ -1,10 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-
 import MobileSubMenuItem from "./MobileSubMenuItem"
 
 const MobileSubMenu = ({ subActive, items }) => {
-  console.log({ subActive })
   return (
     <MobileSubMenuStyled subactive={subActive} sublenght={items.length}>
       {items.map(item => (
