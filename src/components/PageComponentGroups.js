@@ -8,7 +8,6 @@ import Testimonials from "./PageComponents/Testimonials"
 
 const ComponentGroups = props => {
   const { components } = props
-  console.log("components", components)
   const allPageComponents =
     components?.acfMainTemplateFields?.pageComponents?.length > 0 ? (
       <>

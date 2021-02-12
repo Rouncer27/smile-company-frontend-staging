@@ -217,7 +217,11 @@ const TestSection = styled.section`
     align-items: stretch;
     justify-content: stretch;
     width: 100%;
-    height: 60rem;
+    height: 40rem;
+
+    @media (min-width: 768px) {
+      height: 60rem;
+    }
   }
 
   .sliderNav {
@@ -255,7 +259,7 @@ const Card = styled.div`
   background-color: ${props =>
     props.centercard ? "rgba(173,137,166,1)" : "rgba(173,137,166,0.25)"};
   width: calc(100%);
-  padding: 8rem 4rem;
+  padding: 2rem 4rem;
   z-index: ${props => (props.centercard ? "999999" : "5")};
   ${props =>
     props.centercard ? "box-shadow: 3px 4px 7px 0 rgba(0, 0, 0, 0.16);" : ""};
@@ -268,6 +272,7 @@ const Card = styled.div`
       props.leftcard ? "10rem" : props.centercard ? "50%" : "auto"};
     ${props => props.rightoff && "right: 25rem"};
     ${props => props.leftoff && "left: 25rem"};
+    padding: 8rem 4rem;
     transform: ${props =>
       props.centercard ? "translate( -50%, -5rem)" : "translateX(0%)"};
     opacity: ${props => (props.cardactive ? "1" : "0")};

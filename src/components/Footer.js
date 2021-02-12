@@ -159,8 +159,27 @@ const FooterStyled = styled.footer`
     }
   }
 
+  .footSignUp {
+    margin-bottom: 3rem;
+
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+    }
+  }
+
+  .footHello {
+    margin-bottom: 2rem;
+
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+    }
+  }
+
   .footPermeanant {
-    a {
+    margin-bottom: 3rem;
+
+    @media (min-width: 768px) {
+      margin-bottom: 0;
     }
   }
 
@@ -184,14 +203,22 @@ const FooterStyled = styled.footer`
     ul {
       width: 100%;
       display: flex;
-      justify-content: space-around;
-      justify-content: space-evenly;
+      justify-content: flex-start;
+
+      @media (min-width: 768px) {
+        justify-content: space-around;
+        justify-content: space-evenly;
+      }
     }
 
     li {
       display: inline-block;
-      margin-right: 0.5rem;
-      margin-left: 0.5rem;
+      margin-right: 1rem;
+      margin-left: 1rem;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
 
       a {
         display: block;
