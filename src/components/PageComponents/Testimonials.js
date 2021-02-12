@@ -16,6 +16,7 @@ const getData = graphql`
     testimonials: allWpTestimonial {
       edges {
         node {
+          title
           acfTestimonials {
             sacContent
             fieldGroupName
@@ -147,7 +148,7 @@ const Testimonials = () => {
                     <Tooth />
                   </div>
                   <div className="slideContent__name">
-                    <h3>Name</h3>
+                    <h3>{test.node.title}</h3>
                   </div>
                   <div
                     className="slideContent__content"
