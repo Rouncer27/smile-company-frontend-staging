@@ -23,19 +23,27 @@ const getData = graphql`
         }
       }
     }
+
+    footerMenu: wpMenu(name: { eq: "Footer Menu" }) {
+      name
+      menuItems {
+        nodes {
+          label
+          url
+          id
+        }
+      }
+    }
   }
 `
 
 const Footer = () => {
   const data = useStaticQuery(getData)
-  console.log("FOOTER DATA: ", data)
-
   const {
     socialMediaLinks,
     contactEmailAddress,
   } = data.footerData.siteWideSettings.acfSiteWideSettings
-
-  console.log(socialMediaLinks)
+  const footerMenu = data.footerMenu.menuItems.nodes
 
   return (
     <FooterStyled>
@@ -65,14 +73,17 @@ const Footer = () => {
         <div className="footPermeanant footBlock">
           <h3>Permeanant Placement</h3>
           <ul>
-            <li>
-              <Link to="/permanent-hiring/job-board">Job Board</Link>
-            </li>
-            <li>
-              <Link to="/permanent-hiring/permanent-hiring-registration">
-                Place a job on our job board
-              </Link>
-            </li>
+            {footerMenu.map(item => {
+              const slug = item.url
+                .split("/")
+                .filter(item => item !== "")
+                .join("/")
+              return (
+                <li key={item.id}>
+                  <Link to={`/${slug}`}>{item.label}</Link>
+                </li>
+              )
+            })}
           </ul>
         </div>
 
@@ -93,7 +104,7 @@ const Footer = () => {
                 socialIcon = <Twitter />
               }
               return (
-                <li>
+                <li key={link.type}>
                   <a target="_blank" rel="noreferrer" href={link.url}>
                     {socialIcon}
                   </a>
