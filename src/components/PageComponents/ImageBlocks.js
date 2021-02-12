@@ -3,7 +3,6 @@ import BGImage from "gatsby-background-image"
 import styled from "styled-components"
 
 const ImageBlocks = ({ data }) => {
-  console.log(data)
   return (
     <ImageBlocksStyled>
       <div className="wrapper">
