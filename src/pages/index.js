@@ -86,16 +86,26 @@ export const homeQuery = graphql`
           }
 
           ... on WpPage_Acfmaintemplatefields_PageComponents_ThreeSteps {
+            bannerRequired
             bannerButtonSlug
             bannerButtonText
             bannerContent
             fieldGroupName
             mainContent
             mainTitle
+            mainBackgroundColour
+            stepsBackgroundColour
+            buttonsRequired
+            buttons {
+              buttonSlug
+              buttonText
+              buttonType
+            }
             steps {
               content
               fieldGroupName
               title
+              secondTitle
               graphic {
                 altText
                 localFile {
@@ -140,6 +150,19 @@ export const homeQuery = graphql`
           ... on WpPage_Acfmaintemplatefields_PageComponents_TestimonialsSlider {
             fieldGroupName
             showTestimonialsSlider
+          }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_SideBySideContentBlocks {
+            fieldGroupName
+            contentBlock {
+              title
+              fieldGroupName
+              content
+              buttonText
+              buttonSlug
+              buttonRequired
+              backgroundColour
+            }
           }
         }
       }

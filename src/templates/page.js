@@ -30,6 +30,140 @@ export const pageTempQuery = graphql`
             mainTitle
             secondaryTitle
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_ThreeBlocks {
+            fieldGroupName
+            leftBlockContent
+            leftBlockTitle
+            leftBlockIcon {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 250) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            leftBlockBackgroundImage {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            rightBottomButtonSlug
+            rightBottomButtonText
+            rightBottomContent
+            rightBottomTitle
+            rightTopBackgroundImage {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            rightBottomBackgroundImage {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            rightTopButtonSlug
+            rightTopButtonText
+            rightTopContent
+            rightTopTitle
+          }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_ThreeSteps {
+            bannerRequired
+            bannerButtonSlug
+            bannerButtonText
+            bannerContent
+            fieldGroupName
+            mainContent
+            mainTitle
+            mainBackgroundColour
+            stepsBackgroundColour
+            buttonsRequired
+            buttons {
+              buttonSlug
+              buttonText
+              buttonType
+            }
+            steps {
+              content
+              fieldGroupName
+              title
+              secondTitle
+              graphic {
+                altText
+                localFile {
+                  childImageSharp {
+                    fixed {
+                      ...GatsbyImageSharpFixed_withWebp
+                      width
+                      height
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_ImageBlocks {
+            fieldGroupName
+
+            imageOne {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+
+            imageTwo {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+          }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_TestimonialsSlider {
+            fieldGroupName
+            showTestimonialsSlider
+          }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_SideBySideContentBlocks {
+            fieldGroupName
+            contentBlock {
+              title
+              fieldGroupName
+              content
+              buttonText
+              buttonSlug
+              buttonRequired
+              backgroundColour
+            }
+          }
         }
       }
     }

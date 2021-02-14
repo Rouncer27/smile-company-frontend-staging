@@ -5,9 +5,12 @@ import {
   H4Lavender,
   B1CharcoalGrey,
   standardWrapper,
+  Btn1DarkPurple,
 } from "../../styles/helpers"
 
 const IntroSection = ({ data }) => {
+  const linkBtnReq = data.buttonRequired
+
   return (
     <IntroSectionStyled>
       <div className="wrapper">
@@ -21,6 +24,11 @@ const IntroSection = ({ data }) => {
           className="content"
           dangerouslySetInnerHTML={{ __html: data.content }}
         />
+        {linkBtnReq && (
+          <div className="introBtn">
+            <a href={data.buttonLinkSlug}>{data.buttonText}</a>
+          </div>
+        )}
       </div>
     </IntroSectionStyled>
   )
@@ -54,6 +62,12 @@ const IntroSectionStyled = styled.section`
     text-align: center;
     p {
       ${B1CharcoalGrey};
+    }
+  }
+
+  .introBtn {
+    a {
+      ${Btn1DarkPurple};
     }
   }
 `

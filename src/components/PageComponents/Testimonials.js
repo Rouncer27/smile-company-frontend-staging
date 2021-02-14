@@ -222,6 +222,10 @@ const TestSection = styled.section`
     @media (min-width: 768px) {
       height: 60rem;
     }
+
+    @media (min-width: 1025px) {
+      height: 55rem;
+    }
   }
 
   .sliderNav {

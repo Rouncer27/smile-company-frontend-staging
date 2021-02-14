@@ -3,11 +3,15 @@ import styled from "styled-components"
 import BGImage from "gatsby-background-image"
 import { B2CharcoalGrey, colors, H4DarkPurple } from "../../styles/helpers"
 
-const StepCard = ({ step }) => {
+const StepCard = ({ step, stepsbgcolor }) => {
   const graphicWidth = step.graphic.localFile.childImageSharp.fixed.width
   const graphicHeight = step.graphic.localFile.childImageSharp.fixed.height
   return (
-    <StepCardStyled graphicwidth={graphicWidth} graphicheight={graphicHeight}>
+    <StepCardStyled
+      graphicwidth={graphicWidth}
+      graphicheight={graphicHeight}
+      stepsbgcolor={stepsbgcolor}
+    >
       <div className="graphic">
         <div className="graphic__icon">
           <BGImage
@@ -18,7 +22,10 @@ const StepCard = ({ step }) => {
       </div>
       <div className="content">
         <div>
-          <h3>{step.title}</h3>
+          <h3>
+            {step.title}
+            {step.secondTitle && <span>{step.secondTitle}</span>}
+          </h3>
         </div>
         <div dangerouslySetInnerHTML={{ __html: step.content }} />
       </div>
@@ -28,8 +35,12 @@ const StepCard = ({ step }) => {
 
 const StepCardStyled = styled.div`
   width: 100%;
+  margin-right: 0.75rem;
   margin-bottom: 5rem;
+  margin-left: 0.75rem;
   transition: all 0.3s ease-out;
+  background-color: ${props =>
+    props.stepsbgcolor === "grey" ? "rgba(208,204,202, 0.25)" : colors.white};
 
   @media (min-width: 768px) {
     margin-bottom: 2rem;
@@ -61,7 +72,6 @@ const StepCardStyled = styled.div`
   .content {
     padding: 3rem;
     transition: all 0.3s ease-out;
-    background-color: ${colors.white};
 
     @media (min-width: 768px) {
       height: 28rem;
@@ -69,6 +79,10 @@ const StepCardStyled = styled.div`
 
     h3 {
       ${H4DarkPurple};
+
+      span {
+        display: block;
+      }
     }
 
     p {
@@ -77,7 +91,7 @@ const StepCardStyled = styled.div`
   }
 
   &:hover {
-    box-shadow: 0.1rem 3px 0.9rem 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0.4rem 0.3rem 0.9rem 0 rgba(0, 0, 0, 0.26);
 
     .content {
       box-shadow: inset 0rem 0.9rem 0rem 0 #ad89a6;

@@ -8,13 +8,14 @@ import {
   colors,
   H4White,
   Btn1LightSage,
+  Btn1DarkPurple,
 } from "../../styles/helpers"
 
 import StepCard from "./StepCard"
 
 const ThreeSteps = ({ data }) => {
   return (
-    <ThreeStepsSection>
+    <ThreeStepsSection bgcolor={data.mainBackgroundColour}>
       <div className="wrapper">
         <div className="introContent">
           <div className="introContent__title">
@@ -24,25 +25,47 @@ const ThreeSteps = ({ data }) => {
             className="introContent__paragraph"
             dangerouslySetInnerHTML={{ __html: data.mainContent }}
           />
+          {data.buttonsRequired && (
+            <div className="introContent__links">
+              {data.buttons.map((btn, index) => (
+                <Link
+                  key={index}
+                  className={`linkBtn button--${btn.buttonType}`}
+                  to={btn.buttonSlug}
+                >
+                  {btn.buttonText}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
         <div className="steps">
           {data.steps &&
             data.steps.map((step, index) => (
-              <StepCard key={index} step={step} />
+              <StepCard
+                key={index}
+                step={step}
+                stepsbgcolor={data.stepsBackgroundColour}
+              />
             ))}
         </div>
       </div>
-      <div className="banner">
-        <p>
-          {data.bannerContent}{" "}
-          <Link to={data.bannerButtonSlug}>{data.bannerButtonText}</Link>
-        </p>
-      </div>
+      {data.bannerRequired && (
+        <div className="banner">
+          <p>
+            {data.bannerContent}{" "}
+            <Link to={data.bannerButtonSlug}>{data.bannerButtonText}</Link>
+          </p>
+        </div>
+      )}
     </ThreeStepsSection>
   )
 }
 
 const ThreeStepsSection = styled.section`
+  background-color: ${props =>
+    props.bgcolor === "grey" ? "rgba(208,204,202, 0.25)" : colors.white};
+
   .wrapper {
     ${standardWrapper};
   }
@@ -63,6 +86,20 @@ const ThreeStepsSection = styled.section`
     &__paragraph {
       p {
         ${H4Lavender};
+      }
+    }
+
+    &__links {
+      a:last-of-type {
+        margin-left: 2rem;
+      }
+
+      a.button--purple {
+        ${Btn1DarkPurple};
+      }
+
+      a.button--sage {
+        ${Btn1LightSage};
       }
     }
   }
