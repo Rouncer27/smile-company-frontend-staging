@@ -31,7 +31,7 @@ const ThreeSteps = ({ data }) => {
                 <Link
                   key={index}
                   className={`linkBtn button--${btn.buttonType}`}
-                  to={btn.buttonSlug}
+                  to={`/${btn.buttonSlug}`}
                 >
                   {btn.buttonText}
                 </Link>

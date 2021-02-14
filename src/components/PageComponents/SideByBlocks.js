@@ -9,8 +9,6 @@ import {
 } from "../../styles/helpers"
 
 const SideByBlocks = ({ data }) => {
-  console.log({ data })
-
   const { contentBlock } = data
   return (
     <SideByBlocksSection>

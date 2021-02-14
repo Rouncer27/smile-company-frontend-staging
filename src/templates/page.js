@@ -164,6 +164,20 @@ export const pageTempQuery = graphql`
               backgroundColour
             }
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_PricingOptions {
+            fieldGroupName
+            pricingDetails {
+              content
+              items {
+                item
+              }
+              linkSlug
+              price
+              pricingDetails
+              title
+            }
+          }
         }
       }
     }

@@ -6,6 +6,7 @@ import ThreeSteps from "./PageComponents/ThreeSteps"
 import ImageBlocks from "./PageComponents/ImageBlocks"
 import Testimonials from "./PageComponents/Testimonials"
 import SideByBlocks from "./PageComponents/SideByBlocks"
+import Pricing from "./PageComponents/Pricing"
 
 const ComponentGroups = props => {
   const { components } = props
@@ -27,6 +28,8 @@ const ComponentGroups = props => {
                 return <Testimonials key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_SideBySideContentBlocks":
                 return <SideByBlocks key={index} data={component} />
+              case "page_Acfmaintemplatefields_PageComponents_PricingOptions":
+                return <Pricing key={index} data={component} />
               default:
                 return (
                   <p>Cannot find this component {component.fieldGroupName}</p>
