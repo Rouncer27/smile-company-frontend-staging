@@ -177,6 +177,10 @@ export const homeQuery = graphql`
               pricingDetails
               title
             }
+            buttonText
+            buttonSlug
+            bottomTitle
+            bottomContent
           }
         }
       }

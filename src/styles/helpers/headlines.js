@@ -17,6 +17,11 @@ export const H1DarkPurple = css`
   color: ${colors.colorPrimary};
 `
 
+export const H1CharcoalGrey = css`
+  ${H1Base};
+  color: ${colors.colorAlt};
+`
+
 export const H1White = css`
   ${H1Base};
   color: ${colors.white};
@@ -78,6 +83,11 @@ export const H4White = css`
 export const H4DarkPurple = css`
   ${H4Base};
   color: ${colors.colorPrimary};
+`
+
+export const H4CharcoalGrey = css`
+  ${H4Base};
+  color: ${colors.colorAlt};
 `
 
 export const H4Lavender = css`

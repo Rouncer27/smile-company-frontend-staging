@@ -7,9 +7,10 @@ import {
   Btn1LightSage,
   colors,
   H1DarkPurple,
+  H1CharcoalGrey,
   H3CharcoalGrey,
+  H4CharcoalGrey,
   H4DarkPurple,
-  medWrapper,
   standardWrapper,
 } from "../../styles/helpers"
 
@@ -46,6 +47,11 @@ const Pricing = ({ data }) => {
             </PriceCard>
           )
         })}
+        <div className="bottomContent">
+          <h3>{data.bottomTitle}</h3>
+          <p>{data.bottomContent}</p>
+          <Link to={`/${data.buttonSlug}`}>{data.buttonText}</Link>
+        </div>
       </div>
     </PricingStyled>
   )
@@ -66,6 +72,24 @@ const PricingStyled = styled.section`
 
     h2 {
       ${H1DarkPurple};
+    }
+  }
+
+  .bottomContent {
+    width: 100%;
+    margin: 5rem auto;
+    padding-bottom: 5rem;
+    text-align: center;
+
+    h3 {
+      ${H1CharcoalGrey};
+    }
+
+    p {
+      ${H4CharcoalGrey};
+    }
+    a {
+      ${Btn1LightSage};
     }
   }
 `

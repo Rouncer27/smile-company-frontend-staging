@@ -177,6 +177,10 @@ export const pageTempQuery = graphql`
               pricingDetails
               title
             }
+            buttonText
+            buttonSlug
+            bottomTitle
+            bottomContent
           }
         }
       }
