@@ -1,16 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 import BGImage from "gatsby-background-image"
-import {
-  B1White,
-  colors,
-  H1White,
-  H4White,
-  standardWrapper,
-} from "../../styles/helpers"
+import { colors, H1White, H4White, standardWrapper } from "../../styles/helpers"
 
 const OurValues = ({ data }) => {
-  console.log(data)
   return (
     <OurValuesSection>
       <div className="wrapper">

@@ -11,7 +11,6 @@ import {
 } from "../../styles/helpers"
 
 const PriceCard = ({ item }) => {
-  console.log(item.content)
   return (
     <PriceCardStyled>
       <div className="cardWrap">

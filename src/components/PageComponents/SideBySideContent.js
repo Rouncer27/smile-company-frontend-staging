@@ -7,7 +7,6 @@ import {
 } from "../../styles/helpers"
 
 const SideBySideContent = ({ data }) => {
-  console.log(data)
   return (
     <SideBySideContentStyled>
       <div className="wrapper">

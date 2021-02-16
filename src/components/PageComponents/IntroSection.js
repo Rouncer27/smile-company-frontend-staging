@@ -20,10 +20,12 @@ const IntroSection = ({ data }) => {
         <div className="secondaryTitle">
           <h2 dangerouslySetInnerHTML={{ __html: data.secondaryTitle }} />
         </div>
-        <div
-          className="content"
-          dangerouslySetInnerHTML={{ __html: data.content }}
-        />
+        {data.content && (
+          <div
+            className="content"
+            dangerouslySetInnerHTML={{ __html: data.content }}
+          />
+        )}
         {linkBtnReq && (
           <div className="introBtn">
             <a href={data.buttonLinkSlug}>{data.buttonText}</a>

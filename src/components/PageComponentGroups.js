@@ -12,6 +12,7 @@ import SideBySideContent from "./PageComponents/SideBySideContent"
 import TeamCards from "./PageComponents/TeamCards"
 import OurValues from "./PageComponents/OurValues"
 import Affiliates from "./PageComponents/Affiliates"
+import FAQs from "./PageComponents/FAQs"
 
 const ComponentGroups = props => {
   const { components } = props
@@ -35,10 +36,8 @@ const ComponentGroups = props => {
                 return <SideByBlocks key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_PricingOptions":
                 return <Pricing key={index} data={component} />
-
               case "page_Acfmaintemplatefields_PageComponents_PricingOptionsReversed":
                 return <PricingReversed key={index} data={component} />
-
               case "page_Acfmaintemplatefields_PageComponents_SideBySideContent":
                 return <SideBySideContent key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_TeamCardsSection":
@@ -47,6 +46,8 @@ const ComponentGroups = props => {
                 return <OurValues key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_Affiliates":
                 return <Affiliates key={index} data={component} />
+              case "page_Acfmaintemplatefields_PageComponents_FaqsSection":
+                return <FAQs key={index} data={component} />
               default:
                 return (
                   <p>Cannot find this component {component.fieldGroupName}</p>

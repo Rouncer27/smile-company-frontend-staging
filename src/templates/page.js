@@ -269,6 +269,15 @@ export const pageTempQuery = graphql`
               }
             }
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_FaqsSection {
+            fieldGroupName
+            sectionTitle
+            faqs {
+              answer
+              question
+            }
+          }
         }
       }
     }
