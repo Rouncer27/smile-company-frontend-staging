@@ -182,6 +182,12 @@ export const homeQuery = graphql`
             bottomTitle
             bottomContent
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_SideBySideContent {
+            fieldGroupName
+            leftSideContent
+            rightSideContent
+          }
         }
       }
     }
