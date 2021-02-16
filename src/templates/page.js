@@ -188,6 +188,28 @@ export const pageTempQuery = graphql`
             leftSideContent
             rightSideContent
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_TeamCardsSection {
+            fieldGroupName
+            mainTitle
+            subTitle
+            teamCards {
+              bio
+              fieldGroupName
+              name
+              position
+              image {
+                altText
+                localFile {
+                  childImageSharp {
+                    fluid(maxWidth: 1000) {
+                      ...GatsbyImageSharpFluid_withWebp
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

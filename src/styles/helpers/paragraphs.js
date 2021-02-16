@@ -18,6 +18,11 @@ export const B1CharcoalGrey = css`
   color: ${colors.colorAlt};
 `
 
+export const B1White = css`
+  ${B1Base};
+  color: ${colors.white};
+`
+
 // Body copy TWO //
 export const B2Base = css`
   ${fontSizer(1.4, 1.6, 76.8, 150, 1.4)};
