@@ -210,6 +210,45 @@ export const homeQuery = graphql`
               }
             }
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_OurValuesSection {
+            content
+            fieldGroupName
+            title
+            points {
+              point
+            }
+            backgroundImage {
+              altText
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 2000) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+          }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_Affiliates {
+            content
+            fieldGroupName
+            mainTitle
+            affiliates {
+              affiliateBio
+              affiliateUrl
+              logo {
+                altText
+                localFile {
+                  childImageSharp {
+                    fluid(maxWidth: 500) {
+                      ...GatsbyImageSharpFluid_withWebp
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

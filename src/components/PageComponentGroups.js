@@ -9,6 +9,8 @@ import SideByBlocks from "./PageComponents/SideByBlocks"
 import Pricing from "./PageComponents/Pricing"
 import SideBySideContent from "./PageComponents/SideBySideContent"
 import TeamCards from "./PageComponents/TeamCards"
+import OurValues from "./PageComponents/OurValues"
+import Affiliates from "./PageComponents/Affiliates"
 
 const ComponentGroups = props => {
   const { components } = props
@@ -36,6 +38,10 @@ const ComponentGroups = props => {
                 return <SideBySideContent key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_TeamCardsSection":
                 return <TeamCards key={index} data={component} />
+              case "page_Acfmaintemplatefields_PageComponents_OurValuesSection":
+                return <OurValues key={index} data={component} />
+              case "page_Acfmaintemplatefields_PageComponents_Affiliates":
+                return <Affiliates key={index} data={component} />
               default:
                 return (
                   <p>Cannot find this component {component.fieldGroupName}</p>

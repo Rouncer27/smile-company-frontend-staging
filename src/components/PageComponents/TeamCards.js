@@ -10,7 +10,6 @@ import {
 } from "../../styles/helpers"
 
 const TeamCards = ({ data }) => {
-  console.log(data)
   return (
     <TeamCardsSection>
       <div className="wrapper">
