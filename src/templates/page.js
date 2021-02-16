@@ -183,6 +183,26 @@ export const pageTempQuery = graphql`
             bottomContent
           }
 
+          ... on WpPage_Acfmaintemplatefields_PageComponents_PricingOptionsReversed {
+            boxButtonSlug
+            boxButtonText
+            boxContent
+            boxTitle
+            fieldGroupName
+            mainContent
+            mainTitle
+            pricingDetails {
+              content
+              items {
+                item
+              }
+              linkSlug
+              price
+              pricingDetails
+              title
+            }
+          }
+
           ... on WpPage_Acfmaintemplatefields_PageComponents_SideBySideContent {
             fieldGroupName
             leftSideContent

@@ -10,7 +10,6 @@ import {
 } from "../../styles/helpers"
 
 const Affiliates = ({ data }) => {
-  console.log(data)
   return (
     <AffiliatesSection>
       <div className="wrapper">

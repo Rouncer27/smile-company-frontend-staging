@@ -7,6 +7,7 @@ import ImageBlocks from "./PageComponents/ImageBlocks"
 import Testimonials from "./PageComponents/Testimonials"
 import SideByBlocks from "./PageComponents/SideByBlocks"
 import Pricing from "./PageComponents/Pricing"
+import PricingReversed from "./PageComponents/PricingReversed"
 import SideBySideContent from "./PageComponents/SideBySideContent"
 import TeamCards from "./PageComponents/TeamCards"
 import OurValues from "./PageComponents/OurValues"
@@ -34,6 +35,10 @@ const ComponentGroups = props => {
                 return <SideByBlocks key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_PricingOptions":
                 return <Pricing key={index} data={component} />
+
+              case "page_Acfmaintemplatefields_PageComponents_PricingOptionsReversed":
+                return <PricingReversed key={index} data={component} />
+
               case "page_Acfmaintemplatefields_PageComponents_SideBySideContent":
                 return <SideBySideContent key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_TeamCardsSection":
