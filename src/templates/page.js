@@ -303,6 +303,15 @@ export const pageTempQuery = graphql`
             displayNewsAndUpdates
             fieldGroupName
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_JobPostings {
+            displayJobPostings
+            fieldGroupName
+            sidebarButtonSlug
+            sidebarButtonText
+            sidebarContent
+            sidebarTitle
+          }
         }
       }
     }

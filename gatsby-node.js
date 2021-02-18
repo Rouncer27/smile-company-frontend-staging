@@ -23,6 +23,15 @@ exports.createPages = async ({ graphql, actions }) => {
             }
           }
         }
+
+        jobPosts: allWpJobPosting {
+          edges {
+            node {
+              slug
+              id
+            }
+          }
+        }
       }
     `)
 
@@ -59,6 +68,23 @@ exports.createPages = async ({ graphql, actions }) => {
           slug: node.slug,
           next: index === 0 ? null : posts[index - 1].node.slug,
           prev: index === posts.length - 1 ? null : posts[index + 1].node.slug,
+        },
+      })
+    })
+
+    const jobPosts = data.jobPosts.edges
+    jobPosts.forEach(({ node }, index) => {
+      createPage({
+        path: `/job-posting/${node.slug}/`,
+        component: path.resolve("./src/templates/jobpost.js"),
+        context: {
+          id: node.id,
+          slug: node.slug,
+          next: index === 0 ? null : jobPosts[index - 1].node.slug,
+          prev:
+            index === jobPosts.length - 1
+              ? null
+              : jobPosts[index + 1].node.slug,
         },
       })
     })
