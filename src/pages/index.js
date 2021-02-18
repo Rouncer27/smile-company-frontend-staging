@@ -278,6 +278,18 @@ export const homeQuery = graphql`
               question
             }
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_ContactForm {
+            fieldGroupName
+            formFields {
+              id
+              label
+              placeholder
+              required
+              size
+              type
+            }
+          }
         }
       }
     }

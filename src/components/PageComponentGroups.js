@@ -13,6 +13,7 @@ import TeamCards from "./PageComponents/TeamCards"
 import OurValues from "./PageComponents/OurValues"
 import Affiliates from "./PageComponents/Affiliates"
 import FAQs from "./PageComponents/FAQs"
+import ContactForm from "./PageComponents/ContactForm"
 
 const ComponentGroups = props => {
   const { components } = props
@@ -48,6 +49,8 @@ const ComponentGroups = props => {
                 return <Affiliates key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_FaqsSection":
                 return <FAQs key={index} data={component} />
+              case "page_Acfmaintemplatefields_PageComponents_ContactForm":
+                return <ContactForm key={index} data={component} />
               default:
                 return (
                   <p>Cannot find this component {component.fieldGroupName}</p>
