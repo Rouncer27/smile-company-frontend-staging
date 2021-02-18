@@ -298,6 +298,11 @@ export const homeQuery = graphql`
             socialShare
             title
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_NewsAndUpdates {
+            displayNewsAndUpdates
+            fieldGroupName
+          }
         }
       }
     }

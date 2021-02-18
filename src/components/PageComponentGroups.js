@@ -15,6 +15,7 @@ import Affiliates from "./PageComponents/Affiliates"
 import FAQs from "./PageComponents/FAQs"
 import ContactForm from "./PageComponents/ContactForm"
 import ContactBanner from "./PageComponents/ContactBanner"
+import NewsAndUpdates from "./PageComponents/NewsAndUpdates"
 
 const ComponentGroups = props => {
   const { components } = props
@@ -54,6 +55,8 @@ const ComponentGroups = props => {
                 return <ContactForm key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_ContactBanner":
                 return <ContactBanner key={index} data={component} />
+              case "page_Acfmaintemplatefields_PageComponents_NewsAndUpdates":
+                return <NewsAndUpdates key={index} data={component} />
               default:
                 return (
                   <p>Cannot find this component {component.fieldGroupName}</p>
