@@ -5,9 +5,11 @@ import moment from "moment"
 import Skeleton from "react-loading-skeleton"
 import {
   B2CharcoalGrey,
+  Btn1DarkPurple,
   H4Lavender,
   Nav1CharcoalGrey,
 } from "../../styles/helpers"
+import { Link } from "gatsby"
 
 const PostCard = ({ post, loadTime }) => {
   const [postData, setPostData] = useState({
@@ -15,6 +17,7 @@ const PostCard = ({ post, loadTime }) => {
     mainTitle: "",
     mainExcerpt: "",
     mainDate: "",
+    mainSlug: "",
   })
   const cardLoadTime = loadTime ? 0 : 1500
 
@@ -29,6 +32,7 @@ const PostCard = ({ post, loadTime }) => {
         mainTitle: post.title,
         mainExcerpt: post.newsAndUpdates && post.newsAndUpdates.excerpt,
         mainDate: post.date && moment(post.date).format("MMM Do YY"),
+        mainSlug: post.slug && post.slug,
       })
     }, cardLoadTime)
   }, [])
@@ -55,6 +59,13 @@ const PostCard = ({ post, loadTime }) => {
         </div>
         <div className="cardContent__date">
           {postData.mainDate ? <p>{postData.mainDate}</p> : <Skeleton />}
+        </div>
+        <div className="cardContent__link">
+          {postData.mainSlug ? (
+            <Link to={`/news/${postData.mainSlug}`}>Read More</Link>
+          ) : (
+            <Skeleton />
+          )}
         </div>
       </div>
     </PostCardStyled>
@@ -108,6 +119,14 @@ const PostCardStyled = styled.div`
       p {
         ${Nav1CharcoalGrey};
         margin: 0;
+      }
+    }
+
+    &__link {
+      margin-top: 1rem;
+
+      a {
+        ${Btn1DarkPurple};
       }
     }
   }

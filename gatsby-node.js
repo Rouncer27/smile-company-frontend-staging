@@ -49,7 +49,7 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     })
 
-    const posts = data.allWpPost.edges
+    const posts = data.posts.edges
     posts.forEach(({ node }, index) => {
       createPage({
         path: `/news/${node.slug}/`,

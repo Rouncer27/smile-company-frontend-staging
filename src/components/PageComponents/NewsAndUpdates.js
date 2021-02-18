@@ -13,6 +13,7 @@ const getData = graphql`
           id
           title
           date
+          slug
           newsAndUpdates {
             excerpt
             featuredImage {

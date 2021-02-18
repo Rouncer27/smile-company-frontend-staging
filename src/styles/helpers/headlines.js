@@ -17,6 +17,11 @@ export const H1DarkPurple = css`
   color: ${colors.colorPrimary};
 `
 
+export const H1Lavender = css`
+  ${H1Base};
+  color: ${colors.colorSecondary};
+`
+
 export const H1CharcoalGrey = css`
   ${H1Base};
   color: ${colors.colorAlt};
