@@ -290,6 +290,14 @@ export const homeQuery = graphql`
               type
             }
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_ContactBanner {
+            email
+            fieldGroupName
+            phone
+            socialShare
+            title
+          }
         }
       }
     }

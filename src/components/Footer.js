@@ -4,10 +4,8 @@ import styled from "styled-components"
 import { Link } from "gatsby"
 import { BigWrapper, colors, Nav1Lavender, B2White } from "../styles/helpers"
 
-import Facebook from "./Icons/Facebook"
-import Instagram from "./Icons/Instagram"
-import Linkedin from "./Icons/Linkedin"
-import Twitter from "./Icons/Twitter"
+import SocialMediaContainer from "./SocialMedia/SocialMediaContainer"
+import SocialMediaIcon from "./SocialMedia/SocialMediaIcon"
 
 const getData = graphql`
   {
@@ -86,32 +84,8 @@ const Footer = () => {
             })}
           </ul>
         </div>
-
         <div className="footSocial footBlock">
-          <div className="footSocial__title">
-            <h3>Connect and Share</h3>
-          </div>
-          <ul>
-            {socialMediaLinks.map(link => {
-              let socialIcon
-              if (link.type === "instagram") {
-                socialIcon = <Instagram />
-              } else if (link.type === "facebook") {
-                socialIcon = <Facebook />
-              } else if (link.type === "linkedin") {
-                socialIcon = <Linkedin />
-              } else if (link.type === "twitter") {
-                socialIcon = <Twitter />
-              }
-              return (
-                <li key={link.type}>
-                  <a target="_blank" rel="noreferrer" href={link.url}>
-                    {socialIcon}
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
+          <SocialMediaContainer socialMediaLinks={socialMediaLinks} />
         </div>
       </div>
     </FooterStyled>
@@ -193,71 +167,6 @@ const FooterStyled = styled.footer`
       width: calc(20% - 2rem);
       margin-left: 20%;
       text-align: center;
-    }
-
-    &__title {
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-
-    ul {
-      width: 100%;
-      display: flex;
-      justify-content: flex-start;
-
-      @media (min-width: 768px) {
-        justify-content: space-around;
-        justify-content: space-evenly;
-      }
-    }
-
-    li {
-      display: inline-block;
-      margin-right: 1rem;
-      margin-left: 1rem;
-
-      &:first-of-type {
-        margin-left: 0;
-      }
-
-      a {
-        display: block;
-        position: relative;
-        width: 4rem;
-        height: 4rem;
-        border-radius: 50%;
-
-        @media (min-width: 768px) {
-          width: 2rem;
-          height: 2rem;
-        }
-        @media (min-width: 1025px) {
-          width: 2rem;
-          height: 2rem;
-        }
-
-        svg {
-          display: block;
-          width: 4rem;
-          height: 4rem;
-          margin: auto;
-          transition: all 0.3s ease-out;
-          fill: ${colors.colorSecondary};
-
-          @media (min-width: 768px) {
-            width: 2rem;
-            height: 2rem;
-          }
-          @media (min-width: 1025px) {
-            width: 2rem;
-            height: 2rem;
-          }
-
-          &:hover {
-            fill: ${colors.white};
-          }
-        }
-      }
     }
   }
 `
