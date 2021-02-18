@@ -9,14 +9,14 @@ import {
   Nav1CharcoalGrey,
 } from "../../styles/helpers"
 
-const PostCard = ({ post, index }) => {
-  console.log({ post })
+const PostCard = ({ post, loadTime }) => {
   const [postData, setPostData] = useState({
     featuredImage: "",
     mainTitle: "",
     mainExcerpt: "",
     mainDate: "",
   })
+  const cardLoadTime = loadTime ? 0 : 1500
 
   useEffect(() => {
     setTimeout(() => {
@@ -30,7 +30,7 @@ const PostCard = ({ post, index }) => {
         mainExcerpt: post.newsAndUpdates && post.newsAndUpdates.excerpt,
         mainDate: post.date && moment(post.date).format("MMM Do YY"),
       })
-    }, 500 * index)
+    }, cardLoadTime)
   }, [])
 
   return (
