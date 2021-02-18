@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import moment from "moment"
 
-import { H2Lavender, Nav1CharcoalGrey } from "../../styles/helpers"
+import { H4Lavender, Nav1CharcoalGrey } from "../../styles/helpers"
 
 const PostTitle = ({ title, date }) => {
   return (
@@ -27,7 +27,7 @@ const PostTitleStyled = styled.div`
     width: calc(50%);
 
     h2 {
-      ${H2Lavender};
+      ${H4Lavender};
       margin: 0;
     }
   }

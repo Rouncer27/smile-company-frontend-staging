@@ -7,12 +7,28 @@ import SEO from "../components/SEO"
 import PostContent from "../components/PostComponents/PostContent"
 
 const post = props => {
-  const { post } = props.data
-  console.log({ post })
+  const prevPost = props.pageContext.prev
+  const nextPost = props.pageContext.next
+  const { post, allPosts } = props.data
+
+  const prevPostData = allPosts.edges.find(post => {
+    return post.node.slug === prevPost
+  })
+  const nextPostData = allPosts.edges.find(post => {
+    return post.node.slug === nextPost
+  })
+
+  const prevSlug = prevPostData && prevPostData.node && prevPostData.node.slug
+  const nextSlug = nextPostData && nextPostData.node && nextPostData.node.slug
+
   return (
     <Layout>
       <SEO title="Page Template" />
-      <PostContent data={post} />
+      <PostContent
+        data={post}
+        prevPostSlug={prevSlug}
+        nextPostSlug={nextSlug}
+      />
     </Layout>
   )
 }
@@ -33,6 +49,15 @@ export const postTempQuery = graphql`
               }
             }
           }
+        }
+      }
+    }
+
+    allPosts: allWpPost {
+      edges {
+        node {
+          id
+          slug
         }
       }
     }
