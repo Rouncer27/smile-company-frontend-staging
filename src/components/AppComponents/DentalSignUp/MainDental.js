@@ -5,16 +5,16 @@ import AppSidebar from "../AppSidebar"
 import AppSignUpIntro from "../AppSignUpIntro"
 import SignupFields from "./SignupFields"
 
-const MainClinic = () => {
+const MainDental = () => {
   return (
     <SignUpFieldsStyled>
       <div className="wrapper">
         <div className="mainAppArea">
-          <AppSignUpIntro location="clinic" />
+          <AppSignUpIntro location="dental" />
           <SignupFields />
         </div>
         <div className="mainAppSidebar">
-          <AppSidebar location="clinicSignup" />
+          <AppSidebar location="dentalSignup" />
         </div>
       </div>
     </SignUpFieldsStyled>
@@ -54,4 +54,4 @@ const SignUpFieldsStyled = styled.div`
   }
 `
 
-export default MainClinic
+export default MainDental

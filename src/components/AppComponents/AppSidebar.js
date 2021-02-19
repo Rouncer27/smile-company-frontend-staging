@@ -54,6 +54,29 @@ const getData = graphql`
               }
             }
           }
+
+          dentalSignUpContent
+          dentalSignUpColour
+          dentalSignUpBackgroundImage {
+            altText
+            localFile {
+              childImageSharp {
+                fluid(maxWidth: 1000) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
+          dentalSignUpIcon {
+            altText
+            localFile {
+              childImageSharp {
+                fluid(maxWidth: 1000) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -81,6 +104,11 @@ const AppSidebar = ({ location }) => {
     backgroundColour = sideBarData.clinicSignUpColour
     backgroundImg =
       sideBarData.clinicSignUpBackgroundImage.localFile.childImageSharp.fluid
+  } else if (location === "dentalSignup") {
+    content = sideBarData.dentalSignUpContent
+    backgroundColour = sideBarData.dentalSignUpColour
+    backgroundImg =
+      sideBarData.dentalSignUpBackgroundImage.localFile.childImageSharp.fluid
   }
 
   return (
@@ -137,7 +165,15 @@ const AppSidebarStyled = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${props =>
-      props.bgcolor === "sage" ? colors.colorTertiary : colors.colorPrimary};
+      props.bgcolor === "sage"
+        ? colors.colorTertiary
+        : props.bgcolor === "darkPurple"
+        ? colors.colorPrimary
+        : props.bgcolor === "lavender"
+        ? colors.colorSecondary
+        : props.bgcolor === "black"
+        ? colors.black
+        : colors.colorSecondary};
     opacity: 0.75;
     z-index: 5;
   }
