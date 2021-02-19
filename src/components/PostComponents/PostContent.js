@@ -12,9 +12,6 @@ import PostTitle from "./PostTitle"
 import PostWysiwyg from "./PostWysiwyg"
 
 const PostContent = ({ data, prevPostSlug, nextPostSlug }) => {
-  console.log({ data })
-  console.log({ prevPostSlug })
-  console.log({ nextPostSlug })
   return (
     <PostContentStyled>
       <div className="headline">

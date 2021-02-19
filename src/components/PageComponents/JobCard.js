@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
+import moment from "moment"
 import {
   B1CharcoalGrey,
   Btn1DarkPurple,
@@ -23,7 +24,9 @@ const JobCard = ({ data, index }) => {
           <p>
             <span className="location">{location}</span>
             <span className="pipe"> &#124; </span>
-            <span className="date">{datePosted}</span>
+            <span className="date">
+              {moment(datePosted).format("MMM Do YYYY")}
+            </span>
           </p>
         </div>
       </div>
@@ -39,7 +42,6 @@ const JobCardStyled = styled.div`
   margin-bottom: 3rem;
 
   @media (min-width: 768px) {
-    ${props => console.log(props.index % 2)}
     width: calc(50% - 1.5rem);
     margin-right: ${props => (props.index % 2 ? "0rem" : "1.5rem")};
     margin-left: ${props => (props.index % 2 ? "1.5rem" : "0rem")};

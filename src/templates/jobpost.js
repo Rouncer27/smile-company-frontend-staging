@@ -4,13 +4,14 @@ import { graphql } from "gatsby"
 import Layout from "../components/Layout"
 import SEO from "../components/SEO"
 
+import JobPostContent from "../components/JobPost/JobPostContent"
+
 const JobPost = props => {
   const { jobPost } = props.data
-  console.log({ jobPost })
   return (
     <Layout>
       <SEO title="Page Template" />
-      <h1>JobPost</h1>
+      <JobPostContent data={jobPost} />
     </Layout>
   )
 }
