@@ -281,6 +281,7 @@ export const homeQuery = graphql`
 
           ... on WpPage_Acfmaintemplatefields_PageComponents_ContactForm {
             fieldGroupName
+            formMainTitle
             formFields {
               id
               label

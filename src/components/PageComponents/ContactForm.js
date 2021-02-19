@@ -8,6 +8,7 @@ import {
   B2White,
   H2White,
   medWrapper,
+  H1DarkPurple,
 } from "../../styles/helpers"
 
 import Input from "../FormParts/Input"
@@ -41,6 +42,11 @@ const ContactForm = ({ data }) => {
     <ContactFormStyled sidebar={displaySidebar}>
       <div className="wrapper">
         <form onSubmit={handleOnSubmit}>
+          {data.formMainTitle && (
+            <div className="mainFormTitle">
+              <h2>{data.formMainTitle}</h2>
+            </div>
+          )}
           <fieldset>
             {formFields.map(field => {
               const { id, type, label, placeholder, required, size } = field
@@ -117,6 +123,14 @@ const ContactFormStyled = styled.div`
 
     @media (min-width: 1025px) {
       width: calc(60%);
+    }
+
+    .mainFormTitle {
+      text-align: center;
+      h2 {
+        ${H1DarkPurple};
+        margin: 0;
+      }
     }
   }
 

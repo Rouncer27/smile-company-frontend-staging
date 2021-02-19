@@ -5,7 +5,6 @@ import { Link } from "gatsby"
 import { BigWrapper, colors, Nav1Lavender, B2White } from "../styles/helpers"
 
 import SocialMediaContainer from "./SocialMedia/SocialMediaContainer"
-import SocialMediaIcon from "./SocialMedia/SocialMediaIcon"
 
 const getData = graphql`
   {
