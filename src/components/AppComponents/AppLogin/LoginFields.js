@@ -111,6 +111,8 @@ const LoginFieldsStyled = styled.div`
   }
 
   .mainNav {
+    padding-left: 2rem;
+
     p,
     a {
       ${B2CharcoalGrey};

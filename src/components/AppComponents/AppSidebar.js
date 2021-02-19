@@ -22,6 +22,38 @@ const getData = graphql`
               }
             }
           }
+          loginIcon {
+            altText
+            localFile {
+              childImageSharp {
+                fluid(maxWidth: 1000) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
+          clinicSignupContent
+          clinicSignUpColour
+          clinicSignUpBackgroundImage {
+            altText
+            localFile {
+              childImageSharp {
+                fluid(maxWidth: 1000) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
+          clinicSignUpIcon {
+            altText
+            localFile {
+              childImageSharp {
+                fluid(maxWidth: 1000) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -31,7 +63,7 @@ const getData = graphql`
 const AppSidebar = ({ location }) => {
   const data = useStaticQuery(getData)
   console.log(data)
-  const constsideBarData = data.sideBar.appSettings.appSidebarContent
+  const sideBarData = data.sideBar.appSettings.appSidebarContent
 
   console.log(location)
 
@@ -40,10 +72,15 @@ const AppSidebar = ({ location }) => {
   let backgroundImg
 
   if (location === "login") {
-    content = constsideBarData.loginContent
-    backgroundColour = constsideBarData.loginColour
+    content = sideBarData.loginContent
+    backgroundColour = sideBarData.loginColour
     backgroundImg =
-      constsideBarData.loginBackgroundImage.localFile.childImageSharp.fluid
+      sideBarData.loginBackgroundImage.localFile.childImageSharp.fluid
+  } else if (location === "clinicSignup") {
+    content = sideBarData.clinicSignupContent
+    backgroundColour = sideBarData.clinicSignUpColour
+    backgroundImg =
+      sideBarData.clinicSignUpBackgroundImage.localFile.childImageSharp.fluid
   }
 
   return (
