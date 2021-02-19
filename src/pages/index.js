@@ -289,6 +289,11 @@ export const homeQuery = graphql`
               size
               type
             }
+            sidebarButtonSlug
+            sidebarButtonText
+            sidebarContent
+            sidebarDispaly
+            sidebarTitle
           }
 
           ... on WpPage_Acfmaintemplatefields_PageComponents_ContactBanner {

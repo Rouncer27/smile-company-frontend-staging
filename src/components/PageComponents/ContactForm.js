@@ -1,6 +1,14 @@
+import { Link } from "gatsby"
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import { Btn1DarkPurple } from "../../styles/helpers"
+import {
+  Btn1DarkPurple,
+  colors,
+  Btn1LightSage,
+  B2White,
+  H2White,
+  medWrapper,
+} from "../../styles/helpers"
 
 import Input from "../FormParts/Input"
 import Textarea from "../FormParts/Textarea"
@@ -8,6 +16,9 @@ import Textarea from "../FormParts/Textarea"
 const ContactForm = ({ data }) => {
   const { formFields } = data
   const [formData, setFormData] = useState({})
+
+  const displaySidebar = data.sidebarDispaly
+  console.log(data)
 
   useEffect(() => {
     const startingState = {}
@@ -27,7 +38,7 @@ const ContactForm = ({ data }) => {
   }
 
   return (
-    <ContactFormStyled>
+    <ContactFormStyled sidebar={displaySidebar}>
       <div className="wrapper">
         <form onSubmit={handleOnSubmit}>
           <fieldset>
@@ -69,6 +80,23 @@ const ContactForm = ({ data }) => {
             </div>
           </fieldset>
         </form>
+
+        {displaySidebar && (
+          <FormSidebar className="postingSidebar">
+            <div className="postingSidebar__title">
+              <h3>{data.sidebarTitle}</h3>
+            </div>
+            <div
+              className="postingSidebar__content"
+              dangerouslySetInnerHTML={{ __html: data.sidebarContent }}
+            />
+            <div className="postingSidebar__link">
+              <Link to={`/${data.sidebarButtonSlug}`}>
+                {data.sidebarButtonText}
+              </Link>
+            </div>
+          </FormSidebar>
+        )}
       </div>
     </ContactFormStyled>
   )
@@ -76,21 +104,20 @@ const ContactForm = ({ data }) => {
 
 const ContactFormStyled = styled.div`
   .wrapper {
-    width: 100%;
-    margin: 2rem auto;
-    padding: 2rem;
-
-    @media (min-width: 768px) {
-      max-width: 60rem;
-    }
-
-    @media (min-width: 1025px) {
-      max-width: 60rem;
-    }
+    ${medWrapper};
+    flex-direction: row-reverse;
   }
 
   form {
     width: 100%;
+
+    @media (min-width: 768px) {
+      width: calc(66.66%);
+    }
+
+    @media (min-width: 1025px) {
+      width: calc(60%);
+    }
   }
 
   fieldset {
@@ -110,6 +137,41 @@ const ContactFormStyled = styled.div`
 
     button {
       ${Btn1DarkPurple};
+    }
+  }
+`
+
+const FormSidebar = styled.div`
+  align-self: flex-start;
+  width: calc(100%);
+  padding: 4rem;
+  background-color: ${colors.colorTertiary};
+
+  @media (min-width: 768px) {
+    width: calc(33.33% - 2rem);
+    margin-right: 2rem;
+  }
+
+  @media (min-width: 1025px) {
+    width: calc(40% - 2rem);
+    margin-right: 2rem;
+  }
+
+  .postingSidebar__title {
+    h3 {
+      ${H2White};
+    }
+  }
+
+  .postingSidebar__content {
+    p {
+      ${B2White};
+    }
+  }
+
+  .postingSidebar__link {
+    a {
+      ${Btn1LightSage};
     }
   }
 `
