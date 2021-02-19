@@ -2,6 +2,7 @@ import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import BGImage from "gatsby-background-image"
 import styled from "styled-components"
+import { B1White, colors } from "../../styles/helpers"
 
 const getData = graphql`
   {
@@ -63,14 +64,46 @@ const AppSidebar = ({ location }) => {
 }
 
 const AppSidebarStyled = styled.div`
+  display: flex;
+  justify-content: center;
   position: relative;
   width: 100%;
 
-  .sidebarBackgroundImage {
-    position: absolute;
+  .sidebarContent {
+    position: relative;
+    padding: 20rem 10rem 10rem;
+    z-index: 10;
+
+    p {
+      ${B1White};
+    }
   }
 
+  .sidebarBackgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 
+    div {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .sidebarOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: ${props =>
+      props.bgcolor === "sage" ? colors.colorTertiary : colors.colorPrimary};
+    opacity: 0.75;
+    z-index: 5;
+  }
 `
 
 export default AppSidebar

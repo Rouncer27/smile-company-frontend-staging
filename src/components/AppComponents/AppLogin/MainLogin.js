@@ -42,6 +42,8 @@ const MainLoginStyled = styled.div`
   }
 
   .mainAppSidebar {
+    display: flex;
+    justify-content: center;
     width: 100vw;
 
     @media (min-width: 768px) {
