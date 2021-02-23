@@ -1,6 +1,9 @@
 import { Link } from "gatsby"
 import React, { useState } from "react"
 import styled from "styled-components"
+import { Magic } from "magic-sdk"
+import axios from "axios"
+
 import {
   B2CharcoalGrey,
   Btn1DarkPurple,
@@ -9,6 +12,8 @@ import {
 } from "../../../styles/helpers"
 
 import Input from "../FormFields/Input"
+
+const m = new Magic(process.env.GATSBY_MAGIC_API_KEY)
 
 const LoginFields = () => {
   const [formData, setFormData] = useState({
@@ -23,9 +28,33 @@ const LoginFields = () => {
     })
   }
 
-  const handleOnSubmit = event => {
+  const handleOnSubmit = async event => {
     event.preventDefault()
     console.log("Submit the login")
+    let token
+
+    // try {
+    //   token = await m.auth.loginWithMagicLink({
+    //     email: "techhelp@switchbackcreative.ca",
+    //   })
+    //   console.log("HERE IS THE TOKEN: ", token)
+    // } catch (err) {
+    //   console.log("HERE IS THE ERROR: ", err)
+    // }
+
+    try {
+      const reponse = await axios.post(
+        `${process.env.GATSBY_API_URL}/auth/local/register/professional`,
+        {
+          username: "ROUNCER27",
+          email: "techhelp@switchbackcreative.ca",
+          password: "123456",
+        }
+      )
+      console.log("HERE IS THE RESPONSE: ", reponse)
+    } catch (err) {
+      console.log("HERE IS THE ERROR: ", err)
+    }
   }
 
   return (
@@ -45,7 +74,7 @@ const LoginFields = () => {
                 value={formData.email}
                 onChange={handleOnChange}
                 fieldvalid={true}
-                required={true}
+                required={false}
                 size="full"
               />
               <Input
@@ -56,7 +85,7 @@ const LoginFields = () => {
                 value={formData.password}
                 onChange={handleOnChange}
                 fieldvalid={true}
-                required={true}
+                required={false}
                 size="full"
               />
               <div className="submitButton">

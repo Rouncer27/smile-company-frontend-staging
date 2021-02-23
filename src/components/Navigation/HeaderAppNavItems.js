@@ -15,7 +15,7 @@ const HeaderAppNavItems = () => {
         <Link to="/dental-professionals-signup">Dental Professionals</Link>
       </AppItemOne>
       <AppItemTwo>
-        <Link to="/login">
+        <Link to="/app/login">
           <span>
             <DefaultUser />
           </span>

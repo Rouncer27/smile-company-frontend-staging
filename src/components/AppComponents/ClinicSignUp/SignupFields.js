@@ -1,21 +1,18 @@
 import { Link } from "gatsby"
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import styled from "styled-components"
-import {
-  B2CharcoalGrey,
-  Btn1DarkPurple,
-  colors,
-  H4Lavender,
-} from "../../../styles/helpers"
+import axios from "axios"
+import { UserContext } from "../../../context/UserContext"
+import { navigate } from "gatsby"
+import { B2CharcoalGrey, Btn1DarkPurple, colors } from "../../../styles/helpers"
 
 import Input from "../FormFields/Input"
 
 const SignUpFields = () => {
+  const [state, dispatch] = useContext(UserContext)
   const [formData, setFormData] = useState({
-    clinicName: "",
-    contactFirstName: "",
-    contactLastName: "",
-    phone: "",
+    clinicname: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -28,9 +25,26 @@ const SignUpFields = () => {
     })
   }
 
-  const handleOnSubmit = event => {
+  const handleOnSubmit = async event => {
     event.preventDefault()
-    console.log("Submit the login")
+    dispatch({ type: "USER_LOADING" })
+    try {
+      const reponse = await axios.post(
+        `${process.env.GATSBY_API_URL}/auth/local/register/clinic`,
+        {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }
+      )
+
+      const { user, token } = reponse.data
+      dispatch({ type: "USER_LOGIN", payload: { token, user } })
+      navigate("/app/clinic-dashboard", { replace: true })
+    } catch (err) {
+      console.log(err)
+      dispatch({ type: "USER_ERROR" })
+    }
   }
   return (
     <SignUpFieldsStyled>
@@ -38,48 +52,15 @@ const SignUpFields = () => {
         <form onSubmit={event => handleOnSubmit(event)}>
           <fieldset>
             <Input
-              label="clinic name"
-              name="clinicName"
+              label="account username"
+              name="username"
               type="text"
-              placeholder="clinic name"
-              value={formData.clinicName}
+              placeholder="account username"
+              value={formData.username}
               onChange={handleOnChange}
               fieldvalid={true}
-              required={true}
+              required={false}
               size="full"
-            />
-            <Input
-              label="contact first name"
-              name="contactFirstName"
-              type="text"
-              placeholder="contact first name"
-              value={formData.contactFirstName}
-              onChange={handleOnChange}
-              fieldvalid={true}
-              required={true}
-              size="half"
-            />
-            <Input
-              label="contact last name"
-              name="contactLastName"
-              type="text"
-              placeholder="contact last name"
-              value={formData.contactLastName}
-              onChange={handleOnChange}
-              fieldvalid={true}
-              required={true}
-              size="half"
-            />
-            <Input
-              label="phone number"
-              name="phone"
-              type="text"
-              placeholder="phone number"
-              value={formData.phone}
-              onChange={handleOnChange}
-              fieldvalid={true}
-              required={true}
-              size="half"
             />
             <Input
               label="email"
@@ -89,8 +70,8 @@ const SignUpFields = () => {
               value={formData.email}
               onChange={handleOnChange}
               fieldvalid={true}
-              required={true}
-              size="half"
+              required={false}
+              size="full"
             />
             <Input
               label="password"
@@ -100,7 +81,7 @@ const SignUpFields = () => {
               value={formData.password}
               onChange={handleOnChange}
               fieldvalid={true}
-              required={true}
+              required={false}
               size="half"
             />
             <Input
@@ -111,7 +92,7 @@ const SignUpFields = () => {
               value={formData.confirmPassword}
               onChange={handleOnChange}
               fieldvalid={true}
-              required={true}
+              required={false}
               size="half"
             />
             <div className="submitButton">

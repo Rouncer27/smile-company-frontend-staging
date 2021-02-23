@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Trevor and Suzy Rounce",
   "dependencies": {
+    "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.12.0",
     "dotenv": "^8.2.0",
     "gatsby": "^2.32.3",
@@ -20,6 +21,7 @@
     "gatsby-source-strapi": "0.0.12",
     "gatsby-source-wordpress": "^4.0.1",
     "gatsby-transformer-sharp": "^2.12.0",
+    "magic-sdk": "^4.1.1",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
