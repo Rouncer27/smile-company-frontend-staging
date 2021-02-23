@@ -108,7 +108,7 @@ const SignUpFields = () => {
       </div>
       <div className="mainNav">
         <p>
-          Already have an account? <Link to="/login">Sign In</Link>
+          Already have an account? <Link to="/app/login">Sign In</Link>
         </p>
         <p>
           Are you a clinic looking to register?{" "}
