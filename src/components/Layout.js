@@ -7,6 +7,7 @@ import Header from "./Header"
 import Footer from "./Footer"
 import ModalLoading from "./UiElements/ModalLoading"
 import ModalAlert from "./UiElements/ModalAlert"
+import ModalError from "./UiElements/ModalError"
 
 const Layout = props => {
   const children = props.children
@@ -17,6 +18,7 @@ const Layout = props => {
         <GlobalStyle />
         <ModalLoading />
         <ModalAlert />
+        <ModalError />
         <Header />
         <main>{children}</main>
         <Footer location={props.location} />

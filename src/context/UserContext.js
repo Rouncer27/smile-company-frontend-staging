@@ -26,7 +26,16 @@ const reducer = (state, action) => {
         ...state,
         loading: false,
         error: true,
-        errMessage: "Something Went Wrong...",
+        errMessage:
+          action.payload && action.payload.message
+            ? action.payload.message
+            : "Something went wrong. Please try again later",
+      }
+    case "USER_CLEAR_ERROR":
+      return {
+        ...state,
+        error: false,
+        errMessage: "",
       }
     case "USER_LOGIN":
       return {

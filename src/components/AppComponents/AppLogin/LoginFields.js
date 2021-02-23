@@ -49,8 +49,13 @@ const LoginFields = () => {
         navigate("/app/professional-dashboard", { replace: true })
       }
     } catch (err) {
-      console.log(err)
-      dispatch({ type: "USER_ERROR" })
+      console.dir(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        err.response.data.message[0] &&
+        err.response.data.message[0].messages[0].message
+      dispatch({ type: "USER_ERROR", payload: { message } })
     }
   }
 
@@ -64,10 +69,10 @@ const LoginFields = () => {
           <form onSubmit={event => handleOnSubmit(event)}>
             <fieldset>
               <Input
-                label="email"
+                label="email / username"
                 name="email"
-                type="email"
-                placeholder="email"
+                type="text"
+                placeholder="email / username"
                 value={formData.email}
                 onChange={handleOnChange}
                 fieldvalid={true}

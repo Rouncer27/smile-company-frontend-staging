@@ -9,7 +9,6 @@ import {
   H2Lavender,
   H1CharcoalGrey,
   H4CharcoalGrey,
-  callOut,
 } from "../../styles/helpers"
 
 const PostWysiwyg = ({ content }) => {
