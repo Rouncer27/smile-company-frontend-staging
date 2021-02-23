@@ -1,7 +1,8 @@
-import { Link } from "gatsby"
-import React, { useState } from "react"
+import { Link, navigate } from "gatsby"
+import React, { useState, useContext } from "react"
 import styled from "styled-components"
 import axios from "axios"
+import { UserContext } from "../../../context/UserContext"
 
 import {
   B2CharcoalGrey,
@@ -13,6 +14,8 @@ import {
 import Input from "../FormFields/Input"
 
 const LoginFields = () => {
+  const [state, dispatch] = useContext(UserContext)
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,30 +30,27 @@ const LoginFields = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
-    console.log("Submit the login")
-    let token
-
-    // try {
-    //   token = await m.auth.loginWithMagicLink({
-    //     email: "techhelp@switchbackcreative.ca",
-    //   })
-    //   console.log("HERE IS THE TOKEN: ", token)
-    // } catch (err) {
-    //   console.log("HERE IS THE ERROR: ", err)
-    // }
-
+    dispatch({ type: "USER_LOADING" })
     try {
-      const reponse = await axios.post(
-        `${process.env.GATSBY_API_URL}/auth/local/register/professional`,
+      const { data } = await axios.post(
+        `${process.env.GATSBY_API_URL}/auth/local`,
         {
-          username: "ROUNCER27",
-          email: "techhelp@switchbackcreative.ca",
-          password: "123456",
+          identifier: formData.email,
+          password: formData.password,
         }
       )
-      console.log("HERE IS THE RESPONSE: ", reponse)
+
+      const { user, token } = data
+      dispatch({ type: "USER_LOGIN", payload: { token, user } })
+
+      if (user.role.type === "dental_clinics") {
+        navigate("/app/clinic-dashboard", { replace: true })
+      } else {
+        navigate("/app/professional-dashboard", { replace: true })
+      }
     } catch (err) {
-      console.log("HERE IS THE ERROR: ", err)
+      console.log(err)
+      dispatch({ type: "USER_ERROR" })
     }
   }
 
