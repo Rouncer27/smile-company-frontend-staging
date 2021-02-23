@@ -13,12 +13,11 @@ import {
 
 import Input from "../FormFields/Input"
 
-const LoginFields = () => {
+const ForgotFields = () => {
   const [state, dispatch] = useContext(UserContext)
 
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
   })
 
   const handleOnChange = event => {
@@ -32,33 +31,25 @@ const LoginFields = () => {
     event.preventDefault()
     dispatch({ type: "USER_LOADING" })
     try {
-      const { data } = await axios.post(
-        `${process.env.GATSBY_API_URL}/auth/local`,
-        {
-          identifier: formData.email,
-          password: formData.password,
-        }
+      const response = await axios.post(
+        `${process.env.GATSBY_API_URL}/auth/forgot-password`,
+        { email: formData.email }
       )
 
-      const { user, token } = data
-      dispatch({ type: "USER_LOGIN", payload: { token, user } })
-
-      if (user.role.type === "dental_clinics") {
-        navigate("/app/clinic-dashboard", { replace: true })
-      } else {
-        navigate("/app/professional-dashboard", { replace: true })
+      if (response.data.ok) {
+        dispatch({ type: "USER_RESET" })
       }
     } catch (err) {
-      console.log(err)
+      console.dir(err)
       dispatch({ type: "USER_ERROR" })
     }
   }
 
   return (
-    <LoginFieldsStyled>
+    <ForgotFieldsStyled>
       <div>
         <div className="mainTitle">
-          <h2>Login to your account</h2>
+          <h2>Forgot Your Password</h2>
         </div>
         <div className="mainForm">
           <form onSubmit={event => handleOnSubmit(event)}>
@@ -74,24 +65,13 @@ const LoginFields = () => {
                 required={false}
                 size="full"
               />
-              <Input
-                label="password"
-                name="password"
-                type="password"
-                placeholder="password"
-                value={formData.password}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={false}
-                size="full"
-              />
               <div className="submitButton">
                 <button type="submit">Submit</button>
               </div>
             </fieldset>
           </form>
           <div className="passForgot">
-            <Link to="/app/forgot">Forgot your password?</Link>
+            <Link to="/app/login">Login Page</Link>
           </div>
         </div>
         <div className="mainNav">
@@ -105,11 +85,11 @@ const LoginFields = () => {
           </p>
         </div>
       </div>
-    </LoginFieldsStyled>
+    </ForgotFieldsStyled>
   )
 }
 
-const LoginFieldsStyled = styled.div`
+const ForgotFieldsStyled = styled.div`
   .mainTitle {
     h2 {
       ${H4Lavender};
@@ -168,4 +148,4 @@ const LoginFieldsStyled = styled.div`
   }
 `
 
-export default LoginFields
+export default ForgotFields

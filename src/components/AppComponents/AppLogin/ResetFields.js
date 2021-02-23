@@ -1,5 +1,6 @@
 import { Link, navigate } from "gatsby"
-import React, { useState, useContext } from "react"
+import queryString from "query-string"
+import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import axios from "axios"
 import { UserContext } from "../../../context/UserContext"
@@ -13,13 +14,19 @@ import {
 
 import Input from "../FormFields/Input"
 
-const LoginFields = () => {
+const ResetFields = props => {
+  const [code, setCode] = useState("")
   const [state, dispatch] = useContext(UserContext)
 
   const [formData, setFormData] = useState({
-    email: "",
     password: "",
+    password2: "",
   })
+
+  useEffect(() => {
+    const queryData = queryString.parse(props.location.search)
+    setCode(queryData.code)
+  }, [])
 
   const handleOnChange = event => {
     setFormData({
@@ -32,15 +39,16 @@ const LoginFields = () => {
     event.preventDefault()
     dispatch({ type: "USER_LOADING" })
     try {
-      const { data } = await axios.post(
-        `${process.env.GATSBY_API_URL}/auth/local`,
+      const response = await axios.post(
+        `${process.env.GATSBY_API_URL}/auth/reset-password`,
         {
-          identifier: formData.email,
+          code: code,
           password: formData.password,
+          passwordConfirmation: formData.password2,
         }
       )
 
-      const { user, token } = data
+      const { user, token } = response.data
       dispatch({ type: "USER_LOGIN", payload: { token, user } })
 
       if (user.role.type === "dental_clinics") {
@@ -49,31 +57,20 @@ const LoginFields = () => {
         navigate("/app/professional-dashboard", { replace: true })
       }
     } catch (err) {
-      console.log(err)
+      console.dir(err)
       dispatch({ type: "USER_ERROR" })
     }
   }
 
   return (
-    <LoginFieldsStyled>
+    <ResetFieldsStyled>
       <div>
         <div className="mainTitle">
-          <h2>Login to your account</h2>
+          <h2>Reset Your Password</h2>
         </div>
         <div className="mainForm">
           <form onSubmit={event => handleOnSubmit(event)}>
             <fieldset>
-              <Input
-                label="email"
-                name="email"
-                type="email"
-                placeholder="email"
-                value={formData.email}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={false}
-                size="full"
-              />
               <Input
                 label="password"
                 name="password"
@@ -85,13 +82,24 @@ const LoginFields = () => {
                 required={false}
                 size="full"
               />
+              <Input
+                label="confirm password"
+                name="password2"
+                type="password"
+                placeholder="confirm password"
+                value={formData.password2}
+                onChange={handleOnChange}
+                fieldvalid={true}
+                required={false}
+                size="full"
+              />
               <div className="submitButton">
                 <button type="submit">Submit</button>
               </div>
             </fieldset>
           </form>
           <div className="passForgot">
-            <Link to="/app/forgot">Forgot your password?</Link>
+            <Link to="/app/login">Login Page</Link>
           </div>
         </div>
         <div className="mainNav">
@@ -105,11 +113,11 @@ const LoginFields = () => {
           </p>
         </div>
       </div>
-    </LoginFieldsStyled>
+    </ResetFieldsStyled>
   )
 }
 
-const LoginFieldsStyled = styled.div`
+const ResetFieldsStyled = styled.div`
   .mainTitle {
     h2 {
       ${H4Lavender};
@@ -168,4 +176,4 @@ const LoginFieldsStyled = styled.div`
   }
 `
 
-export default LoginFields
+export default ResetFields

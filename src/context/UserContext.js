@@ -9,6 +9,8 @@ const initialState = {
   loading: false,
   error: false,
   errMessage: "",
+  alert: false,
+  alertMessage: "",
 }
 
 const reducer = (state, action) => {
@@ -31,6 +33,13 @@ const reducer = (state, action) => {
         ...state,
         token: action.payload.token,
         user: action.payload.user,
+        loading: false,
+      }
+    case "USER_RESET":
+      return {
+        ...state,
+        alert: true,
+        alertMessage: "A reste link has been sent to your email account.",
         loading: false,
       }
     case "USER_UPDATE":
