@@ -10,7 +10,7 @@ import {
   H4Lavender,
 } from "../../../styles/helpers"
 
-import Input from "../FormFields/Input")
+import Input from "../FormFields/Input"
 
 const LoginFields = () => {
   const [formData, setFormData] = useState({
