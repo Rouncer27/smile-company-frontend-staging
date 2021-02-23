@@ -1,7 +1,6 @@
 import { Link } from "gatsby"
 import React, { useState } from "react"
 import styled from "styled-components"
-import { Magic } from "magic-sdk"
 import axios from "axios"
 
 import {
@@ -11,9 +10,7 @@ import {
   H4Lavender,
 } from "../../../styles/helpers"
 
-import Input from "../FormFields/Input"
-
-const m = new Magic(process.env.GATSBY_MAGIC_API_KEY)
+import Input from "../FormFields/Input")
 
 const LoginFields = () => {
   const [formData, setFormData] = useState({
