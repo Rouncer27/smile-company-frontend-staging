@@ -1,5 +1,5 @@
-import { navigate } from "gatsby"
-import React, { useContext } from "react"
+import { Link, navigate } from "gatsby"
+import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
 import axios from "axios"
 import { UserContext } from "../../../context/UserContext"
@@ -9,12 +9,51 @@ import {
   Btn1DarkPurple,
   colors,
   H1DarkPurple,
+  B1Sage,
+  H4Lavender,
 } from "../../../styles/helpers"
 
 const MainDashboard = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user } = state
   const { confirmed, email } = user
+  const userProfileId = user.clinic_profile._id
+
+  const handleGetProfileOnMount = async () => {
+    dispatch({ type: "USER_LOADING" })
+    try {
+      const response = await axios.get(
+        `${process.env.GATSBY_API_URL}/clinic-profiles/${userProfileId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      dispatch({
+        type: "USER_GET_PROFILE",
+        payload: { profile: response.data },
+      })
+    } catch (err) {
+      console.dir(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
+      dispatch({ type: "USER_ERROR", payload: { message } })
+    }
+  }
+
+  useEffect(() => {
+    handleGetProfileOnMount()
+  }, [])
+
   const handleConfirmedEmail = async () => {
     dispatch({ type: "USER_LOADING" })
     try {
@@ -55,7 +94,11 @@ const MainDashboard = () => {
     <MainDashboardStyled>
       <div className="dashWrap">
         <div className="dashWelcome">
-          <p></p>
+          {state.profile.profile_satisfied && (
+            <p>
+              <span /> {state.profile.clinic_name}
+            </p>
+          )}
           <h2>Welcome to my Dashboard</h2>
         </div>
         {!confirmed && (
@@ -70,6 +113,28 @@ const MainDashboard = () => {
             </p>
 
             <button onClick={handleConfirmedEmail}>setup profile</button>
+          </div>
+        )}
+        {!state.profile.profile_satisfied && (
+          <div className="setupProfile">
+            <div>
+              <p>
+                Before you can contiune, you are required to setup your clinics
+                profile.
+              </p>
+              <Link to="/app/clinic-dashboard/profile-settings">
+                Clinic Details
+              </Link>
+            </div>
+          </div>
+        )}
+        {confirmed && state.profile.profile_satisfied && (
+          <div className="mainDashContent">
+            <h3>
+              Hello {state.profile.clinic_name},<br />
+              This is your dashboard for all of your clinic profile information.
+              This is where you will set up, review and manage your bookings.
+            </h3>
           </div>
         )}
       </div>
@@ -100,6 +165,13 @@ const MainDashboardStyled = styled.div`
 
     h2 {
       ${H1DarkPurple};
+      margin-top: 0;
+    }
+
+    p {
+      ${B1Sage};
+      margin-bottom: 0;
+      font-weight: bold;
     }
   }
 
@@ -113,6 +185,12 @@ const MainDashboardStyled = styled.div`
     button {
       ${Btn1DarkPurple};
       margin-top: 2rem;
+    }
+  }
+
+  .mainDashContent {
+    h3 {
+      ${H4Lavender};
     }
   }
 `

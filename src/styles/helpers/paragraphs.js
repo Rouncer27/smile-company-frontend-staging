@@ -23,6 +23,11 @@ export const B1White = css`
   color: ${colors.white};
 `
 
+export const B1Sage = css`
+  ${B1Base};
+  color: ${colors.colorTertiary};
+`
+
 // Body copy TWO //
 export const B2Base = css`
   ${fontSizer(1.4, 1.6, 76.8, 150, 1.4)};

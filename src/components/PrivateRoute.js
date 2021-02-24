@@ -4,9 +4,7 @@ import { navigate } from "gatsby"
 import { UserContext } from "../context/UserContext"
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
-  console.log("PRIVATE ROUTE.....")
   const [state, dispatch] = useContext(UserContext)
-
   if (state.token === "" && location.pathname !== `/app/login`) {
     navigate(`/app/login`)
     return null

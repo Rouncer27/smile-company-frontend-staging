@@ -21,6 +21,11 @@ const reducer = (state, action) => {
         ...state,
         loading: true,
       }
+    case "USER_LOADING_COMPLETE":
+      return {
+        ...state,
+        loading: false,
+      }
     case "USER_ERROR":
       return {
         ...state,

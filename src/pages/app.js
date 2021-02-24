@@ -11,6 +11,7 @@ import NotFoundPage from "../components/NotFoundPage"
 
 import ClinicDashboard from "../components/AppRoutes/ClinicDashboard"
 import ProfileSettings from "../components/AppRoutes/clinic-dashboard/ProfileSettings"
+import BookingPackages from "../components/AppRoutes/clinic-dashboard/BookingPackages"
 
 import ProfessionalDashboard from "../components/AppRoutes/ProfessionalDashboard"
 
@@ -27,11 +28,16 @@ const App = ({ location }) => {
           path="/app/clinic-dashboard/profile-settings"
           component={ProfileSettings}
         />
+        <PrivateRoute
+          path="/app/clinic-dashboard/booking-packages"
+          component={BookingPackages}
+        />
 
         <PrivateRoute
           path="/app/professional-dashboard"
           component={ProfessionalDashboard}
         />
+
         <Login path="/app/login" />
         <ForgotPassword path="/app/forgot" />
         <ResetPassword path="/app/reset-password" location={location} />

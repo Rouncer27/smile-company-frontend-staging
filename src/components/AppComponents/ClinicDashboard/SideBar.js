@@ -16,7 +16,11 @@ const SideBar = () => {
 
   const userConfirmed = state.user.confirmed
   const profileSatisfied = state.profile.profile_satisfied
-  console.log("NAVIGATION STATE: ", state)
+  const accountHasCredits = state.profile.monthly_subscription
+    ? true
+    : state.profile.credits > 0
+    ? true
+    : false
 
   return (
     <AppSidebarStyled>
@@ -49,7 +53,7 @@ const SideBar = () => {
           </li>
           <li>
             {userConfirmed && profileSatisfied ? (
-              <Link to="/">
+              <Link to="/app/clinic-dashboard/booking-packages">
                 <span className="icon">
                   <Dash />
                 </span>{" "}
@@ -65,7 +69,7 @@ const SideBar = () => {
             )}
           </li>
           <li>
-            {userConfirmed && profileSatisfied ? (
+            {userConfirmed && profileSatisfied && accountHasCredits ? (
               <Link to="/">
                 <span className="icon">
                   <Calendar />
@@ -82,7 +86,7 @@ const SideBar = () => {
             )}
           </li>
           <li>
-            {userConfirmed && profileSatisfied ? (
+            {userConfirmed && profileSatisfied && false ? (
               <Link to="/">
                 <span className="icon">
                   <Checked />
@@ -99,7 +103,7 @@ const SideBar = () => {
             )}
           </li>
           <li>
-            {userConfirmed && profileSatisfied ? (
+            {userConfirmed && profileSatisfied && false ? (
               <Link to="/">
                 <span className="icon">
                   <List />

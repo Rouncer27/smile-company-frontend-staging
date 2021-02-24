@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import axios from "axios"
+import { navigate } from "gatsby"
 import { UserContext } from "../../../context/UserContext"
 
 import { colors, Btn1DarkPurple, H1DarkPurple } from "../../../styles/helpers"
@@ -97,6 +98,10 @@ const MainSettings = () => {
   }
 
   useEffect(() => {
+    // If this person is not confirmed yet, send them back to the main dashboard. //
+    if (!state.user.confirmed)
+      return navigate("/app/clinic-dashboard", { replace: true })
+
     handleGetProfileOnMount()
   }, [])
 
