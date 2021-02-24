@@ -15,10 +15,6 @@ const MainDashboard = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user } = state
   const { confirmed, email } = user
-
-  console.log("MAIN DASHBOARD: ", state)
-  console.log("MAIN token: ", token)
-
   const handleConfirmedEmail = async () => {
     dispatch({ type: "USER_LOADING" })
     try {
@@ -37,13 +33,21 @@ const MainDashboard = () => {
       if (isEmailConfirmed) {
         dispatch({ type: "USER_UPDATE", payload: { token, user } })
         navigate("/app/clinic-dashboard/profile-settings", { replace: true })
-      } else {
-        console.log("HANDLE ERROR....")
-        dispatch({ type: "USER_ERROR" })
       }
     } catch (err) {
-      console.log(err)
-      dispatch({ type: "USER_ERROR" })
+      console.dir(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
+
+      dispatch({ type: "USER_ERROR", payload: { message } })
     }
   }
 

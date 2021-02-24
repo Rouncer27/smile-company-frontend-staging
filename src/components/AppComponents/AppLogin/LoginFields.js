@@ -49,11 +49,12 @@ const LoginFields = () => {
         navigate("/app/professional-dashboard", { replace: true })
       }
     } catch (err) {
-      console.dir(err)
+      console.log(err)
       const message =
         err.response.data &&
         err.response.data.message &&
         err.response.data.message[0] &&
+        err.response.data.message[0].messages[0] &&
         err.response.data.message[0].messages[0].message
       dispatch({ type: "USER_ERROR", payload: { message } })
     }

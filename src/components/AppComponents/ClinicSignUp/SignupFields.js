@@ -42,8 +42,13 @@ const SignUpFields = () => {
       dispatch({ type: "USER_LOGIN", payload: { token, user } })
       navigate("/app/clinic-dashboard", { replace: true })
     } catch (err) {
-      console.log(err)
-      dispatch({ type: "USER_ERROR" })
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        err.response.data.message[0] &&
+        err.response.data.message[0].messages[0] &&
+        err.response.data.message[0].messages[0].message
+      dispatch({ type: "USER_ERROR", payload: { message } })
     }
   }
   return (

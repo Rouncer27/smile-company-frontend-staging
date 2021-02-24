@@ -40,8 +40,14 @@ const ForgotFields = () => {
         dispatch({ type: "USER_RESET" })
       }
     } catch (err) {
-      console.dir(err)
-      dispatch({ type: "USER_ERROR" })
+      console.log(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        err.response.data.message[0] &&
+        err.response.data.message[0].messages[0] &&
+        err.response.data.message[0].messages[0].message
+      dispatch({ type: "USER_ERROR", payload: { message } })
     }
   }
 
