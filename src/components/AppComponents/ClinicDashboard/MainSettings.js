@@ -11,7 +11,8 @@ import Input from "../FormFields/Input"
 const MainSettings = () => {
   const [state, dispatch] = useContext(UserContext)
   const token = state.token
-  const userProfileId = state.user.clinic_profile._id
+  const userId = state.user._id
+  const profileId = state.profile && state.profile.id
 
   const [formData, setFormData] = useState({
     clinicName: "",
@@ -69,7 +70,7 @@ const MainSettings = () => {
     dispatch({ type: "USER_LOADING" })
     try {
       const response = await axios.get(
-        `${process.env.GATSBY_API_URL}/clinic-profiles/${userProfileId}`,
+        `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -164,8 +165,8 @@ const MainSettings = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
+    if (!profileId) return
     dispatch({ type: "USER_LOADING" })
-
     const { goToSend, message } = isAllFieldsComplete()
 
     if (!goToSend)
@@ -178,7 +179,7 @@ const MainSettings = () => {
 
     try {
       const response = await axios.put(
-        `${process.env.GATSBY_API_URL}/clinic-profiles/${userProfileId}`,
+        `${process.env.GATSBY_API_URL}/clinic-profiles/${profileId}`,
         {
           clinic_name: formData.clinicName,
           contact_first_name: formData.contactFirstName,

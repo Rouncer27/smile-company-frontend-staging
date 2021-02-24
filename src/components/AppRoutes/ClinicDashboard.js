@@ -5,7 +5,6 @@ import Dashboard from "../AppComponents/ClinicDashboard/Dashboard"
 
 const ClinicDashboard = () => {
   const [state, dispatch] = useContext(UserContext)
-  console.log("YOYOYOY: ", state)
   return <Dashboard />
 }
 

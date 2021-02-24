@@ -15,12 +15,16 @@ const SideBar = () => {
   const [state] = useContext(UserContext)
 
   const userConfirmed = state.user.confirmed
-  const profileSatisfied = state.profile.profile_satisfied
-  const accountHasCredits = state.profile.monthly_subscription
-    ? true
-    : state.profile.credits > 0
-    ? true
-    : false
+  const profileSatisfied =
+    state.profile && state.profile.profile_satisfied
+      ? state.profile.profile_satisfied
+      : false
+  const accountHasCredits =
+    state.profile && state.profile.monthly_subscription
+      ? true
+      : state.profile && state.profile.credits > 0
+      ? true
+      : false
 
   return (
     <AppSidebarStyled>

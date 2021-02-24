@@ -17,19 +17,24 @@ const MainDashboard = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user } = state
   const { confirmed, email } = user
-  const userProfileId = user.clinic_profile._id
+  const userId = user.id
 
   const handleGetProfileOnMount = async () => {
+    if (!userId) return
+    if (!confirmed) return
+
     dispatch({ type: "USER_LOADING" })
+
     try {
       const response = await axios.get(
-        `${process.env.GATSBY_API_URL}/clinic-profiles/${userProfileId}`,
+        `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       )
+      console.log(response)
       dispatch({
         type: "USER_GET_PROFILE",
         payload: { profile: response.data },
@@ -94,9 +99,9 @@ const MainDashboard = () => {
     <MainDashboardStyled>
       <div className="dashWrap">
         <div className="dashWelcome">
-          {state.profile.profile_satisfied && (
+          {state.profile && state.profile.profile_satisfied && (
             <p>
-              <span /> {state.profile.clinic_name}
+              <span /> {state.profile && state.profile.clinic_name}
             </p>
           )}
           <h2>Welcome to my Dashboard</h2>
@@ -115,7 +120,7 @@ const MainDashboard = () => {
             <button onClick={handleConfirmedEmail}>setup profile</button>
           </div>
         )}
-        {!state.profile.profile_satisfied && (
+        {state.profile && !state.profile.profile_satisfied && (
           <div className="setupProfile">
             <div>
               <p>
@@ -128,7 +133,7 @@ const MainDashboard = () => {
             </div>
           </div>
         )}
-        {confirmed && state.profile.profile_satisfied && (
+        {confirmed && state.profile && state.profile.profile_satisfied && (
           <div className="mainDashContent">
             <h3>
               Hello {state.profile.clinic_name},<br />
