@@ -12,6 +12,7 @@ const Input = ({
   onChange,
   fieldvalid,
   size,
+  position,
   required,
 }) => {
   const [currentFieldVal, setCurrentFieldVal] = useState({
@@ -77,6 +78,7 @@ const InputFieldStyled = styled.div`
   @media (min-width: 768px) {
     width: ${props =>
       props.size === "full" ? " calc(100% - 1.5rem)" : " calc(50% - 1.5rem)"};
+    margin-left: 1.5rem;
   }
 
   label {

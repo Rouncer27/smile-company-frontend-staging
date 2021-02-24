@@ -32,7 +32,7 @@ const LoginFields = () => {
     event.preventDefault()
     dispatch({ type: "USER_LOADING" })
     try {
-      const { data } = await axios.post(
+      const response = await axios.post(
         `${process.env.GATSBY_API_URL}/auth/local`,
         {
           identifier: formData.email,
@@ -40,13 +40,21 @@ const LoginFields = () => {
         }
       )
 
-      const { user, token } = data
-      dispatch({ type: "USER_LOGIN", payload: { token, user } })
+      const { user, jwt: token } = response.data
 
       if (user.role.type === "dental_clinics") {
+        const profile = user.clinic_profile
+        dispatch({ type: "USER_LOGIN", payload: { token, user, profile } })
         navigate("/app/clinic-dashboard", { replace: true })
-      } else {
+      } else if (user.role.type === "dental_professional") {
+        const profile = user.professional_profile
+        dispatch({ type: "USER_LOGIN", payload: { token, user, profile } })
         navigate("/app/professional-dashboard", { replace: true })
+      } else {
+        dispatch({
+          type: "USER_ERROR",
+          payload: { message: "Something went wrong, please try again later." },
+        })
       }
     } catch (err) {
       console.log(err)

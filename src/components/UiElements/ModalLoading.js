@@ -5,6 +5,7 @@ import { UserContext } from "../../context/UserContext"
 
 const ModalLoading = () => {
   const [state] = useContext(UserContext)
+
   return (
     <LoadingModalStyled loadingactive={state.loading}>
       <div className="inner">

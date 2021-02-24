@@ -1,7 +1,8 @@
 import { Link } from "gatsby"
-import React from "react"
+import React, { useContext } from "react"
 import styled from "styled-components"
 import { colors, Nav2Lavender } from "../../../styles/helpers"
+import { UserContext } from "../../../context/UserContext"
 
 import Calendar from "../../Icons/AppIcons/Calendar"
 import Checked from "../../Icons/AppIcons/Checked"
@@ -11,6 +12,12 @@ import List from "../../Icons/AppIcons/List"
 import Man from "../../Icons/AppIcons/Man"
 
 const SideBar = () => {
+  const [state] = useContext(UserContext)
+
+  const userConfirmed = state.user.confirmed
+  const profileSatisfied = state.profile.profile_satisfied
+  console.log("NAVIGATION STATE: ", state)
+
   return (
     <AppSidebarStyled>
       <nav className="sidebarNav">
@@ -18,58 +25,95 @@ const SideBar = () => {
           <li>
             <Link to="/app/clinic-dashboard">
               <span className="icon">
-                <Dash />
+                <Cog />
               </span>{" "}
               <span className="text">Main Dashbaord</span>
             </Link>
           </li>
           <li>
-            <Link to="/app/clinic-dashboard/profile-settings">
-              <span className="icon">
-                <Man />
-              </span>{" "}
-              <span className="text">Clinic Settings</span>
-            </Link>
+            {userConfirmed ? (
+              <Link to="/app/clinic-dashboard/profile-settings">
+                <span className="icon">
+                  <Man />
+                </span>{" "}
+                <span className="text">Clinic Details</span>
+              </Link>
+            ) : (
+              <button type="button" disabled={true}>
+                <span className="icon">
+                  <Man />
+                </span>{" "}
+                <span className="text">Clinic Details</span>
+              </button>
+            )}
           </li>
           <li>
-            <Link to="/">
-              <span className="icon">
-                <Cog />
-              </span>{" "}
-              <span className="text">Contact Information</span>
-            </Link>
+            {userConfirmed && profileSatisfied ? (
+              <Link to="/">
+                <span className="icon">
+                  <Dash />
+                </span>{" "}
+                <span className="text">Purchase Booking Package</span>
+              </Link>
+            ) : (
+              <button type="button" disabled={true}>
+                <span className="icon">
+                  <Dash />
+                </span>{" "}
+                <span className="text">Purchase Booking Package</span>
+              </button>
+            )}
           </li>
           <li>
-            <Link to="/">
-              <span className="icon">
-                <Dash />
-              </span>{" "}
-              <span className="text">Purchase Booking Package</span>
-            </Link>
+            {userConfirmed && profileSatisfied ? (
+              <Link to="/">
+                <span className="icon">
+                  <Calendar />
+                </span>{" "}
+                <span className="text">Create a Booking</span>
+              </Link>
+            ) : (
+              <button type="button" disabled={true}>
+                <span className="icon">
+                  <Calendar />
+                </span>{" "}
+                <span className="text">Create a Booking</span>
+              </button>
+            )}
           </li>
           <li>
-            <Link to="/">
-              <span className="icon">
-                <Calendar />
-              </span>{" "}
-              <span className="text">Create a Booking</span>
-            </Link>
+            {userConfirmed && profileSatisfied ? (
+              <Link to="/">
+                <span className="icon">
+                  <Checked />
+                </span>{" "}
+                <span className="text">Review Applicants</span>
+              </Link>
+            ) : (
+              <button type="button" disabled={true}>
+                <span className="icon">
+                  <Checked />
+                </span>{" "}
+                <span className="text">Review Applicants</span>
+              </button>
+            )}
           </li>
           <li>
-            <Link to="/">
-              <span className="icon">
-                <Checked />
-              </span>{" "}
-              <span className="text">Review Applicants</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/">
-              <span className="icon">
-                <List />
-              </span>{" "}
-              <span className="text">Historical</span>
-            </Link>
+            {userConfirmed && profileSatisfied ? (
+              <Link to="/">
+                <span className="icon">
+                  <List />
+                </span>{" "}
+                <span className="text">Historical</span>
+              </Link>
+            ) : (
+              <button type="button" disabled={true}>
+                <span className="icon">
+                  <List />
+                </span>{" "}
+                <span className="text">Historical</span>
+              </button>
+            )}
           </li>
         </ul>
       </nav>
@@ -104,23 +148,43 @@ const AppSidebarStyled = styled.div`
       border-bottom: 0.1rem solid ${colors.colorSecondary};
     }
 
-    a {
+    a,
+    button {
       ${Nav2Lavender};
+      background-color: transparent;
+      border: none;
       display: flex;
       align-items: center;
       width: 80%;
       margin: auto;
+      line-height: 1.8rem;
       padding: 1.5rem;
+
+      &:disabled {
+        color: rgba(173, 137, 166, 0.25);
+        cursor: not-allowed;
+      }
 
       .icon {
         display: inline-block;
         width: 2.4rem;
+        line-height: 1.8rem;
       }
 
       .text {
         display: inline-block;
         padding-left: 2rem;
+        line-height: 1.8rem;
       }
+    }
+
+    a:hover {
+      color: ${colors.white};
+    }
+
+    a[aria-current="page"] {
+      color: ${colors.white};
+      cursor: inherit;
     }
   }
 `
