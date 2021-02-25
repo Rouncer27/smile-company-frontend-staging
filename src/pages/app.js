@@ -12,6 +12,7 @@ import NotFoundPage from "../components/NotFoundPage"
 import ClinicDashboard from "../components/AppRoutes/ClinicDashboard"
 import ProfileSettings from "../components/AppRoutes/clinic-dashboard/ProfileSettings"
 import BookingPackages from "../components/AppRoutes/clinic-dashboard/BookingPackages"
+import Payments from "../components/AppRoutes/clinic-dashboard/Payments"
 
 import ProfessionalDashboard from "../components/AppRoutes/ProfessionalDashboard"
 
@@ -31,6 +32,10 @@ const App = ({ location }) => {
         <PrivateRoute
           path="/app/clinic-dashboard/booking-packages"
           component={BookingPackages}
+        />
+        <PrivateRoute
+          path="/app/clinic-dashboard/payment"
+          component={Payments}
         />
 
         <PrivateRoute

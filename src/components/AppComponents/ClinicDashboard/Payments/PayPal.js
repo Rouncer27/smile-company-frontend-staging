@@ -1,0 +1,196 @@
+import React, { useState, useRef, useEffect, useContext } from "react"
+import axios from "axios"
+import { UserContext } from "../../../../context/UserContext"
+
+const isBrowser = () => typeof window !== "undefined"
+
+const PayPal = ({ productType }) => {
+  const [state, dispatch] = useContext(UserContext)
+  const [loaded, setLoaded] = useState(false)
+  const [paymentDetails, setPaymentDetails] = useState({
+    name: "",
+    price: "",
+    description: "",
+    details: "",
+    terms: "",
+    active: false,
+  })
+  const token = state.token
+  const paypalRef = useRef(null)
+
+  const setOneBooking = data => {
+    setPaymentDetails({
+      name: "One Booking",
+      price: data.booking_one_price,
+      description: data.booking_one_description,
+      details: data.booking_one_includes_details,
+      terms: data.booking_one_purchase_terms,
+      active: true,
+    })
+  }
+
+  const setSmilePass = data => {
+    setPaymentDetails({
+      name: "10 Smile Pass",
+      price: data.ten_pass_price,
+      description: data.ten_pass_description,
+      details: data.ten_pass_includes_details,
+      terms: data.ten_pass_purchase_terms,
+      active: true,
+    })
+  }
+
+  const setMembership = data => {
+    setPaymentDetails({
+      name: "Monthly Membership",
+      price: data.smile_member_price,
+      description: data.smile_member_description,
+      details: data.smile_member_included_details,
+      terms: data.smile_member_purchase_terms,
+      active: true,
+    })
+  }
+
+  const getProductDataFromServer = async () => {
+    try {
+      const reponse = await axios.get(
+        `${process.env.GATSBY_API_URL}/booking-packages`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      if (productType === "onebooking") {
+        setOneBooking(reponse.data)
+      } else if (productType === "smilepass") {
+        setSmilePass(reponse.data)
+      } else if (productType === "membership") {
+        setMembership(reponse.data)
+      }
+    } catch (err) {
+      console.dir(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
+      dispatch({ type: "USER_ERROR", payload: { message } })
+    }
+  }
+
+  useEffect(() => {
+    const script = document.createElement("script")
+    script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.GATSBY_PAYPAL_CLIENT_ID}&currency=CAD`
+    script.addEventListener("load", () => setLoaded(true))
+    document.body.appendChild(script)
+    return function cleanup() {
+      document.body.removeChild(script)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isBrowser() && loaded && window.paypal) {
+      getProductDataFromServer()
+    }
+  }, [loaded])
+
+  useEffect(() => {
+    activatePayPalButton()
+  }, [paymentDetails])
+
+  const activatePayPalButton = async () => {
+    if (isBrowser() && loaded && window.paypal) {
+      console.log("PAYPAMENT DETAILS: ", paymentDetails)
+      window.paypal
+        .Buttons({
+          createOrder: (data, actions) => {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  description: `Payment To Smile and Company`,
+                  amount: {
+                    currency_code: "CAD",
+                    value: paymentDetails.price + paymentDetails.price * 0.05,
+                    breakdown: {
+                      item_total: {
+                        currency_code: "CAD",
+                        value: paymentDetails.price,
+                      },
+                      tax_total: {
+                        currency_code: "CAD",
+                        value: paymentDetails.price * 0.05,
+                      },
+                    },
+                  },
+                  items: [
+                    {
+                      name: paymentDetails.name,
+                      quantity: 1,
+                      unit_amount: {
+                        currency_code: "CAD",
+                        value: paymentDetails.price,
+                      },
+                    },
+                  ],
+                },
+              ],
+            })
+          },
+          onApprove: async (data, actions) => {
+            const order = await actions.order.capture()
+            const createdOrder = await handleCreateOrderRecord(order)
+            console.log("The ORDER created from the server --> ", createdOrder)
+          },
+          onError: err => {
+            console.error(err)
+          },
+        })
+        .render(paypalRef.current)
+    }
+  }
+
+  const handleCreateOrderRecord = async order => {
+    try {
+      const reponse = await axios.post(
+        `${process.env.GATSBY_API_URL}/invoices/paypal`,
+        { order, productType },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      console.log(reponse)
+    } catch (err) {
+      console.dir(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
+      dispatch({ type: "USER_ERROR", payload: { message } })
+    }
+  }
+  console.log("DETAILS OUTSIDE: ", paymentDetails)
+
+  return (
+    <div>
+      <div ref={paypalRef}></div>
+    </div>
+  )
+}
+
+export default PayPal

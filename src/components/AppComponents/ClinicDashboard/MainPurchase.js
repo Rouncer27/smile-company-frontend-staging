@@ -169,7 +169,7 @@ const MainPurchase = () => {
               )}
             </div>
             <div className="bookDetail__btn">
-              <Link to="/app/clinic-dashboard/booking-packages">
+              <Link to="/app/clinic-dashboard/payment?product=onebooking">
                 Purchase One Booking
               </Link>
             </div>
@@ -210,7 +210,7 @@ const MainPurchase = () => {
               )}
             </div>
             <div className="bookDetail__btn">
-              <Link to="/app/clinic-dashboard/booking-packages">
+              <Link to="/app/clinic-dashboard/payment?product=smilepass">
                 Purchase 10 Smile Pass
               </Link>
             </div>
@@ -251,7 +251,7 @@ const MainPurchase = () => {
               )}
             </div>
             <div className="bookDetail__btn">
-              <Link to="/app/clinic-dashboard/booking-packages">
+              <Link to="/app/clinic-dashboard/payment?product=membership">
                 Purchase Monthly Membership
               </Link>
             </div>
