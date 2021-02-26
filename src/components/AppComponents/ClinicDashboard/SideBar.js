@@ -13,7 +13,6 @@ import Man from "../../Icons/AppIcons/Man"
 
 const SideBar = () => {
   const [state] = useContext(UserContext)
-
   const userConfirmed = state.user.confirmed
   const profileSatisfied =
     state.profile && state.profile.profile_satisfied
@@ -25,6 +24,8 @@ const SideBar = () => {
       : state.profile && state.profile.credits > 0
       ? true
       : false
+  const accountHasInvoices =
+    state.profile.invoices && state.profile.invoices.length > 0
 
   return (
     <AppSidebarStyled>
@@ -107,19 +108,19 @@ const SideBar = () => {
             )}
           </li>
           <li>
-            {userConfirmed && profileSatisfied && false ? (
-              <Link to="/">
+            {userConfirmed && profileSatisfied && accountHasInvoices ? (
+              <Link to="/app/clinic-dashboard/invoices">
                 <span className="icon">
                   <List />
                 </span>{" "}
-                <span className="text">Historical</span>
+                <span className="text">Invoice Records</span>
               </Link>
             ) : (
               <button type="button" disabled={true}>
                 <span className="icon">
                   <List />
                 </span>{" "}
-                <span className="text">Historical</span>
+                <span className="text">Invoice Records</span>
               </button>
             )}
           </li>

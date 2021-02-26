@@ -34,7 +34,6 @@ const MainDashboard = () => {
           },
         }
       )
-      console.log(response)
       dispatch({
         type: "USER_GET_PROFILE",
         payload: { profile: response.data },
@@ -134,13 +133,28 @@ const MainDashboard = () => {
           </div>
         )}
         {confirmed && state.profile && state.profile.profile_satisfied && (
-          <div className="mainDashContent">
-            <h3>
-              Hello {state.profile.clinic_name},<br />
-              This is your dashboard for all of your clinic profile information.
-              This is where you will set up, review and manage your bookings.
-            </h3>
-          </div>
+          <>
+            <div className="mainDashContent">
+              <h3>
+                Hello {state.profile.clinic_name},<br />
+                This is your dashboard for all of your clinic profile
+                information. This is where you will set up, review and manage
+                your bookings.
+              </h3>
+            </div>
+            <div className="mainDashCredits">
+              <p>
+                Current account credits:{" "}
+                {state.profile.monthly_subscription ? (
+                  <span>Monthly Subsciption - Unlimited Booking</span>
+                ) : (
+                  <span>
+                    {state.profile.credits ? state.profile.credits : 0}
+                  </span>
+                )}
+              </p>
+            </div>
+          </>
         )}
       </div>
     </MainDashboardStyled>
@@ -194,8 +208,27 @@ const MainDashboardStyled = styled.div`
   }
 
   .mainDashContent {
+    width: 100%;
     h3 {
       ${H4Lavender};
+    }
+  }
+
+  .mainDashCredits {
+    width: 100%;
+    margin-top: 2.5rem;
+    padding: 5rem 2.5rem;
+    border-radius: 2.5rem;
+    background-color: rgba(173, 137, 166, 0.25);
+
+    p {
+      ${H4Lavender};
+      margin: 0;
+
+      span {
+        font-weight: bold;
+        color: ${colors.colorTertiary};
+      }
     }
   }
 `

@@ -203,8 +203,6 @@ const MainSettings = () => {
           },
         }
       )
-
-      console.log(response)
       dispatch({
         type: "USER_UPDATE_PROFILE",
         payload: {

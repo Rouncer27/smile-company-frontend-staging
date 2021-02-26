@@ -74,9 +74,6 @@ const MainPayment = () => {
           },
         }
       )
-
-      console.log("HERE IS THE SERVER ", reponse)
-
       if (productType === "onebooking") return setOneBooking(reponse.data)
       if (productType === "smilepass") return setSmilePass(reponse.data)
       if (productType === "membership") return setMembership(reponse.data)

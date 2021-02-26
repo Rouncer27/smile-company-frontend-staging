@@ -13,6 +13,8 @@ import ClinicDashboard from "../components/AppRoutes/ClinicDashboard"
 import ProfileSettings from "../components/AppRoutes/clinic-dashboard/ProfileSettings"
 import BookingPackages from "../components/AppRoutes/clinic-dashboard/BookingPackages"
 import Payments from "../components/AppRoutes/clinic-dashboard/Payments"
+import Invoices from "../components/AppRoutes/clinic-dashboard/Invoices"
+import Invoice from "../components/AppRoutes/clinic-dashboard/Invoice"
 
 import ProfessionalDashboard from "../components/AppRoutes/ProfessionalDashboard"
 
@@ -36,6 +38,14 @@ const App = ({ location }) => {
         <PrivateRoute
           path="/app/clinic-dashboard/payment"
           component={Payments}
+        />
+        <PrivateRoute
+          path="/app/clinic-dashboard/invoices"
+          component={Invoices}
+        />
+        <PrivateRoute
+          path={`/app/clinic-dashboard/invoices/:id`}
+          component={Invoice}
         />
 
         <PrivateRoute
