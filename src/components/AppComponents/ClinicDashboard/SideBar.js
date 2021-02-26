@@ -75,7 +75,7 @@ const SideBar = () => {
           </li>
           <li>
             {userConfirmed && profileSatisfied && accountHasCredits ? (
-              <Link to="/">
+              <Link to="/app/clinic-dashboard/create-booking">
                 <span className="icon">
                   <Calendar />
                 </span>{" "}
