@@ -25,7 +25,10 @@ const SideBar = () => {
       ? true
       : false
   const accountHasInvoices =
-    state.profile.invoices && state.profile.invoices.length > 0
+    state.profile && state.profile.invoices && state.profile.invoices.length > 0
+
+  const accountHasBookings =
+    state.profile && state.profile.bookings && state.profile.bookings.length > 0
 
   return (
     <AppSidebarStyled>
@@ -91,19 +94,19 @@ const SideBar = () => {
             )}
           </li>
           <li>
-            {userConfirmed && profileSatisfied && false ? (
-              <Link to="/">
+            {userConfirmed && profileSatisfied && accountHasBookings ? (
+              <Link to="/app/clinic-dashboard/bookings">
                 <span className="icon">
                   <Checked />
                 </span>{" "}
-                <span className="text">Review Applicants</span>
+                <span className="text">Review Bookings</span>
               </Link>
             ) : (
               <button type="button" disabled={true}>
                 <span className="icon">
                   <Checked />
                 </span>{" "}
-                <span className="text">Review Applicants</span>
+                <span className="text">Review Bookings</span>
               </button>
             )}
           </li>

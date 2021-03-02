@@ -57,6 +57,13 @@ const reducer = (state, action) => {
         alertMessage: "A reset link has been sent to your email account.",
         loading: false,
       }
+    case "USER_ALERT":
+      return {
+        ...state,
+        alert: true,
+        alertMessage: action.payload.message,
+        loading: false,
+      }
     case "USER_CLEAR_ALERT":
       return {
         ...state,

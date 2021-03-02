@@ -49,3 +49,42 @@ export const getMaxHeight = elements => {
   elements.forEach(el => (max = el.scrollHeight > max ? el.scrollHeight : max))
   return max
 }
+
+export const timeFormat = time => {
+  let hour = ""
+  let minutes = ""
+  let meridiem = ""
+
+  if (time && time.length > 0) {
+    hour =
+      parseInt(time.split(":")[0]) > 12
+        ? parseInt(time.split(":")[0]) - 12
+        : parseInt(time.split(":")[0])
+
+    minutes =
+      parseInt(time.split(":")[1]) === 0 ? "00" : parseInt(time.split(":")[1])
+
+    meridiem = parseInt(time.split(":")[0]) >= 12 ? "PM" : "AM"
+  }
+
+  return { hour, minutes, meridiem }
+}
+
+export const getMothName = date => {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ]
+  const monthIndex = date.split("-")[1]
+  return monthNames[monthIndex - 1]
+}

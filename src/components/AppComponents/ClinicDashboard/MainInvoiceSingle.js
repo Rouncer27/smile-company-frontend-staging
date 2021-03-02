@@ -33,8 +33,6 @@ const MainInvoiceSingle = () => {
     setCurrentInvoice(invoice)
   }, [currentInvoiceId])
 
-  console.log(currentInvoice)
-
   return (
     <MainInvoiceSingleStyled>
       <div className="dashWrap">

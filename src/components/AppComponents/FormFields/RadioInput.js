@@ -27,6 +27,7 @@ const RadioInput = ({ handleOnRadioChange, name, options, value, label }) => {
 
 const RadioInputStyled = styled.div`
   margin-top: 2rem;
+  width: 100%;
 
   p {
     ${Nav1CharcoalGrey};

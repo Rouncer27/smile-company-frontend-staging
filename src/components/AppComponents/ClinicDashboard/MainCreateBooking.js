@@ -1,13 +1,7 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useState, useContext } from "react"
 import styled from "styled-components"
 import axios from "axios"
-
-import TimePicker from "react-time-picker"
-import Calendar from "react-calendar"
-import "react-calendar/dist/Calendar.css"
-
-import DayPicker, { DateUtils } from "react-day-picker"
-import "react-day-picker/lib/style.css"
+import { navigate } from "gatsby"
 
 import {
   B1Sage,
@@ -20,11 +14,10 @@ import {
 import { UserContext } from "../../../context/UserContext"
 import { Link } from "gatsby"
 
-import Input from "../FormFields/Input"
 import DateTimePicker from "../FormFields/DateTimePicker"
-import DatePicker from "../FormFields/DatePicker"
 import RadioInput from "../FormFields/RadioInput"
 import CheckBoxInput from "../FormFields/CheckBoxInput"
+import Input from "../FormFields/Input"
 
 const MainCreateBooking = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -35,50 +28,18 @@ const MainCreateBooking = () => {
   const subcription = state.profile.monthly_subscription
 
   const [formData, setFormData] = useState({
-    daysRequired: 1,
+    day: "",
+    shift_start: "",
+    shift_end: "",
     location: "",
-    salary: "",
-    hireDate: "",
-    expireDate: "",
-    experience: "",
-    qualifications: "",
-    strengths: "",
+    address: "",
+    position: "",
     notifyAgree: false,
     hiringFees: false,
+    shortNotice: false,
   })
 
-  const handleSelectDay = (event, id) => {
-    setFormData({
-      ...formData,
-      [`selectedDay-${id}`]: event,
-    })
-  }
-
-  const handleSelectTimeStart = (event, id) => {
-    setFormData({
-      ...formData,
-      [`selectedTimeStart-${id}`]: event,
-    })
-  }
-
-  const handleSelectTimeEnd = (event, id) => {
-    setFormData({
-      ...formData,
-      [`selectedTimeEnd-${id}`]: event,
-    })
-  }
-
-  const handleAddShift = () => {
-    const newDaysRequired = formData.daysRequired + 1
-    setFormData({
-      ...formData,
-      daysRequired: newDaysRequired,
-    })
-  }
-
   const handleDatePicker = (event, id) => {
-    console.log("DATE PICKER", event, id)
-
     setFormData({
       ...formData,
       [id]: event,
@@ -86,9 +47,6 @@ const MainCreateBooking = () => {
   }
 
   const handleOnChange = event => {
-    console.log("RADIO!!!!", event.target.id)
-    console.log("RADIO!!!!", event.target.name)
-    console.log("RADIO!!!!", event.target.value)
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
@@ -96,18 +54,66 @@ const MainCreateBooking = () => {
   }
 
   const handleOnCheckBoxChange = event => {
-    console.log("RADIO!!!!", event.target.id)
-    console.log("RADIO!!!!", event.target.name)
-    console.log("RADIO!!!!", event.target.value)
     setFormData({
       ...formData,
       [event.target.id]: true,
     })
   }
 
+  const resetFormData = () => {
+    setFormData({
+      day: "",
+      shift_start: "",
+      shift_end: "",
+      location: "",
+      address: "",
+      position: "",
+      notifyAgree: false,
+      hiringFees: false,
+      shortNotice: false,
+    })
+  }
+
   const handleOnSubmit = async event => {
     event.preventDefault()
-    console.log("SUBMIT!!!!")
+    dispatch({ type: "USER_LOADING" })
+    try {
+      const response = await axios.post(
+        `${process.env.GATSBY_API_URL}/bookings`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      console.log(
+        "RESPONSE FROM THE SERVER AFTER BOOKING CREATE: ",
+        response.data
+      )
+
+      dispatch({
+        type: "USER_ALERT",
+        payload: {
+          message: `Congratulations! You have created a booking. You can always review your bookings history from your dashboard under Review Bookings in the left side menu.`,
+        },
+      })
+      return navigate("/app/clinic-dashboard", { replace: true })
+    } catch (err) {
+      console.dir(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
+      dispatch({ type: "USER_ERROR", payload: { message } })
+    }
   }
 
   console.log("HERE IS THE FORM STATE: ", formData)
@@ -130,42 +136,13 @@ const MainCreateBooking = () => {
         <div className="mainForm">
           <form onSubmit={event => handleOnSubmit(event)}>
             <fieldset>
-              {[...Array(formData.daysRequired)].map((index, i) => {
-                const currentDayIndex = i + 1
-                return (
-                  <DateTimePicker
-                    key={index}
-                    day={formData[`selectedDay-${currentDayIndex}`]}
-                    setDay={handleSelectDay}
-                    startTime={formData[`selectedTimeStart-${currentDayIndex}`]}
-                    setStartTime={handleSelectTimeStart}
-                    endTime={formData[`selectedTimeEnd-${currentDayIndex}`]}
-                    setEndTime={handleSelectTimeEnd}
-                    id={`${currentDayIndex}`}
-                  />
-                )
-              })}
-
-              {/* <button type="button" onClick={handleAddShift}>
-                Add Another Day
-              </button> */}
-              <RadioInput
-                name="location"
-                label="What location area are you looking placement in? (check all that apply):"
-                handleOnRadioChange={handleOnChange}
-                value={formData.location}
-                options={[
-                  {
-                    id: "nw-ne-sw-se-calgary",
-                    label: "NW, NE, SW, SE Calgary",
-                  },
-                  { id: "inner-city-calgary", label: "Inner-city Calgary" },
-                  { id: "airdrie", label: "Airdrie" },
-                  { id: "chestermere", label: "Chestermere" },
-                  { id: "cochrane", label: "Cochrane" },
-                  { id: "okotoks", label: "Okotoks" },
-                  { id: "banff", label: "Banff" },
-                ]}
+              <DateTimePicker
+                day={formData.day}
+                setDay={handleDatePicker}
+                startTime={formData.shift_start}
+                setStartTime={handleDatePicker}
+                endTime={formData.shift_end}
+                setEndTime={handleDatePicker}
               />
 
               <RadioInput
@@ -180,7 +157,6 @@ const MainCreateBooking = () => {
                   },
                   { id: "rdh", label: "RDH" },
                   { id: "admin", label: "Admin" },
-                  { id: "chestermere", label: "Chestermere" },
                   {
                     id: "sterilizationAssistant",
                     label: "Sterilization Assistant",
@@ -188,66 +164,31 @@ const MainCreateBooking = () => {
                 ]}
               />
 
-              <Input
-                label="What salary range are you offering (per hour)? "
-                name="salary"
-                type="text"
-                placeholder="$/hour"
-                value={formData.salary}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-
-              <DatePicker
-                id={"hireDate"}
-                label="What is the ideal date that you would like to hire by?"
-                value={formData.hireDate}
-                onChange={handleDatePicker}
-              />
-
-              <DatePicker
-                id={"expireDate"}
-                label="When should this post expire?"
-                value={formData.expireDate}
-                onChange={handleDatePicker}
-              />
-
               <RadioInput
-                label="How many years of experience would your ideal candidate have?"
-                name="experience"
+                name="location"
+                label="What location area are you looking placement in?"
                 handleOnRadioChange={handleOnChange}
-                value={formData.experience}
+                value={formData.location}
                 options={[
                   {
-                    id: "less1year",
-                    label: "Less than one year",
+                    id: "nwNeSwSeCalgary",
+                    label: "NW, NE, SW, SE Calgary",
                   },
-                  { id: "2to5years", label: "2-5 Years" },
-                  { id: "6to9years", label: "6-9 Years" },
-                  { id: "10years", label: "10+ Years" },
+                  { id: "innerCityCalgary", label: "Inner-city Calgary" },
+                  { id: "airdrie", label: "Airdrie" },
+                  { id: "chestermere", label: "Chestermere" },
+                  { id: "cochrane", label: "Cochrane" },
+                  { id: "okotoks", label: "Okotoks" },
+                  { id: "banff", label: "Banff" },
                 ]}
               />
 
               <Input
-                label="What specific qualifications are you seeking?"
-                name="qualifications"
+                label="clinic street address / location"
+                name="address"
                 type="text"
-                placeholder="qualifications"
-                value={formData.qualifications}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-
-              <Input
-                label="What strengths does your ideal candidate possess?"
-                name="strengths"
-                type="text"
-                placeholder="strengths"
-                value={formData.strengths}
+                placeholder="clinic street address / location"
+                value={formData.address}
                 onChange={handleOnChange}
                 fieldvalid={true}
                 required={true}
@@ -277,7 +218,6 @@ const MainCreateBooking = () => {
                   onChange={handleOnCheckBoxChange}
                 />
               </div>
-
               <div className="submitButton">
                 <button type="submit">Submit Booking</button>
               </div>

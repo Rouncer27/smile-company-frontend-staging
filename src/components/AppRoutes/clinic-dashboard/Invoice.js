@@ -1,8 +1,8 @@
 import React from "react"
 import DashboardInvoiceSingle from "../../../components/AppComponents/ClinicDashboard/DashboardInvoiceSingle"
 
-const Invoices = () => {
+const Invoice = () => {
   return <DashboardInvoiceSingle />
 }
 
-export default Invoices
+export default Invoice
