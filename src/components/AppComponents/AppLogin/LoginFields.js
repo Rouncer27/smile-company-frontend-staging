@@ -41,12 +41,11 @@ const LoginFields = () => {
       )
 
       const { user, jwt: token } = response.data
-
       if (user.role.type === "dental_clinics") {
         const profile = user.clinic_profile
         dispatch({ type: "USER_LOGIN", payload: { token, user, profile } })
         navigate("/app/clinic-dashboard", { replace: true })
-      } else if (user.role.type === "dental_professional") {
+      } else if (user.role.type === "dental_professionals") {
         const profile = user.professional_profile
         dispatch({ type: "USER_LOGIN", payload: { token, user, profile } })
         navigate("/app/professional-dashboard", { replace: true })

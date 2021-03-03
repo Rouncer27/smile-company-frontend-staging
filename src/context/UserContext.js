@@ -47,7 +47,7 @@ const reducer = (state, action) => {
         ...state,
         token: action.payload.token,
         user: action.payload.user,
-        profile: action.payload.profile,
+        profile: action.payload.profile ? action.payload.profile : {},
         loading: false,
       }
     case "USER_RESET":
@@ -80,13 +80,13 @@ const reducer = (state, action) => {
     case "USER_GET_PROFILE":
       return {
         ...state,
-        profile: action.payload.profile,
+        profile: action.payload.profile ? action.payload.profile : {},
         loading: false,
       }
     case "USER_UPDATE_PROFILE":
       return {
         ...state,
-        profile: action.payload.profile,
+        profile: action.payload.profile ? action.payload.profile : {},
         loading: false,
         alert: true,
         alertMessage: action.payload.message,

@@ -2,9 +2,10 @@ import React from "react"
 import styled from "styled-components"
 import { colors, Nav1CharcoalGrey } from "../../../styles/helpers"
 
-const CheckBoxInput = ({ name, options, onChange }) => {
+const CheckBoxInput = ({ name, label, options, onChange }) => {
   return (
     <CheckBoxInputStyled>
+      <p>{label}</p>
       {options.map(option => {
         return (
           <div className="checkbox-wrapper">
@@ -14,6 +15,7 @@ const CheckBoxInput = ({ name, options, onChange }) => {
               name={name}
               value={option.id}
               onChange={event => onChange(event)}
+              checked={option.checked}
             />
             <label htmlFor={option.id}>
               <span>{option.label}</span>
@@ -28,6 +30,17 @@ const CheckBoxInput = ({ name, options, onChange }) => {
 const CheckBoxInputStyled = styled.div`
   width: 100%;
   margin: 2.5rem auto;
+
+  p {
+    ${Nav1CharcoalGrey};
+    color: ${colors.colorSecondary};
+    margin-bottom: 1.5rem;
+
+    &:hover {
+      color: ${colors.colorSecondary};
+      cursor: inherit;
+    }
+  }
 
   .checkbox-wrapper {
     position: relative;

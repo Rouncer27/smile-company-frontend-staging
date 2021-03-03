@@ -19,11 +19,13 @@ import Invoices from "../components/AppRoutes/clinic-dashboard/Invoices"
 import Invoice from "../components/AppRoutes/clinic-dashboard/Invoice"
 import CreateBooking from "../components/AppRoutes/clinic-dashboard/CreateBooking"
 
-import ProfessionalDashboard from "../components/AppRoutes/ProfessionalDashboard"
+import ProDashboard from "../components/AppRoutes/ProDashboard"
+import DashboardGeneral from "../components/AppRoutes/pro-dashboard/GeneralSettings"
+import Experience from "../components/AppRoutes/pro-dashboard/Experience"
+import ContactInfo from "../components/AppRoutes/pro-dashboard/ContactInfo"
 
 const App = ({ location }) => {
   const [state] = useContext(UserContext)
-  console.log(state)
   const { type } = state.user && state.user.role ? state.user.role : false
   return (
     <Layout>
@@ -72,7 +74,19 @@ const App = ({ location }) => {
           <>
             <PrivateRoute
               path="/app/professional-dashboard"
-              component={ProfessionalDashboard}
+              component={ProDashboard}
+            />
+            <PrivateRoute
+              path="/app/professional-dashboard/general"
+              component={DashboardGeneral}
+            />
+            <PrivateRoute
+              path="/app/professional-dashboard/experience"
+              component={Experience}
+            />
+            <PrivateRoute
+              path="/app/professional-dashboard/contact"
+              component={ContactInfo}
             />
           </>
         )}
