@@ -122,11 +122,11 @@ const SideBar = () => {
           </li>
           <li>
             {userConfirmed && profileSatisfied ? (
-              <Link to="/app/professional-dashboard/bookings">
+              <Link to="/app/professional-dashboard/booking-approved">
                 <span className="icon">
                   <Calendar />
                 </span>{" "}
-                <span className="text">My Bookings</span>
+                <span className="text">Approved Bookings</span>
               </Link>
             ) : (
               <button type="button" disabled={true}>

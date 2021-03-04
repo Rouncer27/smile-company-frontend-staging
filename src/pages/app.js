@@ -24,6 +24,7 @@ import DashboardGeneral from "../components/AppRoutes/pro-dashboard/GeneralSetti
 import Experience from "../components/AppRoutes/pro-dashboard/Experience"
 import ContactInfo from "../components/AppRoutes/pro-dashboard/ContactInfo"
 import Available from "../components/AppRoutes/pro-dashboard/Available"
+import Approved from "../components/AppRoutes/pro-dashboard/Approved"
 
 const App = ({ location }) => {
   const [state] = useContext(UserContext)
@@ -92,6 +93,10 @@ const App = ({ location }) => {
             <PrivateRoute
               path="/app/professional-dashboard/booking-available"
               component={Available}
+            />
+            <PrivateRoute
+              path="/app/professional-dashboard/booking-approved"
+              component={Approved}
             />
           </>
         )}
