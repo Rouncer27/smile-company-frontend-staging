@@ -45,20 +45,13 @@ const MainBookingSingle = () => {
 
   useEffect(() => {
     if (currentBookingId) getBookingFromServer()
-  }, [currentBookingId])
+  }, [currentBookingId, profile])
 
   useEffect(() => {
     const urlSplit = globalHistory.location.pathname.split("/")
     const bookingId = urlSplit[urlSplit.length - 1]
     setCurrentBookingId(bookingId)
   }, [])
-
-  // useEffect(() => {
-  //   // const booking = profile.bookings.find(
-  //   //   booking => booking.id === currentBookingId
-  //   // )
-  //   // setCurrentBooking(booking)
-  // }, [currentBookingId])
 
   useEffect(() => {
     const currentBookingStartTime = currentBooking
@@ -78,6 +71,41 @@ const MainBookingSingle = () => {
     })
   }, [currentBooking])
 
+  let bookingStatusTitle
+  let bookingStatus
+  let isActive
+
+  if (currentBooking !== null) {
+    bookingStatusTitle =
+      !currentBooking.booking_active && currentBooking.candidate_selected
+        ? "FULFILLED"
+        : !currentBooking.booking_active && !currentBooking.candidate_selected
+        ? "UNFULFILLED"
+        : currentBooking.booking_active && !currentBooking.candidate_selected
+        ? "OPEN"
+        : currentBooking.booking_active && currentBooking.candidate_selected
+        ? "ERROR"
+        : "ERROR"
+
+    bookingStatus =
+      !currentBooking.booking_active && currentBooking.candidate_selected
+        ? "closed and a candidate has been selected and posting if filled."
+        : !currentBooking.booking_active && !currentBooking.candidate_selected
+        ? "closed and no candidates have been selected, this post has not been filled."
+        : currentBooking.booking_active && !currentBooking.candidate_selected
+        ? "open and waiting for replies from protental candidates."
+        : "There has been an error. If required please contact Smile and Company for assitance."
+
+    isActive =
+      !currentBooking.booking_active && currentBooking.candidate_selected
+        ? false
+        : !currentBooking.booking_active && !currentBooking.candidate_selected
+        ? false
+        : currentBooking.booking_active && !currentBooking.candidate_selected
+        ? true
+        : false
+  }
+
   console.log("currentBooking", currentBooking)
 
   return (
@@ -96,6 +124,18 @@ const MainBookingSingle = () => {
           <div className="dashContent">
             <div className="bookingTitle">
               <h2>Booking id #{currentBooking._id}</h2>
+            </div>
+            <div className="bookingStatus">
+              <h3>Booking Status</h3>
+              <p>
+                Booking Active:{" "}
+                <span
+                  className={`bookingStatus__indicator bookingStatus__${bookingStatusTitle.toLowerCase()}`}
+                >
+                  {bookingStatusTitle}
+                </span>
+              </p>
+              <p>This temp booking is now --- {bookingStatus}</p>
             </div>
             <div className="bookingDates">
               <h3>Booking Day and Time</h3>
@@ -118,6 +158,7 @@ const MainBookingSingle = () => {
                 {`${currentBookingTime.shiftEndHour}:${currentBookingTime.shiftEndMinutes} ${currentBookingTime.shiftEndMeridiem}`}
               </p>
             </div>
+
             <div className="bookingPosition">
               <h3>Booking Position</h3>
               <p>Position Reqested: {currentBooking.position}</p>
@@ -127,30 +168,61 @@ const MainBookingSingle = () => {
               <p>Location Reqested: {currentBooking.location}</p>
               <p>Location Address: {currentBooking.address}</p>
             </div>
-            <div className="bookingActivity">
-              <h3>Booking Status</h3>
-              <p>
-                Booking Active:{" "}
-                {currentBooking.booking_active ? "ACTIVE" : "FULFILLED"}
-              </p>
-              <div className="bookingactivity__button">
-                <button>Request Cancellation</button>
+            {isActive && (
+              <div className="bookingActivity">
+                <h3>Cancel Booking</h3>
+                <div className="bookingactivity__button">
+                  <button>Request Cancellation</button>
+                </div>
               </div>
-            </div>
+            )}
             <div className="bookingCandidates">
-              <div className="bookingCandidates__titles">
-                <h3>Booking Status</h3>
-                <p>objectPosition: </p>
-                <h3>Potential Candidates</h3>
-              </div>
-              {currentBooking.professionals_applied &&
-                currentBooking.professionals_applied.length > 0 && (
-                  <div className="bookingCandidates__wrapper">
-                    {currentBooking.professionals_applied.map(pro => (
-                      <ProfessionalCard key={pro.id} pro={pro} />
-                    ))}
+              {bookingStatusTitle === "OPEN" ? (
+                <div>
+                  <div>
+                    <h3>Potential Candidates</h3>
                   </div>
-                )}
+                  {currentBooking.professionals_applied &&
+                    currentBooking.professionals_applied.length > 0 && (
+                      <div className="bookingCandidates__wrapper">
+                        {currentBooking.professionals_applied.map(pro => (
+                          <ProfessionalCard
+                            key={pro.id}
+                            pro={pro}
+                            bookingId={currentBooking._id}
+                            accepted={false}
+                          />
+                        ))}
+                      </div>
+                    )}
+                </div>
+              ) : bookingStatusTitle === "ERROR" ? (
+                <div>
+                  <h3>Error With Booking</h3>
+                </div>
+              ) : bookingStatusTitle === "FULFILLED" ? (
+                <div>
+                  <div>
+                    <h3>Candidate Accepted</h3>
+                  </div>
+                  <div className="bookingCandidates__wrapper">
+                    <ProfessionalCard
+                      pro={currentBooking.professional_selected}
+                      bookingId={null}
+                      accepted={true}
+                    />
+                  </div>
+                </div>
+              ) : bookingStatusTitle === "UNFULFILLED" ? (
+                <div>
+                  <h3>Booking Unfulfilled</h3>
+                  <p>This booking expired or was canclled and was not filled</p>
+                </div>
+              ) : (
+                <div>
+                  <h3>Error With Booking</h3>
+                </div>
+              )}
             </div>
           </div>
         ) : (
@@ -201,6 +273,53 @@ const MainBookingSingleStyled = styled.div`
       margin-bottom: 5rem;
       h2 {
         ${H2Lavender};
+      }
+    }
+
+    .bookingStatus {
+      margin-bottom: 2rem;
+
+      h3 {
+        ${H4DarkPurple};
+        margin: 0;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        ${Nav1CharcoalGrey};
+        margin-bottom: 1.5rem;
+
+        &:hover {
+          color: ${colors.colorAlt};
+          cursor: inherit;
+        }
+      }
+      &__indicator {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        color: ${colors.black} !important;
+        text-align: center;
+
+        &:hover {
+          color: ${colors.black};
+        }
+      }
+
+      &__open {
+        background-color: #b8daff;
+      }
+
+      &__fulfilled {
+        background-color: #c3e6cb;
+      }
+
+      &__unfulfilled {
+        background-color: #ffeeba;
+      }
+
+      &__error {
+        background-color: #f5c6cb;
       }
     }
 

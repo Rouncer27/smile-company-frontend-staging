@@ -81,6 +81,10 @@ const AvailableCard = ({ booking }) => {
   const havApplied =
     booking.applied_ids.findIndex(id => id === profile.id) !== -1 ? true : false
 
+  const bookingSelected = booking.candidate_selected
+
+  console.log(bookingSelected)
+
   return (
     <AvailableCardStyled key={booking.id}>
       <div className="detailsTitle">
@@ -118,20 +122,27 @@ const AvailableCard = ({ booking }) => {
             </span>
           </span>
         </p>
-        {havApplied ? (
+
+        {!bookingSelected && havApplied ? (
           <div className="appliedPosting">
             <p>
               You have applied to this posting. We will let you know if you got
               this temp job.
             </p>
           </div>
-        ) : (
+        ) : !bookingSelected && !havApplied ? (
           <div className="bookingBtn">
             <p>Apply to this temp job</p>
-
             <button onClick={() => handleApplyForBooking(booking._id)}>
               Yes
             </button>
+          </div>
+        ) : (
+          <div>
+            <p>
+              Contragulations! You have been selected for this temp job. Please
+              watch your email for details.
+            </p>
           </div>
         )}
       </div>

@@ -87,9 +87,23 @@ const MainBookings = () => {
                 meridiem: endMeridiem,
               } = timeFormat(booking.shift_end)
 
+              const status =
+                !booking.booking_active && booking.candidate_selected
+                  ? "FULFILLED"
+                  : !booking.booking_active && !booking.candidate_selected
+                  ? "UNFULFILLED"
+                  : booking.booking_active && !booking.candidate_selected
+                  ? "OPEN"
+                  : "ERROR"
+
               return (
                 <li key={booking.id}>
                   <Link to={`/app/clinic-dashboard/bookings/${booking.id}`}>
+                    <span
+                      className={`bookingStatus bookingStatus__${status.toLowerCase()}`}
+                    >
+                      {status}
+                    </span>
                     <span>
                       {dayOfTheWeek}, {monthName} {`${dayNumber}`}, {year}
                     </span>{" "}
@@ -165,9 +179,33 @@ const MainBookingsStyled = styled.div`
             display: inline-block;
             padding: 0 2rem;
           }
+        }
 
-          span:first-of-type {
-            padding-left: 0;
+        span.bookingStatus {
+          display: inline-block;
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          color: ${colors.black} !important;
+          text-align: center;
+
+          &:hover {
+            color: ${colors.black};
+          }
+
+          &__open {
+            background-color: #b8daff;
+          }
+
+          &__fulfilled {
+            background-color: #c3e6cb;
+          }
+
+          &__unfulfilled {
+            background-color: #ffeeba;
+          }
+
+          &__error {
+            background-color: #f5c6cb;
           }
         }
       }

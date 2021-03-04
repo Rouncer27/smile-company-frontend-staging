@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import styled from "styled-components"
 
 import {
@@ -10,9 +10,20 @@ import {
   Btn1DarkPurple,
 } from "../../../../styles/helpers"
 
-const ProfessionalCard = ({ pro }) => {
-  const handleOnAccept = () => {
-    console.log("ACCEPTED!!!!")
+import putAcceptCandidate from "../actions/putAcceptCandidate"
+import getProfile from "../actions/getProfile"
+import { UserContext } from "../../../../context/UserContext"
+
+const ProfessionalCard = ({ pro, bookingId, accepted }) => {
+  const [state, dispatch] = useContext(UserContext)
+  const { token, user, profile, bookings } = state
+  const userId = user.id
+
+  const handleOnAccept = async () => {
+    if (!accepted && bookingId !== null) {
+      await putAcceptCandidate(token, userId, dispatch, bookingId, pro.id)
+      await getProfile(token, userId, dispatch)
+    }
   }
 
   const yearsDisplay =
@@ -64,9 +75,11 @@ const ProfessionalCard = ({ pro }) => {
             Year Graduated From Program: <span>{pro.year_graduated}</span>
           </p>
         </div>
-        <div className="btnActions">
-          <button onClick={handleOnAccept}>Accept Candidate</button>
-        </div>
+        {!accepted && (
+          <div className="btnActions">
+            <button onClick={handleOnAccept}>Accept Candidate</button>
+          </div>
+        )}
       </div>
     </ProfessionalCardStyled>
   )
