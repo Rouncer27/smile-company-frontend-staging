@@ -14,6 +14,9 @@ import { UserContext } from "../../../context/UserContext"
 import Skeleton from "react-loading-skeleton"
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
 
+import getCurrentBooking from "./actions/getCurrentBooking"
+import ProfessionalCard from "./booking/ProfessionalCard"
+
 const MainBookingSingle = () => {
   const [currentBookingId, setCurrentBookingId] = useState("")
   const [currentBooking, setCurrentBooking] = useState(null)
@@ -29,18 +32,33 @@ const MainBookingSingle = () => {
   const { token, user, profile } = state
   const userId = user.id
 
+  const getBookingFromServer = async () => {
+    const currentBooking = await getCurrentBooking(
+      token,
+      userId,
+      dispatch,
+      currentBookingId
+    )
+    setCurrentBooking(currentBooking)
+    console.log("HERE ARE THE currentBooking", currentBooking)
+  }
+
+  useEffect(() => {
+    if (currentBookingId) getBookingFromServer()
+  }, [currentBookingId])
+
   useEffect(() => {
     const urlSplit = globalHistory.location.pathname.split("/")
     const bookingId = urlSplit[urlSplit.length - 1]
     setCurrentBookingId(bookingId)
   }, [])
 
-  useEffect(() => {
-    const booking = profile.bookings.find(
-      booking => booking.id === currentBookingId
-    )
-    setCurrentBooking(booking)
-  }, [currentBookingId])
+  // useEffect(() => {
+  //   // const booking = profile.bookings.find(
+  //   //   booking => booking.id === currentBookingId
+  //   // )
+  //   // setCurrentBooking(booking)
+  // }, [currentBookingId])
 
   useEffect(() => {
     const currentBookingStartTime = currentBooking
@@ -59,6 +77,8 @@ const MainBookingSingle = () => {
       shiftEndMeridiem: endTimes.meridiem,
     })
   }, [currentBooking])
+
+  console.log("currentBooking", currentBooking)
 
   return (
     <MainBookingSingleStyled>
@@ -118,8 +138,19 @@ const MainBookingSingle = () => {
               </div>
             </div>
             <div className="bookingCandidates">
-              <h3>Booking Status</h3>
-              <p>Potential Candidates: </p>
+              <div className="bookingCandidates__titles">
+                <h3>Booking Status</h3>
+                <p>objectPosition: </p>
+                <h3>Potential Candidates</h3>
+              </div>
+              {currentBooking.professionals_applied &&
+                currentBooking.professionals_applied.length > 0 && (
+                  <div className="bookingCandidates__wrapper">
+                    {currentBooking.professionals_applied.map(pro => (
+                      <ProfessionalCard key={pro.id} pro={pro} />
+                    ))}
+                  </div>
+                )}
             </div>
           </div>
         ) : (
@@ -176,8 +207,7 @@ const MainBookingSingleStyled = styled.div`
     .bookingDates,
     .bookingPosition,
     .bookingActivity,
-    .bookingLocation,
-    .bookingCandidates {
+    .bookingLocation {
       margin-bottom: 2rem;
 
       h3 {
@@ -202,6 +232,32 @@ const MainBookingSingleStyled = styled.div`
       button {
         ${Btn1DarkPurple};
       }
+    }
+  }
+
+  .bookingCandidates {
+    margin-bottom: 2rem;
+    &__titles {
+      h3 {
+        ${H4DarkPurple};
+        margin: 0;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        ${Nav1CharcoalGrey};
+        margin-bottom: 1.5rem;
+
+        &:hover {
+          color: ${colors.colorAlt};
+          cursor: inherit;
+        }
+      }
+    }
+    &__wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
     }
   }
 `

@@ -5,10 +5,7 @@ import { B1White, colors } from "../../styles/helpers"
 
 const ModalAlert = () => {
   const [state, dispatch] = useContext(UserContext)
-  console.log("state", state)
-
   const handleDismiss = () => {
-    console.log("CLEARR!!!!")
     dispatch({ type: "USER_CLEAR_ALERT" })
   }
 

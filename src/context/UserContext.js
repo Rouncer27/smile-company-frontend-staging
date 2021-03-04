@@ -6,6 +6,7 @@ const initialState = {
   token: "",
   user: {},
   profile: {},
+  bookings: [],
   loading: false,
   error: false,
   errMessage: "",
@@ -90,6 +91,12 @@ const reducer = (state, action) => {
         loading: false,
         alert: true,
         alertMessage: action.payload.message,
+      }
+    case "USER_GET_BOOKINGS":
+      return {
+        ...state,
+        loading: false,
+        bookings: action.payload.bookings ? action.payload.bookings : [],
       }
     default:
       return state

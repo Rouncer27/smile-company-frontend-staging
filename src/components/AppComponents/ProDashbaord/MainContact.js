@@ -30,8 +30,6 @@ const MainContact = () => {
     locations_working: [],
   })
 
-  console.log("FORM DATA Locations: ", formData.locations_working)
-
   const handleOnChange = event => {
     setFormData({
       ...formData,
