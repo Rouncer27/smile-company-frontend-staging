@@ -80,10 +80,28 @@ const AvailableCard = ({ booking }) => {
 
   const havApplied =
     booking.applied_ids.findIndex(id => id === profile.id) !== -1 ? true : false
+  const isActive = booking.booking_active
+  const isSelected = booking.candidate_selected
+  const acceptedId = booking.aceepted_profile_id
+  const myId = profile.id
+  const isAccepted = acceptedId === myId
 
-  const bookingSelected = booking.candidate_selected
+  console.log("SELECTED", isActive)
 
-  console.log(bookingSelected)
+  const bookingStatus =
+    isActive && !isSelected && havApplied
+      ? "PENDING"
+      : isActive && !isSelected && !havApplied
+      ? "OPEN"
+      : !isActive && isSelected && havApplied && !isAccepted
+      ? "NOT SELECTED"
+      : !isActive && isSelected && havApplied && isAccepted
+      ? "APPROVED"
+      : !isActive && !isSelected
+      ? "POSTING CANCELLED"
+      : "ERROR"
+
+  console.log(bookingStatus)
 
   return (
     <AvailableCardStyled key={booking.id}>
@@ -123,26 +141,48 @@ const AvailableCard = ({ booking }) => {
           </span>
         </p>
 
-        {!bookingSelected && havApplied ? (
-          <div className="appliedPosting">
+        {bookingStatus === "PENDING" && (
+          <div className="status status__pending">
             <p>
               You have applied to this posting. We will let you know if you got
               this temp job.
             </p>
           </div>
-        ) : !bookingSelected && !havApplied ? (
-          <div className="bookingBtn">
+        )}
+
+        {bookingStatus === "OPEN" && (
+          <div className="bookingBtn status status__open">
             <p>Apply to this temp job</p>
             <button onClick={() => handleApplyForBooking(booking._id)}>
               Yes
             </button>
           </div>
-        ) : (
-          <div>
+        )}
+
+        {bookingStatus === "NOT SELECTED" && (
+          <div className="status status__notSelected">
+            <p>sorry, you were not selected for this temp job.</p>
+          </div>
+        )}
+
+        {bookingStatus === "APPROVED" && (
+          <div className="status status__approved">
             <p>
               Contragulations! You have been selected for this temp job. Please
-              watch your email for details.
+              check Approved Bookings in your dashboard side navigation.
             </p>
+          </div>
+        )}
+
+        {bookingStatus === "POSTING CANCELLED" && (
+          <div className="status status__concelled">
+            <p>Sorry, This temp job posting was cancelled.</p>
+          </div>
+        )}
+
+        {bookingStatus === "ERROR" && (
+          <div>
+            <p>ERROR!</p>
           </div>
         )}
       </div>
@@ -209,6 +249,7 @@ const AvailableCardStyled = styled.div`
     p {
       ${B2CharcoalGrey};
       margin-top: 2rem;
+      margin-bottom: 0;
       color: rgba(255, 0, 0, 1);
       font-weight: bold;
       line-height: 1.35;
@@ -220,6 +261,31 @@ const AvailableCardStyled = styled.div`
 
     button {
       ${Btn1DarkPurple};
+    }
+  }
+
+  .status {
+    width: 100%;
+    padding: 1.5rem;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    &__pending {
+      background-color: #bee5eb;
+    }
+
+    &__approved {
+      background-color: #d4edda;
+    }
+
+    &__concelled {
+      background-color: #ffeeba;
+    }
+
+    &__notSelected {
+      background-color: #f8d7da;
     }
   }
 `
