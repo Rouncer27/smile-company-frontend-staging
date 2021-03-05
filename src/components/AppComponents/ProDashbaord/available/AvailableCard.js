@@ -95,7 +95,7 @@ const AvailableCard = ({ booking }) => {
       ? "PENDING"
       : isActive && !isSelected && !havApplied
       ? "OPEN"
-      : !isActive && isSelected && havApplied && !isAccepted
+      : !isActive && isSelected && !isAccepted
       ? "NOT SELECTED"
       : !isActive && isSelected && havApplied && isAccepted
       ? "APPROVED"
@@ -196,7 +196,7 @@ const AvailableCard = ({ booking }) => {
         )}
 
         {bookingStatus === "ERROR" && (
-          <div>
+          <div className="status status__error">
             <p className="status__indicator">
               Posting Status -- <span>ERROR</span>
             </p>
@@ -312,6 +312,14 @@ const AvailableCardStyled = styled.div`
         display: inline-block;
         padding: 0.5rem 1rem;
         border-radius: 0.5rem;
+      }
+    }
+
+    &__open {
+      .status__indicator {
+        span {
+          background-color: #4bb1cf;
+        }
       }
     }
 
