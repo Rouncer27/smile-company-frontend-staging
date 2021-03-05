@@ -78,6 +78,10 @@ const AvailableCard = ({ booking }) => {
     }
   }
 
+  const handleIgnorePost = () => {
+    console.log("IGNORE ME!")
+  }
+
   const havApplied =
     booking.applied_ids.findIndex(id => id === profile.id) !== -1 ? true : false
   const isActive = booking.booking_active
@@ -85,8 +89,6 @@ const AvailableCard = ({ booking }) => {
   const acceptedId = booking.aceepted_profile_id
   const myId = profile.id
   const isAccepted = acceptedId === myId
-
-  console.log("SELECTED", isActive)
 
   const bookingStatus =
     isActive && !isSelected && havApplied
@@ -100,8 +102,6 @@ const AvailableCard = ({ booking }) => {
       : !isActive && !isSelected
       ? "POSTING CANCELLED"
       : "ERROR"
-
-  console.log(bookingStatus)
 
   return (
     <AvailableCardStyled key={booking.id}>
@@ -143,6 +143,9 @@ const AvailableCard = ({ booking }) => {
 
         {bookingStatus === "PENDING" && (
           <div className="status status__pending">
+            <p className="status__indicator">
+              Posting Status -- <span>PENDING</span>
+            </p>
             <p>
               You have applied to this posting. We will let you know if you got
               this temp job.
@@ -152,6 +155,9 @@ const AvailableCard = ({ booking }) => {
 
         {bookingStatus === "OPEN" && (
           <div className="bookingBtn status status__open">
+            <p className="status__indicator">
+              Posting Status -- <span>OPEN</span>
+            </p>
             <p>Apply to this temp job</p>
             <button onClick={() => handleApplyForBooking(booking._id)}>
               Yes
@@ -161,12 +167,18 @@ const AvailableCard = ({ booking }) => {
 
         {bookingStatus === "NOT SELECTED" && (
           <div className="status status__notSelected">
+            <p className="status__indicator">
+              Posting Status -- <span>NOT SELECTED</span>
+            </p>
             <p>sorry, you were not selected for this temp job.</p>
           </div>
         )}
 
         {bookingStatus === "APPROVED" && (
           <div className="status status__approved">
+            <p className="status__indicator">
+              Posting Status -- <span>APPROVED</span>
+            </p>
             <p>
               Contragulations! You have been selected for this temp job. Please
               check Approved Bookings in your dashboard side navigation.
@@ -176,15 +188,28 @@ const AvailableCard = ({ booking }) => {
 
         {bookingStatus === "POSTING CANCELLED" && (
           <div className="status status__concelled">
+            <p className="status__indicator">
+              Posting Status -- <span>POSTING CANCELLED</span>
+            </p>
             <p>Sorry, This temp job posting was cancelled.</p>
           </div>
         )}
 
         {bookingStatus === "ERROR" && (
           <div>
+            <p className="status__indicator">
+              Posting Status -- <span>ERROR</span>
+            </p>
             <p>ERROR!</p>
           </div>
         )}
+
+        <div className="ignorePost">
+          <p>
+            Click to remove this post forever from your available booking page.
+          </p>
+          <button onClick={handleIgnorePost}>Remove this post</button>
+        </div>
       </div>
     </AvailableCardStyled>
   )
@@ -264,6 +289,16 @@ const AvailableCardStyled = styled.div`
     }
   }
 
+  .ignorePost {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 0.1rem solid ${colors.colorAlt};
+
+    button {
+      ${Btn1DarkPurple};
+    }
+  }
+
   .status {
     width: 100%;
     padding: 1.5rem;
@@ -272,20 +307,51 @@ const AvailableCardStyled = styled.div`
       margin-bottom: 0;
     }
 
+    &__indicator {
+      span {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+      }
+    }
+
     &__pending {
-      background-color: #bee5eb;
+      .status__indicator {
+        span {
+          background-color: #4bb1cf;
+        }
+      }
     }
 
     &__approved {
-      background-color: #d4edda;
+      .status__indicator {
+        span {
+          background-color: #15cd72;
+        }
+      }
     }
 
     &__concelled {
-      background-color: #ffeeba;
+      .status__indicator {
+        span {
+          background-color: #ede04d;
+        }
+      }
     }
 
     &__notSelected {
-      background-color: #f8d7da;
+      .status__indicator {
+        span {
+          background-color: #ff7200;
+        }
+      }
+    }
+    &__error {
+      .status__indicator {
+        span {
+          background-color: #ed4f32;
+        }
+      }
     }
   }
 `

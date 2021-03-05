@@ -307,19 +307,19 @@ const MainBookingSingleStyled = styled.div`
       }
 
       &__open {
-        background-color: #b8daff;
+        background-color: #4bb1cf;
       }
 
       &__fulfilled {
-        background-color: #c3e6cb;
+        background-color: #15cd72;
       }
 
       &__unfulfilled {
-        background-color: #ffeeba;
+        background-color: #ede04d;
       }
 
       &__error {
-        background-color: #f5c6cb;
+        background-color: #ed4f32;
       }
     }
 
