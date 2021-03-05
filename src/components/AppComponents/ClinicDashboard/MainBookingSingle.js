@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
+import axios from "axios"
 import { globalHistory } from "@reach/router"
 import {
   B1Sage,
@@ -40,7 +41,7 @@ const MainBookingSingle = () => {
       currentBookingId
     )
     setCurrentBooking(currentBooking)
-    console.log("HERE ARE THE currentBooking", currentBooking)
+    // console.log("HERE ARE THE currentBooking", currentBooking)
   }
 
   useEffect(() => {
@@ -106,7 +107,45 @@ const MainBookingSingle = () => {
         : false
   }
 
-  console.log("currentBooking", currentBooking)
+  // console.log("currentBooking", currentBooking)
+
+  const handleCancelBooking = async () => {
+    console.log("cancel THIS BOOKING!!", profile)
+    dispatch({ type: "USER_LOADING" })
+
+    try {
+      const response = await axios.put(
+        `${process.env.GATSBY_API_URL}/bookings/cancel/${currentBooking.id}`,
+        { id: profile.id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      console.log(response.data)
+
+      dispatch({
+        type: "USER_ALERT",
+        payload: { message: response.data.message },
+      })
+      getBookingFromServer()
+    } catch (err) {
+      console.dir(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
+      dispatch({ type: "USER_ERROR", payload: { message } })
+    }
+  }
 
   return (
     <MainBookingSingleStyled>
@@ -172,7 +211,9 @@ const MainBookingSingle = () => {
               <div className="bookingActivity">
                 <h3>Cancel Booking</h3>
                 <div className="bookingactivity__button">
-                  <button>Request Cancellation</button>
+                  <button onClick={() => handleCancelBooking()}>
+                    Request Cancellation
+                  </button>
                 </div>
               </div>
             )}

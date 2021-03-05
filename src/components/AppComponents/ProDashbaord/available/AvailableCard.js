@@ -78,8 +78,41 @@ const AvailableCard = ({ booking }) => {
     }
   }
 
-  const handleIgnorePost = () => {
-    console.log("IGNORE ME!")
+  const handleIgnorePost = async id => {
+    dispatch({ type: "USER_LOADING" })
+    try {
+      const response = await axios.put(
+        `${process.env.GATSBY_API_URL}/bookings/ignore/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      dispatch({
+        type: "USER_ALERT",
+        payload: {
+          message: response.data.message,
+        },
+      })
+
+      await getBookings(token, userId, state.user.confirmed, dispatch)
+    } catch (err) {
+      console.dir(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
+      dispatch({ type: "USER_ERROR", payload: { message } })
+    }
   }
 
   const havApplied =
@@ -208,7 +241,9 @@ const AvailableCard = ({ booking }) => {
           <p>
             Click to remove this post forever from your available booking page.
           </p>
-          <button onClick={handleIgnorePost}>Remove this post</button>
+          <button onClick={() => handleIgnorePost(booking.id)}>
+            Remove this post
+          </button>
         </div>
       </div>
     </AvailableCardStyled>

@@ -46,6 +46,9 @@ const MainAvailable = () => {
           {bookings && bookings.length > 0 ? (
             <div className="bookingsWrapper">
               {bookings.map(booking => {
+                console.log(booking.isIgnored)
+                if (booking.isIgnored) return null
+
                 return <AvailableCard key={booking.id} booking={booking} />
               })}
             </div>
