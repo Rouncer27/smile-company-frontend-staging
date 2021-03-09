@@ -1,23 +1,26 @@
+// NPM Packages
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import { navigate } from "gatsby"
+// Context
+import { UserContext } from "../../../context/UserContext"
+// Actions
+import getUserProfile from "./actions/getUserProfile"
+import putContactInformation from "./actions/putContactInformation"
+// Common styles
+import mainSection from "./style/mainSection"
+import dashWrap from "./style/dashWrap"
+import dashTitle from "./style/dashTitle"
 import {
-  B1Sage,
   colors,
-  H1DarkPurple,
   Nav1CharcoalGrey,
   H4Lavender,
   Btn1DarkPurple,
 } from "../../../styles/helpers"
-import { UserContext } from "../../../context/UserContext"
-
-import getUserProfile from "./actions/getUserProfile"
-import putContactInformation from "./actions/putContactInformation"
-
+// Components
+import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
 import Input from "../FormFields/Input"
 import CheckBoxInput from "../FormFields/CheckBoxInput"
-
-import dashWrap from "./style/dashWrap"
 
 const MainContact = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -138,165 +141,151 @@ const MainContact = () => {
           </p>
           <h2>Contact Information</h2>
         </div>
-        <div className="mainForm">
-          <form onSubmit={event => handleOnSubmit(event)}>
-            <fieldset>
-              <Input
-                label="Mobile Phone Number (for text messages)"
-                name="mobile_phone"
-                type="text"
-                placeholder="Mobile Phone Number"
-                value={formData.mobile_phone}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <Input
-                label="Home Phone Number (optional)"
-                name="home_phone"
-                type="text"
-                placeholder="Home Phone Number"
-                value={formData.home_phone}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={false}
-                size="full"
-              />
-              <Input
-                label="Email"
-                name="email"
-                type="text"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <CheckBoxInput
-                name="days_working"
-                label="I want to be notified of Temp job postings that fall on these days of the week"
-                options={[
-                  {
-                    id: "monday",
-                    label: "Monday",
-                    checked: checkIfDayChecked("monday"),
-                  },
-                  {
-                    id: "tuesday",
-                    label: "Tuesday",
-                    checked: checkIfDayChecked("tuesday"),
-                  },
-                  {
-                    id: "wednesday",
-                    label: "Wednesday",
-                    checked: checkIfDayChecked("wednesday"),
-                  },
-                  {
-                    id: "thursday",
-                    label: "Thursday",
-                    checked: checkIfDayChecked("thursday"),
-                  },
-                  {
-                    id: "friday",
-                    label: "Friday",
-                    checked: checkIfDayChecked("friday"),
-                  },
-                  {
-                    id: "saturday",
-                    label: "Saturday",
-                    checked: checkIfDayChecked("saturday"),
-                  },
-                  {
-                    id: "sunday",
-                    label: "Sunday",
-                    checked: checkIfDayChecked("sunday"),
-                  },
-                ]}
-                onChange={handleOnDayCheck}
-              />
+        {!state.loading ? (
+          <div className="mainForm">
+            <form onSubmit={event => handleOnSubmit(event)}>
+              <fieldset>
+                <Input
+                  label="Mobile Phone Number (for text messages)"
+                  name="mobile_phone"
+                  type="text"
+                  placeholder="Mobile Phone Number"
+                  value={formData.mobile_phone}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="full"
+                />
+                <Input
+                  label="Home Phone Number (optional)"
+                  name="home_phone"
+                  type="text"
+                  placeholder="Home Phone Number"
+                  value={formData.home_phone}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={false}
+                  size="full"
+                />
+                <Input
+                  label="Email"
+                  name="email"
+                  type="text"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="full"
+                />
+                <CheckBoxInput
+                  name="days_working"
+                  label="I want to be notified of Temp job postings that fall on these days of the week"
+                  options={[
+                    {
+                      id: "monday",
+                      label: "Monday",
+                      checked: checkIfDayChecked("monday"),
+                    },
+                    {
+                      id: "tuesday",
+                      label: "Tuesday",
+                      checked: checkIfDayChecked("tuesday"),
+                    },
+                    {
+                      id: "wednesday",
+                      label: "Wednesday",
+                      checked: checkIfDayChecked("wednesday"),
+                    },
+                    {
+                      id: "thursday",
+                      label: "Thursday",
+                      checked: checkIfDayChecked("thursday"),
+                    },
+                    {
+                      id: "friday",
+                      label: "Friday",
+                      checked: checkIfDayChecked("friday"),
+                    },
+                    {
+                      id: "saturday",
+                      label: "Saturday",
+                      checked: checkIfDayChecked("saturday"),
+                    },
+                    {
+                      id: "sunday",
+                      label: "Sunday",
+                      checked: checkIfDayChecked("sunday"),
+                    },
+                  ]}
+                  onChange={handleOnDayCheck}
+                />
 
-              <CheckBoxInput
-                name="locations_working"
-                label="I want to be notified of Temp job postings that are at these locations"
-                options={[
-                  {
-                    id: "nwNeSwSeCalgary",
-                    label: "NW NE SW SW Calgary",
-                    checked: checkIfLocationChecked("nwNeSwSeCalgary"),
-                  },
-                  {
-                    id: "innerCityCalgary",
-                    label: "Inner City Calgary",
-                    checked: checkIfLocationChecked("innerCityCalgary"),
-                  },
-                  {
-                    id: "airdrie",
-                    label: "Airdrie",
-                    checked: checkIfLocationChecked("airdrie"),
-                  },
-                  {
-                    id: "chestermere",
-                    label: "Chestermere",
-                    checked: checkIfLocationChecked("chestermere"),
-                  },
-                  {
-                    id: "cochrane",
-                    label: "Cochrane",
-                    checked: checkIfLocationChecked("cochrane"),
-                  },
-                  {
-                    id: "okotoks",
-                    label: "Okotoks",
-                    checked: checkIfLocationChecked("okotoks"),
-                  },
-                  {
-                    id: "banff",
-                    label: "Banff",
-                    checked: checkIfLocationChecked("banff"),
-                  },
-                ]}
-                onChange={handleOnLocationCheck}
-              />
-              <div className="submitButton">
-                <button type="submit">Submit Information</button>
-              </div>
-            </fieldset>
-          </form>
-        </div>
+                <CheckBoxInput
+                  name="locations_working"
+                  label="I want to be notified of Temp job postings that are at these locations"
+                  options={[
+                    {
+                      id: "nwNeSwSeCalgary",
+                      label: "NW NE SW SW Calgary",
+                      checked: checkIfLocationChecked("nwNeSwSeCalgary"),
+                    },
+                    {
+                      id: "innerCityCalgary",
+                      label: "Inner City Calgary",
+                      checked: checkIfLocationChecked("innerCityCalgary"),
+                    },
+                    {
+                      id: "airdrie",
+                      label: "Airdrie",
+                      checked: checkIfLocationChecked("airdrie"),
+                    },
+                    {
+                      id: "chestermere",
+                      label: "Chestermere",
+                      checked: checkIfLocationChecked("chestermere"),
+                    },
+                    {
+                      id: "cochrane",
+                      label: "Cochrane",
+                      checked: checkIfLocationChecked("cochrane"),
+                    },
+                    {
+                      id: "okotoks",
+                      label: "Okotoks",
+                      checked: checkIfLocationChecked("okotoks"),
+                    },
+                    {
+                      id: "banff",
+                      label: "Banff",
+                      checked: checkIfLocationChecked("banff"),
+                    },
+                  ]}
+                  onChange={handleOnLocationCheck}
+                />
+                <div className="submitButton">
+                  <button type="submit">Submit Information</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        ) : (
+          <LoadingSkeleton />
+        )}
       </div>
     </MainContactStyled>
   )
 }
 
 const MainContactStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
     ${dashWrap};
   }
 
   .dashTitle {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
   }
 
   .mainForm {

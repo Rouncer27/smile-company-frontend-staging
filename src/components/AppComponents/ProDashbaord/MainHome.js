@@ -1,21 +1,23 @@
-import { Link } from "gatsby"
+// NPM Packages
 import React, { useContext, useEffect } from "react"
+import { Link } from "gatsby"
 import styled from "styled-components"
+// Context
 import { UserContext } from "../../../context/UserContext"
+// Actions
 import getUserProfile from "./actions/getUserProfile"
 import getConfirmedEmail from "./actions/getConfirmedEmail"
-
+// Common styles
+import mainSection from "./style/mainSection"
+import dashWrap from "./style/dashWrap"
+import dashTitle from "./style/dashTitle"
 import {
   B1CharcoalGrey,
   Btn1DarkPurple,
   colors,
-  H1DarkPurple,
-  B1Sage,
   H4Lavender,
   Nav1CharcoalGrey,
 } from "../../../styles/helpers"
-
-import dashWrap from "./style/dashWrap"
 
 const MainHome = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -212,32 +214,14 @@ const MainHome = () => {
 }
 
 const MainHomeStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
     ${dashWrap};
   }
 
   .dashTitle {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
 
     p.dashTitle__subcontent {
       ${H4Lavender};

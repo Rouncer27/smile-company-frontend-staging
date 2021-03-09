@@ -1,12 +1,18 @@
+// NPM Packages
 import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
-import { B1Sage, colors, H1DarkPurple } from "../../../styles/helpers"
+// Context
 import { UserContext } from "../../../context/UserContext"
+// Actions
 import getUserProfile from "./actions/getUserProfile"
 import getBookings from "./actions/getBookings"
-
-import AvailableCard from "./available/AvailableCard"
+// Common styles
+import mainSection from "./style/mainSection"
 import dashWrap from "./style/dashWrap"
+import dashTitle from "./style/dashTitle"
+// Components
+import AvailableCard from "./available/AvailableCard"
+import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
 
 const MainAvailable = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -35,57 +41,43 @@ const MainAvailable = () => {
           </p>
           <h2>Available Bookings</h2>
         </div>
-        <div>
-          {bookings && bookings.length > 0 ? (
-            <div className="bookingsWrapper">
-              {bookings.map(booking => {
-                console.log(booking.isIgnored)
-                if (booking.isIgnored) return null
+        {!state.loading ? (
+          <div>
+            {bookings && bookings.length > 0 ? (
+              <div className="bookingsWrapper">
+                {bookings.map(booking => {
+                  console.log(booking.isIgnored)
+                  if (booking.isIgnored) return null
 
-                return <AvailableCard key={booking.id} booking={booking} />
-              })}
-            </div>
-          ) : (
-            <div>
-              <h2>
-                There is currenly no bookings you are matched for. Please check
-                again later.
-              </h2>
-            </div>
-          )}
-        </div>
+                  return <AvailableCard key={booking.id} booking={booking} />
+                })}
+              </div>
+            ) : (
+              <div>
+                <h2>
+                  There is currenly no bookings you are matched for. Please
+                  check again later.
+                </h2>
+              </div>
+            )}
+          </div>
+        ) : (
+          <LoadingSkeleton />
+        )}
       </div>
     </MainAvailableStyled>
   )
 }
 
 const MainAvailableStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
     ${dashWrap};
   }
 
   .dashTitle {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
   }
 
   .bookingsWrapper {

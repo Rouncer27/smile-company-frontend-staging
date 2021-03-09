@@ -1,15 +1,18 @@
+// NPM Packages
 import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
-import { B1Sage, colors, H1DarkPurple } from "../../../styles/helpers"
+// Context
 import { UserContext } from "../../../context/UserContext"
+// Actions
 import getUserProfile from "./actions/getUserProfile"
 import getBookings from "./actions/getBookings"
-
-import ApprovedItem from "./approved/ApprovedItem"
-
 // Common styles
 import mainSection from "./style/mainSection"
 import dashWrap from "./style/dashWrap"
+import dashTitle from "./style/dashTitle"
+// Components
+import ApprovedItem from "./approved/ApprovedItem"
+import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
 
 const MainApproved = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -42,16 +45,22 @@ const MainApproved = () => {
           </p>
           <h2>My Approved Bookings</h2>
         </div>
-        {myApprovedBookings && myApprovedBookings.length > 0 ? (
-          <div className="dashApproved">
-            {myApprovedBookings.map(item => (
-              <ApprovedItem key={item.id} item={item} />
-            ))}
-          </div>
+        {!state.loading ? (
+          <>
+            {myApprovedBookings && myApprovedBookings.length > 0 ? (
+              <div className="dashApproved">
+                {myApprovedBookings.map(item => (
+                  <ApprovedItem key={item.id} item={item} />
+                ))}
+              </div>
+            ) : (
+              <div className="dashNothing">
+                <p>Sorry, you haven't been matched with any temp jobs yet.</p>
+              </div>
+            )}
+          </>
         ) : (
-          <div className="dashNothing">
-            <p>Sorry, you haven't been matched with any temp jobs yet.</p>
-          </div>
+          <LoadingSkeleton />
         )}
       </div>
     </MainApprovedStyled>
@@ -66,18 +75,7 @@ const MainApprovedStyled = styled.div`
   }
 
   .dashTitle {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
   }
 
   .bookingsWrapper {

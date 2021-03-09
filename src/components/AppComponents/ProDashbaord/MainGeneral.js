@@ -1,24 +1,27 @@
+// NPM Packages
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import { navigate } from "gatsby"
+// Context
+import { UserContext } from "../../../context/UserContext"
+// Actions
+import getUserProfile from "./actions/getUserProfile"
+import putGeneralInfo from "./actions/putGeneralInfo"
+// Components
+import Input from "../FormFields/Input"
+import RadioInput from "../FormFields/RadioInput"
+import TextArea from "../FormFields/Textarea"
+import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
+// Common styles
+import mainSection from "./style/mainSection"
+import dashWrap from "./style/dashWrap"
+import dashTitle from "./style/dashTitle"
 import {
-  B1Sage,
   colors,
-  H1DarkPurple,
   Nav1CharcoalGrey,
   H4Lavender,
   Btn1DarkPurple,
 } from "../../../styles/helpers"
-import { UserContext } from "../../../context/UserContext"
-
-import getUserProfile from "./actions/getUserProfile"
-import putGeneralInfo from "./actions/putGeneralInfo"
-
-import Input from "../FormFields/Input"
-import RadioInput from "../FormFields/RadioInput"
-import TextArea from "../FormFields/Textarea"
-
-import dashWrap from "./style/dashWrap"
 
 const MainGeneral = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -84,138 +87,124 @@ const MainGeneral = () => {
           </p>
           <h2>General Information</h2>
         </div>
-        <div className="mainForm">
-          <form onSubmit={event => handleOnSubmit(event)}>
-            <fieldset>
-              <Input
-                label="First Name"
-                name="first_name"
-                type="text"
-                placeholder="First Name"
-                value={formData.first_name}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="half"
-              />
-              <Input
-                label="Last Name"
-                name="last_name"
-                type="text"
-                placeholder="Last Name"
-                value={formData.last_name}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="half"
-              />
-              <RadioInput
-                label="Position"
-                name="position"
-                handleOnRadioChange={handleOnChange}
-                value={formData.position}
-                options={[
-                  {
-                    id: "rda",
-                    label: "RDA",
-                  },
-                  { id: "rdh", label: "RDH" },
-                  { id: "admin", label: "Admin" },
-                  {
-                    id: "sterilizationAssistant",
-                    label: "Sterilization Assistant",
-                  },
-                ]}
-              />
-              <RadioInput
-                label="Years Experience"
-                name="experience"
-                handleOnRadioChange={handleOnChange}
-                value={formData.experience}
-                options={[
-                  {
-                    id: "oneYear",
-                    label: "Less than 1 year",
-                  },
-                  { id: "twoFiveYear", label: "1 to 5 years" },
-                  { id: "sixNineYear", label: "6 to 9 years" },
-                  {
-                    id: "tenPlus",
-                    label: "10 years +",
-                  },
-                ]}
-              />
-              <Input
-                label="Year Graduated From Program"
-                name="year_graduated"
-                type="text"
-                placeholder="Year Graduated From Program"
-                value={formData.year_graduated}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <Input
-                label="School Graduated From"
-                name="school"
-                type="text"
-                placeholder="School Graduated From"
-                value={formData.school}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <TextArea
-                label="Clinics Worked At"
-                name="clinics_worked_at"
-                type="text"
-                placeholder="Clinics Worked At"
-                value={formData.clinics_worked_at}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <div className="submitButton">
-                <button type="submit">Submit Information</button>
-              </div>
-            </fieldset>
-          </form>
-        </div>
+        {!state.loading ? (
+          <div className="mainForm">
+            <form onSubmit={event => handleOnSubmit(event)}>
+              <fieldset>
+                <Input
+                  label="First Name"
+                  name="first_name"
+                  type="text"
+                  placeholder="First Name"
+                  value={formData.first_name}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="half"
+                />
+                <Input
+                  label="Last Name"
+                  name="last_name"
+                  type="text"
+                  placeholder="Last Name"
+                  value={formData.last_name}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="half"
+                />
+                <RadioInput
+                  label="Position"
+                  name="position"
+                  handleOnRadioChange={handleOnChange}
+                  value={formData.position}
+                  options={[
+                    {
+                      id: "rda",
+                      label: "RDA",
+                    },
+                    { id: "rdh", label: "RDH" },
+                    { id: "admin", label: "Admin" },
+                    {
+                      id: "sterilizationAssistant",
+                      label: "Sterilization Assistant",
+                    },
+                  ]}
+                />
+                <RadioInput
+                  label="Years Experience"
+                  name="experience"
+                  handleOnRadioChange={handleOnChange}
+                  value={formData.experience}
+                  options={[
+                    {
+                      id: "oneYear",
+                      label: "Less than 1 year",
+                    },
+                    { id: "twoFiveYear", label: "1 to 5 years" },
+                    { id: "sixNineYear", label: "6 to 9 years" },
+                    {
+                      id: "tenPlus",
+                      label: "10 years +",
+                    },
+                  ]}
+                />
+                <Input
+                  label="Year Graduated From Program"
+                  name="year_graduated"
+                  type="text"
+                  placeholder="Year Graduated From Program"
+                  value={formData.year_graduated}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="full"
+                />
+                <Input
+                  label="School Graduated From"
+                  name="school"
+                  type="text"
+                  placeholder="School Graduated From"
+                  value={formData.school}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="full"
+                />
+                <TextArea
+                  label="Clinics Worked At"
+                  name="clinics_worked_at"
+                  type="text"
+                  placeholder="Clinics Worked At"
+                  value={formData.clinics_worked_at}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="full"
+                />
+                <div className="submitButton">
+                  <button type="submit">Submit Information</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        ) : (
+          <LoadingSkeleton />
+        )}
       </div>
     </MainGeneralStyled>
   )
 }
 
 const MainGeneralStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
     ${dashWrap};
   }
 
   .dashTitle {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
   }
 
   .mainForm {

@@ -1,22 +1,26 @@
+// NPM Packages
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import { navigate } from "gatsby"
+// Context
+import { UserContext } from "../../../context/UserContext"
+// Actions
+import getUserProfile from "./actions/getUserProfile"
+import putExperience from "./actions/putExperience"
+// Components
+import Input from "../FormFields/Input"
+import TextArea from "../FormFields/Textarea"
+import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
+// Common styles
+import mainSection from "./style/mainSection"
+import dashWrap from "./style/dashWrap"
+import dashTitle from "./style/dashTitle"
 import {
-  B1Sage,
   colors,
-  H1DarkPurple,
   Nav1CharcoalGrey,
   H4Lavender,
   Btn1DarkPurple,
 } from "../../../styles/helpers"
-import { UserContext } from "../../../context/UserContext"
-import getUserProfile from "./actions/getUserProfile"
-import putExperience from "./actions/putExperience"
-
-import Input from "../FormFields/Input"
-import TextArea from "../FormFields/Textarea"
-
-import dashWrap from "./style/dashWrap"
 
 const MainExperience = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -81,91 +85,77 @@ const MainExperience = () => {
           </p>
           <h2>My Experience</h2>
         </div>
-        <div className="mainForm">
-          <form onSubmit={event => handleOnSubmit(event)}>
-            <fieldset>
-              <Input
-                label="Associated Registration Number"
-                name="associated_registration_number"
-                type="text"
-                placeholder="Associated Registration Number"
-                value={formData.associated_registration_number}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <Input
-                label="Name registered with"
-                name="name_registered_with"
-                type="text"
-                placeholder="Name registered with"
-                value={formData.name_registered_with}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <TextArea
-                label="What additional qualifications do you have?"
-                name="additional_qualifications"
-                type="text"
-                placeholder="What additional qualifications do you have?"
-                value={formData.additional_qualifications}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <TextArea
-                label="What are your greatest strengths? List 3 things in bullet points"
-                name="greatest_strengths"
-                type="text"
-                placeholder="What are your greatest strengths? List 3 things in bullet points"
-                value={formData.greatest_strengths}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <div className="submitButton">
-                <button type="submit">Submit Information</button>
-              </div>
-            </fieldset>
-          </form>
-        </div>
+        {!state.loading ? (
+          <div className="mainForm">
+            <form onSubmit={event => handleOnSubmit(event)}>
+              <fieldset>
+                <Input
+                  label="Associated Registration Number"
+                  name="associated_registration_number"
+                  type="text"
+                  placeholder="Associated Registration Number"
+                  value={formData.associated_registration_number}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="full"
+                />
+                <Input
+                  label="Name registered with"
+                  name="name_registered_with"
+                  type="text"
+                  placeholder="Name registered with"
+                  value={formData.name_registered_with}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="full"
+                />
+                <TextArea
+                  label="What additional qualifications do you have?"
+                  name="additional_qualifications"
+                  type="text"
+                  placeholder="What additional qualifications do you have?"
+                  value={formData.additional_qualifications}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="full"
+                />
+                <TextArea
+                  label="What are your greatest strengths? List 3 things in bullet points"
+                  name="greatest_strengths"
+                  type="text"
+                  placeholder="What are your greatest strengths? List 3 things in bullet points"
+                  value={formData.greatest_strengths}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="full"
+                />
+                <div className="submitButton">
+                  <button type="submit">Submit Information</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        ) : (
+          <LoadingSkeleton />
+        )}
       </div>
     </MainExperienceStyled>
   )
 }
 
 const MainExperienceStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
     ${dashWrap};
   }
 
   .dashTitle {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
   }
 
   .mainForm {
