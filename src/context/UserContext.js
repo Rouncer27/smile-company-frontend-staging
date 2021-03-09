@@ -16,6 +16,18 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "USER_LOGOUT":
+      return {
+        token: "",
+        user: {},
+        profile: {},
+        bookings: [],
+        loading: false,
+        error: false,
+        errMessage: "",
+        alert: false,
+        alertMessage: "",
+      }
     case "USER_LOADING":
       return {
         ...state,

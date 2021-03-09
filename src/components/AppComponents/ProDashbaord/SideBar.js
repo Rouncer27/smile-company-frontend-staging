@@ -12,9 +12,10 @@ import List from "../../Icons/AppIcons/List"
 import Man from "../../Icons/AppIcons/Man"
 
 import mainSidebar from "./style/mainSidebar"
+import handleLogout from "./actions/handleLogout"
 
 const SideBar = () => {
-  const [state] = useContext(UserContext)
+  const [state, dispatch] = useContext(UserContext)
   const userConfirmed = state.user.confirmed
 
   const profileSatisfied =
@@ -156,6 +157,14 @@ const SideBar = () => {
               </button>
             )}
           </li>
+          <li>
+            <button onClick={() => handleLogout(dispatch)} type="button">
+              <span className="icon">
+                <List />
+              </span>{" "}
+              <span className="text">Log Out</span>
+            </button>
+          </li>
         </ul>
       </nav>
     </AppSidebarStyled>
@@ -195,6 +204,10 @@ const AppSidebarStyled = styled.div`
       margin: auto;
       line-height: 1.8rem;
       padding: 1.5rem;
+
+      &:hover {
+        color: ${colors.white};
+      }
 
       &:disabled {
         color: rgba(173, 137, 166, 0.25);
