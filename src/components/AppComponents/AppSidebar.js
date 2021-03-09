@@ -85,11 +85,7 @@ const getData = graphql`
 
 const AppSidebar = ({ location }) => {
   const data = useStaticQuery(getData)
-  console.log(data)
   const sideBarData = data.sideBar.appSettings.appSidebarContent
-
-  console.log(location)
-
   let content
   let backgroundColour
   let backgroundImg

@@ -25,7 +25,7 @@ const getData = graphql`
   }
 `
 
-const MobileNavDrawer = ({ isOpen }) => {
+const MobileNavDrawer = ({ isOpen, setIsOpen }) => {
   const data = useStaticQuery(getData)
   const menuItems = data.mobileMenu.menuItems.nodes
   return (
@@ -34,7 +34,7 @@ const MobileNavDrawer = ({ isOpen }) => {
         <div className="mobileLogo">
           <MainLogo />
         </div>
-        <MobileNavContainer navitems={menuItems} />
+        <MobileNavContainer navitems={menuItems} setIsOpen={setIsOpen} />
       </div>
     </NavDrawer>
   )
