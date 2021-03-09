@@ -6,6 +6,7 @@ import getUserProfile from "./actions/getUserProfile"
 import getBookings from "./actions/getBookings"
 
 import AvailableCard from "./available/AvailableCard"
+import dashWrap from "./style/dashWrap"
 
 const MainAvailable = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -69,11 +70,7 @@ const MainAvailableStyled = styled.div`
   }
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 80rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {

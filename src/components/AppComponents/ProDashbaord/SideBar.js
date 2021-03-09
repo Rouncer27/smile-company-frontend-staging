@@ -11,6 +11,8 @@ import Dash from "../../Icons/AppIcons/Dash"
 import List from "../../Icons/AppIcons/List"
 import Man from "../../Icons/AppIcons/Man"
 
+import mainSidebar from "./style/mainSidebar"
+
 const SideBar = () => {
   const [state] = useContext(UserContext)
   const userConfirmed = state.user.confirmed
@@ -161,22 +163,17 @@ const SideBar = () => {
 }
 
 const AppSidebarStyled = styled.div`
-  display: flex;
-  align-self: stretch;
-  justify-content: center;
-  position: relative;
-  background-color: ${colors.colorAlt};
-  width: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(30vw);
-  }
+  ${mainSidebar};
 
   .sidebarNav {
     position: relative;
-    padding: 20rem 0;
+    padding: 0;
     width: 100%;
     z-index: 10;
+
+    @media (min-width: 768px) {
+      padding: 20rem 0;
+    }
 
     ul {
       width: 100%;

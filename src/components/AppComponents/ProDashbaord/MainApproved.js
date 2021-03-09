@@ -7,6 +7,10 @@ import getBookings from "./actions/getBookings"
 
 import ApprovedItem from "./approved/ApprovedItem"
 
+// Common styles
+import mainSection from "./style/mainSection"
+import dashWrap from "./style/dashWrap"
+
 const MainApproved = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user, profile, bookings } = state
@@ -55,21 +59,10 @@ const MainApproved = () => {
 }
 
 const MainApprovedStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 80rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {

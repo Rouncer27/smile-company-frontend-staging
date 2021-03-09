@@ -1,22 +1,23 @@
 import React from "react"
 import styled from "styled-components"
-import MainHome from "./MainHome"
+
+import MainHistory from "./MainHistory"
 import SideBar from "./SideBar"
 import { mainDahsboard } from "./style/mainDashboard"
 
-const Dashboard = () => {
+const DashboardHistory = () => {
   return (
-    <DashboardStyled>
+    <DashboardHistoryStyled>
       <div className="dashWrapper">
         <SideBar />
-        <MainHome />
+        <MainHistory />
       </div>
-    </DashboardStyled>
+    </DashboardHistoryStyled>
   )
 }
 
-const DashboardStyled = styled.div`
+const DashboardHistoryStyled = styled.div`
   ${mainDahsboard};
 `
 
-export default Dashboard
+export default DashboardHistory

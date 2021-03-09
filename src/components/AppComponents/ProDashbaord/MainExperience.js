@@ -16,6 +16,8 @@ import putExperience from "./actions/putExperience"
 import Input from "../FormFields/Input"
 import TextArea from "../FormFields/Textarea"
 
+import dashWrap from "./style/dashWrap"
+
 const MainExperience = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user, profile } = state
@@ -148,11 +150,7 @@ const MainExperienceStyled = styled.div`
   }
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 80rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {

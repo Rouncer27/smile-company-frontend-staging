@@ -25,6 +25,7 @@ import Experience from "../components/AppRoutes/pro-dashboard/Experience"
 import ContactInfo from "../components/AppRoutes/pro-dashboard/ContactInfo"
 import Available from "../components/AppRoutes/pro-dashboard/Available"
 import Approved from "../components/AppRoutes/pro-dashboard/Approved"
+import History from "../components/AppRoutes/pro-dashboard/History"
 
 const App = ({ location }) => {
   const [state] = useContext(UserContext)
@@ -97,6 +98,10 @@ const App = ({ location }) => {
             <PrivateRoute
               path="/app/professional-dashboard/booking-approved"
               component={Approved}
+            />
+            <PrivateRoute
+              path="/app/professional-dashboard/bookings-history"
+              component={History}
             />
           </>
         )}

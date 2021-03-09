@@ -18,6 +18,8 @@ import Input from "../FormFields/Input"
 import RadioInput from "../FormFields/RadioInput"
 import TextArea from "../FormFields/Textarea"
 
+import dashWrap from "./style/dashWrap"
+
 const MainGeneral = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user, profile } = state
@@ -198,11 +200,7 @@ const MainGeneralStyled = styled.div`
   }
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 80rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {

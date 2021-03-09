@@ -11,7 +11,9 @@ import {
 } from "../../../../styles/helpers"
 import { timeFormat, getMothName } from "../../../../utils/helperFunc"
 import { UserContext } from "../../../../context/UserContext"
+
 import getBookings from "../actions/getBookings"
+import getBookingApply from "../actions/getBookingApply"
 
 const AvailableCard = ({ booking }) => {
   const [state, dispatch] = useContext(UserContext)
@@ -26,6 +28,7 @@ const AvailableCard = ({ booking }) => {
     shiftEndMinutes: "",
     shiftEndMeridiem: "",
   })
+
   useEffect(() => {
     const currentBookingStartTime = booking ? booking.shift_start : []
     const currentBookingEndTime = booking ? booking.shift_end : []
@@ -43,39 +46,8 @@ const AvailableCard = ({ booking }) => {
   }, [])
 
   const handleApplyForBooking = async id => {
-    dispatch({ type: "USER_LOADING" })
-    try {
-      const response = await axios.get(
-        `${process.env.GATSBY_API_URL}/bookings/professionals-apply/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      dispatch({
-        type: "USER_ALERT",
-        payload: {
-          message: response.data.message,
-        },
-      })
-
-      await getBookings(token, userId, state.user.confirmed, dispatch)
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
+    await getBookingApply(token, dispatch, id)
+    await getBookings(token, userId, state.user.confirmed, dispatch)
   }
 
   const handleIgnorePost = async id => {
@@ -251,11 +223,16 @@ const AvailableCard = ({ booking }) => {
 }
 
 const AvailableCardStyled = styled.div`
-  width: calc(50% - 2rem);
-  margin: 5rem 1rem 0;
+  width: calc(100%);
+  margin: 5rem 0 0;
   padding: 2rem 2.5rem;
   border-radius: 2.5rem;
   background-color: rgba(173, 137, 166, 0.25);
+
+  @media (min-width: 768px) {
+    width: calc(50% - 2rem);
+    margin: 5rem 1rem 0;
+  }
 
   .detailsTitle {
     width: 100%;

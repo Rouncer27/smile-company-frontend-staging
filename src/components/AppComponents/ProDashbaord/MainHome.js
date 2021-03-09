@@ -15,6 +15,8 @@ import {
   Nav1CharcoalGrey,
 } from "../../../styles/helpers"
 
+import dashWrap from "./style/dashWrap"
+
 const MainHome = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user } = state
@@ -220,11 +222,7 @@ const MainHomeStyled = styled.div`
   }
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 75rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {
