@@ -7,11 +7,10 @@ import {
   H1DarkPurple,
   Nav1CharcoalGrey,
   H4DarkPurple,
-  Btn1LightSage,
-  H4CharcoalGrey,
   H2Lavender,
 } from "../../../styles/helpers"
 import { UserContext } from "../../../context/UserContext"
+import getProfile from "./actions/getProfile"
 
 const MainInvoiceSingle = () => {
   const [currentInvoiceId, setCurrentInvoiceId] = useState("")
@@ -20,11 +19,11 @@ const MainInvoiceSingle = () => {
   const { token, user, profile } = state
   const userId = user.id
 
-  useEffect(() => {
+  const getInvoiceId = () => {
     const urlSplit = globalHistory.location.pathname.split("/")
     const invoiceId = urlSplit[urlSplit.length - 1]
     setCurrentInvoiceId(invoiceId)
-  }, [])
+  }
 
   useEffect(() => {
     const invoice = profile.invoices.find(
@@ -33,83 +32,96 @@ const MainInvoiceSingle = () => {
     setCurrentInvoice(invoice)
   }, [currentInvoiceId])
 
+  const handleGetProfileOnMount = async () => {
+    if (!userId) return
+    await getProfile(token, userId, dispatch)
+    getInvoiceId()
+  }
+
+  useEffect(() => {
+    handleGetProfileOnMount()
+  }, [])
+
   return (
     <MainInvoiceSingleStyled>
-      <div className="dashWrap">
-        <div className="dashTitle">
-          {" "}
-          {state.profile && state.profile.profile_satisfied && (
-            <p>
-              <span /> {state.profile && state.profile.clinic_name}
-            </p>
-          )}
-          <h2>Invoice Details</h2>
-        </div>
-        {currentInvoice ? (
-          <div className="dashContent">
-            <div className="invoiceTitle">
-              <h2>{currentInvoice.order_name}</h2>
-              <p>{currentInvoice.clinic_name}</p>
-              <p>Invoice was emailed to: {user.email}</p>
-              <p>Invoice Number: {currentInvoice.id}</p>
-              <p>Date Purchased: {currentInvoice.payment_date}</p>
-              <p>Payment Method: {currentInvoice.payment_method}</p>
-              <p>Order Status: {currentInvoice.payment_status}</p>
-              {currentInvoice.order_month_subscription ? (
-                <p>Monthly Subscription Active</p>
-              ) : (
-                <p>Credits Added: {currentInvoice.order_credits}</p>
-              )}
-            </div>
-
-            <div className="bookDetail">
-              <div className="bookDetail__title">
-                <p>Item Detail</p>
-              </div>
-              <div className="bookDetail__price">
+      {!state.loading && (
+        <div className="dashWrap">
+          <div className="dashTitle">
+            {" "}
+            {state.profile && state.profile.profile_satisfied && (
+              <p>
+                <span /> {state.profile && state.profile.clinic_name}
+              </p>
+            )}
+            <h2>Invoice Details</h2>
+          </div>
+          {currentInvoice ? (
+            <div className="dashContent">
+              <div className="invoiceTitle">
                 <h2>{currentInvoice.order_name}</h2>
-                <p>&#36; {currentInvoice.order_item_total}</p>
+                <p>{currentInvoice.clinic_name}</p>
+                <p>Invoice was emailed to: {user.email}</p>
+                <p>Invoice Number: {currentInvoice.id}</p>
+                <p>Date Purchased: {currentInvoice.payment_date}</p>
+                <p>Payment Method: {currentInvoice.payment_method}</p>
+                <p>Order Status: {currentInvoice.payment_status}</p>
+                {currentInvoice.order_month_subscription ? (
+                  <p>Monthly Subscription Active</p>
+                ) : (
+                  <p>Credits Added: {currentInvoice.order_credits}</p>
+                )}
               </div>
-              <div className="bookDetail__descriptions">
-                <p className="bookDetail__descriptions--terms">
-                  {currentInvoice.order_terms}
-                </p>
-                <p className="bookDetail__descriptions--description">
-                  {currentInvoice.order_description}
-                </p>
-                <p className="bookDetail__descriptions--includes">
-                  {currentInvoice.order_details}
-                </p>
-              </div>
-            </div>
 
-            <div className="paymentDetails">
-              <div>
-                <h2>Payment Details</h2>
+              <div className="bookDetail">
+                <div className="bookDetail__title">
+                  <p>Item Detail</p>
+                </div>
+                <div className="bookDetail__price">
+                  <h2>{currentInvoice.order_name}</h2>
+                  <p>&#36; {currentInvoice.order_item_total}</p>
+                </div>
+                <div className="bookDetail__descriptions">
+                  <p className="bookDetail__descriptions--terms">
+                    {currentInvoice.order_terms}
+                  </p>
+                  <p className="bookDetail__descriptions--description">
+                    {currentInvoice.order_description}
+                  </p>
+                  <p className="bookDetail__descriptions--includes">
+                    {currentInvoice.order_details}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p>
-                  Sub Total: &#36;{currentInvoice.order_item_total.toFixed(2)}
-                </p>
-                <p>
-                  Taxes (GST): &#36;{currentInvoice.order_tax_total.toFixed(2)}
-                </p>
-                <p>
-                  Total Invoice Amount: &#36;
-                  {currentInvoice.order_price_total.toFixed(2)}
-                </p>
+
+              <div className="paymentDetails">
+                <div>
+                  <h2>Payment Details</h2>
+                </div>
+                <div>
+                  <p>
+                    Sub Total: &#36;{currentInvoice.order_item_total.toFixed(2)}
+                  </p>
+                  <p>
+                    Taxes (GST): &#36;
+                    {currentInvoice.order_tax_total.toFixed(2)}
+                  </p>
+                  <p>
+                    Total Invoice Amount: &#36;
+                    {currentInvoice.order_price_total.toFixed(2)}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div>
-            <p>
-              Could not find that invoice details. Please try again later or
-              contact Smile and Company to assist.
-            </p>
-          </div>
-        )}
-      </div>
+          ) : (
+            <div>
+              <p>
+                Could not find that invoice details. Please try again later or
+                contact Smile and Company to assist.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
     </MainInvoiceSingleStyled>
   )
 }

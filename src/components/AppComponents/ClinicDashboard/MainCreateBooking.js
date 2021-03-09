@@ -1,8 +1,5 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
-import axios from "axios"
-import { navigate } from "gatsby"
-
 import {
   B1Sage,
   colors,
@@ -12,20 +9,20 @@ import {
   Nav1CharcoalGrey,
 } from "../../../styles/helpers"
 import { UserContext } from "../../../context/UserContext"
-import { Link } from "gatsby"
 
 import DateTimePicker from "../FormFields/DateTimePicker"
 import RadioInput from "../FormFields/RadioInput"
 import CheckBoxInput from "../FormFields/CheckBoxInput"
 import Input from "../FormFields/Input"
 
+import postCreateBooking from "./actions/postCreateBooking"
+import getProfile from "./actions/getProfile"
+
 const MainCreateBooking = () => {
   const [state, dispatch] = useContext(UserContext)
+  const [hasCredits, setHasCredits] = useState(false)
   const { token, user, profile } = state
-  const { invoices } = profile
   const userId = user.id
-  const credits = state.profile.credits
-  const subcription = state.profile.monthly_subscription
 
   const [formData, setFormData] = useState({
     day: "",
@@ -60,63 +57,27 @@ const MainCreateBooking = () => {
     })
   }
 
-  const resetFormData = () => {
-    setFormData({
-      day: "",
-      shift_start: "",
-      shift_end: "",
-      location: "",
-      address: "",
-      position: "",
-      notifyAgree: false,
-      hiringFees: false,
-      shortNotice: false,
-    })
-  }
-
   const handleOnSubmit = async event => {
     event.preventDefault()
-    dispatch({ type: "USER_LOADING" })
-    try {
-      const response = await axios.post(
-        `${process.env.GATSBY_API_URL}/bookings`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      console.log(
-        "RESPONSE FROM THE SERVER AFTER BOOKING CREATE: ",
-        response.data
-      )
-
-      dispatch({
-        type: "USER_ALERT",
-        payload: {
-          message: `Congratulations! You have created a booking. You can always review your bookings history from your dashboard under Review Bookings in the left side menu.`,
-        },
-      })
-      return navigate("/app/clinic-dashboard", { replace: true })
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
+    await postCreateBooking(token, dispatch, formData)
   }
 
-  console.log("HERE IS THE FORM STATE: ", formData)
+  const handleGetProfileOnMount = async () => {
+    if (!userId) return
+    await getProfile(token, userId, dispatch)
+  }
+
+  useEffect(() => {
+    handleGetProfileOnMount()
+  }, [])
+
+  useEffect(() => {
+    if (state.profile.credits > 0 || state.profile.monthly_subscription) {
+      setHasCredits(true)
+    } else {
+      setHasCredits(false)
+    }
+  }, [profile])
 
   return (
     <MainCreateBookingStyled>
@@ -133,9 +94,19 @@ const MainCreateBooking = () => {
             can match you with the right personnel.
           </p>
         </div>
+        {!hasCredits && (
+          <div className="dashAlert">
+            <p className="creditAlert">
+              <span>WARNING</span>
+              Your account currently has no credits or monthly subscriptions.
+              Please purchase a booking package from the left side menu to be
+              able to create a booking.
+            </p>
+          </div>
+        )}
         <div className="mainForm">
           <form onSubmit={event => handleOnSubmit(event)}>
-            <fieldset>
+            <fieldset disabled={!hasCredits}>
               <DateTimePicker
                 day={formData.day}
                 setDay={handleDatePicker}
@@ -263,6 +234,28 @@ const MainCreateBookingStyled = styled.div`
 
     p.dashTitle__subcontent {
       ${H4Lavender};
+    }
+  }
+
+  .dashAlert {
+    margin: 4rem 0 0;
+    p {
+      ${Nav1CharcoalGrey};
+      margin-bottom: 1.5rem;
+
+      &:hover {
+        color: ${colors.colorAlt};
+        cursor: inherit;
+      }
+
+      span {
+        display: block;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        background-color: #ed4f32;
+        color: ${colors.black} !important;
+        text-align: center;
+      }
     }
   }
 

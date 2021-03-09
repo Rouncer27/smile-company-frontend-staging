@@ -1,8 +1,8 @@
 import React from "react"
-import SettingsDashboard from "../../../components/AppComponents/ClinicDashboard/SettingsDashboard"
+import DashboardSettings from "../../../components/AppComponents/ClinicDashboard/DashboardSettings"
 
 const ProfileSettings = () => {
-  return <SettingsDashboard />
+  return <DashboardSettings />
 }
 
 export default ProfileSettings

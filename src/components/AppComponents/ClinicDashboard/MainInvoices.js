@@ -1,6 +1,5 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
-import axios from "axios"
 import {
   B1Sage,
   colors,
@@ -10,6 +9,8 @@ import {
 import { UserContext } from "../../../context/UserContext"
 import { Link } from "gatsby"
 
+import getProfile from "./actions/getProfile"
+
 const MainInvoices = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user, profile } = state
@@ -17,35 +18,7 @@ const MainInvoices = () => {
   const userId = user.id
 
   const getUpToDateProfile = async () => {
-    dispatch({ type: "USER_LOADING" })
-
-    try {
-      const response = await axios.get(
-        `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      dispatch({
-        type: "USER_GET_PROFILE",
-        payload: { profile: response.data },
-      })
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
+    await getProfile(token, userId, dispatch)
   }
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import { UserContext } from "../../../context/UserContext"
 import { colors, Btn1DarkPurple, H1DarkPurple } from "../../../styles/helpers"
 
 import Input from "../FormFields/Input"
+import getProfile from "./actions/getProfile"
 
 const MainSettings = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -67,35 +68,8 @@ const MainSettings = () => {
   }
 
   const handleGetProfileOnMount = async () => {
-    dispatch({ type: "USER_LOADING" })
-    try {
-      const response = await axios.get(
-        `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      dispatch({
-        type: "USER_GET_PROFILE",
-        payload: { profile: response.data },
-      })
-      updateFormFields()
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
+    await getProfile(token, userId, dispatch)
+    updateFormFields()
   }
 
   useEffect(() => {

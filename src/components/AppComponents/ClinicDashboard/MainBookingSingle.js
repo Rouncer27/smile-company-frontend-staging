@@ -1,7 +1,12 @@
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
-import axios from "axios"
+import Skeleton from "react-loading-skeleton"
 import { globalHistory } from "@reach/router"
+import { UserContext } from "../../../context/UserContext"
+
+import getCurrentBooking from "./actions/getCurrentBooking"
+import putCancelBooking from "./actions/putCancelBooking"
+import ProfessionalCard from "./booking/ProfessionalCard"
 import {
   B1Sage,
   colors,
@@ -11,12 +16,8 @@ import {
   H2Lavender,
   Btn1DarkPurple,
 } from "../../../styles/helpers"
-import { UserContext } from "../../../context/UserContext"
-import Skeleton from "react-loading-skeleton"
-import { timeFormat, getMothName } from "../../../utils/helperFunc"
 
-import getCurrentBooking from "./actions/getCurrentBooking"
-import ProfessionalCard from "./booking/ProfessionalCard"
+import { timeFormat, getMothName } from "../../../utils/helperFunc"
 
 const MainBookingSingle = () => {
   const [currentBookingId, setCurrentBookingId] = useState("")
@@ -41,7 +42,6 @@ const MainBookingSingle = () => {
       currentBookingId
     )
     setCurrentBooking(currentBooking)
-    // console.log("HERE ARE THE currentBooking", currentBooking)
   }
 
   useEffect(() => {
@@ -107,44 +107,9 @@ const MainBookingSingle = () => {
         : false
   }
 
-  // console.log("currentBooking", currentBooking)
-
   const handleCancelBooking = async () => {
-    console.log("cancel THIS BOOKING!!", profile)
-    dispatch({ type: "USER_LOADING" })
-
-    try {
-      const response = await axios.put(
-        `${process.env.GATSBY_API_URL}/bookings/cancel/${currentBooking.id}`,
-        { id: profile.id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      console.log(response.data)
-
-      dispatch({
-        type: "USER_ALERT",
-        payload: { message: response.data.message },
-      })
-      getBookingFromServer()
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
+    await putCancelBooking(token, dispatch, profile, currentBooking)
+    await getBookingFromServer()
   }
 
   return (

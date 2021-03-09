@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
-import axios from "axios"
 import { Link, navigate } from "gatsby"
 import { UserContext } from "../../../context/UserContext"
 import Skeleton from "react-loading-skeleton"
@@ -14,6 +13,9 @@ import {
   H4DarkPurple,
   Nav1CharcoalGrey,
 } from "../../../styles/helpers"
+
+import getProfile from "./actions/getProfile"
+import getBookingPackages from "./actions/getBookingPackages"
 
 const MainPurchase = () => {
   const [bookingDetails, setBookingDetails] = useState({
@@ -31,82 +33,18 @@ const MainPurchase = () => {
     smile_member_purchase_terms: "",
   })
   const [state, dispatch] = useContext(UserContext)
-  const token = state.token
+  const { token, user } = state
+  const { confirmed } = user
+  const userId = user.id
 
   const getTheBookingPackages = async () => {
-    // dispatch({ type: "USER_LOADING" })
-    try {
-      const reponse = await axios.get(
-        `${process.env.GATSBY_API_URL}/booking-packages`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      dispatch({
-        type: "USER_LOADING_COMPLETE",
-      })
-
-      setBookingDetails({
-        booking_one_description: reponse.data.booking_one_description
-          ? reponse.data.booking_one_description
-          : "",
-        booking_one_includes_details: reponse.data.booking_one_includes_details
-          ? reponse.data.booking_one_includes_details
-          : "",
-        booking_one_price: reponse.data.booking_one_price
-          ? reponse.data.booking_one_price
-          : null,
-        booking_one_purchase_terms: reponse.data.booking_one_purchase_terms
-          ? reponse.data.booking_one_purchase_terms
-          : "",
-        ten_pass_description: reponse.data.ten_pass_description
-          ? reponse.data.ten_pass_description
-          : "",
-        ten_pass_includes_details: reponse.data.ten_pass_includes_details
-          ? reponse.data.ten_pass_includes_details
-          : "",
-        ten_pass_price: reponse.data.ten_pass_price
-          ? reponse.data.ten_pass_price
-          : null,
-        ten_pass_purchase_terms: reponse.data.ten_pass_purchase_terms
-          ? reponse.data.ten_pass_purchase_terms
-          : "",
-        smile_member_description: reponse.data.smile_member_description
-          ? reponse.data.smile_member_description
-          : "",
-        smile_member_included_details: reponse.data
-          .smile_member_included_details
-          ? reponse.data.smile_member_included_details
-          : "",
-        smile_member_price: reponse.data.smile_member_price
-          ? reponse.data.smile_member_price
-          : null,
-        smile_member_purchase_terms: reponse.data.smile_member_purchase_terms
-          ? reponse.data.smile_member_purchase_terms
-          : "",
-      })
-
-      console.log("BOOKINGS: ", reponse)
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
+    await getBookingPackages(token, dispatch, setBookingDetails)
   }
 
-  useEffect(() => {
+  const handleGetProfileOnMount = async () => {
+    if (!userId) return
+    if (!confirmed) return
+    await getProfile(token, userId, dispatch)
     // If this person is not confirmed yet, send them back to the main dashboard. //
     if (!state.user.confirmed)
       return navigate("/app/clinic-dashboard", { replace: true })
@@ -115,11 +53,12 @@ const MainPurchase = () => {
       return navigate("/app/clinic-dashboard", { replace: true })
 
     // Get the booking details. //
-
     getTheBookingPackages()
-  }, [])
+  }
 
-  console.log("BOOKING DETAILS: ", bookingDetails)
+  useEffect(() => {
+    handleGetProfileOnMount()
+  }, [])
 
   return (
     <MainPurchaseStyled>

@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import MainInvoices from "./MainInvoices"
 import SideBar from "./SideBar"
+import { mainDahsboard } from "./styles/mainDashboard"
 
 const DashboardInvoices = () => {
   return (
@@ -15,14 +16,7 @@ const DashboardInvoices = () => {
 }
 
 const DashboardInvoicesStyled = styled.div`
-  .dashWrapper {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    width: 100%;
-    min-height: 100vh;
-    margin: auto;
-  }
+  ${mainDahsboard};
 `
 
 export default DashboardInvoices

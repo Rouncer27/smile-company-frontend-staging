@@ -1,7 +1,6 @@
-import { Link, navigate } from "gatsby"
+import { Link } from "gatsby"
 import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
-import axios from "axios"
 import { UserContext } from "../../../context/UserContext"
 
 import {
@@ -13,6 +12,9 @@ import {
   H4Lavender,
 } from "../../../styles/helpers"
 
+import getProfile from "./actions/getProfile"
+import getConfirmEmail from "./actions/getConfirmEmail"
+
 const MainDashboard = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user } = state
@@ -22,36 +24,7 @@ const MainDashboard = () => {
   const handleGetProfileOnMount = async () => {
     if (!userId) return
     if (!confirmed) return
-
-    dispatch({ type: "USER_LOADING" })
-
-    try {
-      const response = await axios.get(
-        `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      dispatch({
-        type: "USER_GET_PROFILE",
-        payload: { profile: response.data },
-      })
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
+    await getProfile(token, userId, dispatch)
   }
 
   useEffect(() => {
@@ -59,39 +32,7 @@ const MainDashboard = () => {
   }, [])
 
   const handleConfirmedEmail = async () => {
-    dispatch({ type: "USER_LOADING" })
-    try {
-      const reponse = await axios.get(
-        `${process.env.GATSBY_API_URL}/users/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      const user = reponse.data
-      const isEmailConfirmed = user.confirmed
-
-      if (isEmailConfirmed) {
-        dispatch({ type: "USER_UPDATE", payload: { token, user } })
-        navigate("/app/clinic-dashboard/profile-settings", { replace: true })
-      }
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
+    await getConfirmEmail(token, dispatch)
   }
 
   return (
@@ -119,7 +60,7 @@ const MainDashboard = () => {
             <button onClick={handleConfirmedEmail}>setup profile</button>
           </div>
         )}
-        {state.profile && !state.profile.profile_satisfied && (
+        {confirmed && state.profile && !state.profile.profile_satisfied && (
           <div className="setupProfile">
             <div>
               <p>
@@ -194,6 +135,7 @@ const MainDashboardStyled = styled.div`
     }
   }
 
+  .setupProfile,
   .pleaseConfirm {
     width: 100%;
 
@@ -201,7 +143,8 @@ const MainDashboardStyled = styled.div`
       ${B1CharcoalGrey};
       margin-bottom: 1rem;
     }
-    button {
+    button,
+    a {
       ${Btn1DarkPurple};
       margin-top: 2rem;
     }

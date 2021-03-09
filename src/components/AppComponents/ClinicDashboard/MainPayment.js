@@ -102,9 +102,6 @@ const MainPayment = () => {
     getPackagesData()
   }, [productType])
 
-  console.log(productType)
-  console.log(productDetails)
-
   return (
     <MainPaymentStyled>
       <div className="dashWrap">

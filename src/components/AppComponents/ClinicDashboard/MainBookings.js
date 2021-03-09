@@ -11,44 +11,15 @@ import { UserContext } from "../../../context/UserContext"
 import { Link } from "gatsby"
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
 
+import getProfile from "./actions/getProfile"
+
 const MainBookings = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user, profile } = state
   const { bookings } = profile
   const userId = user.id
-
-  const getUpToDateProfile = async () => {
-    dispatch({ type: "USER_LOADING" })
-
-    try {
-      const response = await axios.get(
-        `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      dispatch({
-        type: "USER_GET_PROFILE",
-        payload: { profile: response.data },
-      })
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
-  }
-
+  // On page load get the user profile from server. //
+  const getUpToDateProfile = async () => getProfile(token, userId, dispatch)
   useEffect(() => {
     getUpToDateProfile()
   }, [])

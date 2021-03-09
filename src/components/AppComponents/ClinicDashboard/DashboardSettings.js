@@ -4,18 +4,18 @@ import styled from "styled-components"
 import MainSettings from "./MainSettings"
 import SideBar from "./SideBar"
 
-const SettingsDashboard = () => {
+const DashboardSettings = () => {
   return (
-    <SettingsDashboardStyled>
+    <DashboardSettingsStyled>
       <div className="dashWrapper">
         <SideBar />
         <MainSettings />
       </div>
-    </SettingsDashboardStyled>
+    </DashboardSettingsStyled>
   )
 }
 
-const SettingsDashboardStyled = styled.div`
+const DashboardSettingsStyled = styled.div`
   .dashWrapper {
     display: flex;
     align-items: stretch;
@@ -26,4 +26,4 @@ const SettingsDashboardStyled = styled.div`
   }
 `
 
-export default SettingsDashboard
+export default DashboardSettings
