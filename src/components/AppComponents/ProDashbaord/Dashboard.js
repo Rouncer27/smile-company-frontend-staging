@@ -3,6 +3,8 @@ import styled from "styled-components"
 import MainHome from "./MainHome"
 import SideBar from "./SideBar"
 
+import { mainDahsboard } from "./style/mainDashboard"
+
 const Dashboard = () => {
   return (
     <DashboardStyled>
@@ -15,14 +17,7 @@ const Dashboard = () => {
 }
 
 const DashboardStyled = styled.div`
-  .dashWrapper {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    width: 100%;
-    min-height: 100vh;
-    margin: auto;
-  }
+  ${mainDahsboard};
 `
 
 export default Dashboard

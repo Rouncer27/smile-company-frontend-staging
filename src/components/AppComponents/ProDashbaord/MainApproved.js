@@ -1,14 +1,6 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
-import { navigate } from "gatsby"
-import {
-  B1Sage,
-  colors,
-  H1DarkPurple,
-  Nav1CharcoalGrey,
-  H4Lavender,
-  Btn1DarkPurple,
-} from "../../../styles/helpers"
+import { B1Sage, colors, H1DarkPurple } from "../../../styles/helpers"
 import { UserContext } from "../../../context/UserContext"
 import getUserProfile from "./actions/getUserProfile"
 import getBookings from "./actions/getBookings"
@@ -20,13 +12,13 @@ const MainApproved = () => {
   const { token, user, profile, bookings } = state
   const userId = user.id
 
-  const getInitLoad = async () => {
+  const handleGetProfileOnMount = async () => {
     await getUserProfile(token, userId, state.user.confirmed, dispatch)
     await getBookings(token, userId, state.user.confirmed, dispatch)
   }
 
   useEffect(() => {
-    getInitLoad()
+    handleGetProfileOnMount()
   }, [])
 
   const approvedBookings = bookings.filter(
@@ -36,8 +28,6 @@ const MainApproved = () => {
   const myApprovedBookings = approvedBookings.filter(
     booking => booking.aceepted_profile_id === profile.id
   )
-
-  console.log(myApprovedBookings)
 
   return (
     <MainApprovedStyled>

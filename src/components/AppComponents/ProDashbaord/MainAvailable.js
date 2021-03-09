@@ -1,14 +1,6 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
-import { navigate } from "gatsby"
-import {
-  B1Sage,
-  colors,
-  H1DarkPurple,
-  Nav1CharcoalGrey,
-  H4Lavender,
-  Btn1DarkPurple,
-} from "../../../styles/helpers"
+import { B1Sage, colors, H1DarkPurple } from "../../../styles/helpers"
 import { UserContext } from "../../../context/UserContext"
 import getUserProfile from "./actions/getUserProfile"
 import getBookings from "./actions/getBookings"
@@ -17,7 +9,7 @@ import AvailableCard from "./available/AvailableCard"
 
 const MainAvailable = () => {
   const [state, dispatch] = useContext(UserContext)
-  const { token, user, profile, bookings } = state
+  const { token, user, bookings } = state
   const userId = user.id
 
   const handleGetProfileOnMount = async () => {

@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
-import axios from "axios"
 import { navigate } from "gatsby"
 import {
   B1Sage,
@@ -62,11 +61,15 @@ const MainGeneral = () => {
     })
   }
 
+  const handleGetProfileOnMount = async () => {
+    await getUserProfile(token, userId, state.user.confirmed, dispatch)
+  }
+
   useEffect(() => {
     // If this person is not confirmed yet, send them back to the main dashboard. //
     if (!state.user && !state.user.confirmed)
       return navigate("/app/clinic-dashboard", { replace: true })
-    getUserProfile(token, userId, state.user.confirmed, dispatch)
+    handleGetProfileOnMount()
     updateFormFields()
   }, [])
 

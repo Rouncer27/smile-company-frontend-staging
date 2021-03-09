@@ -39,7 +39,7 @@ const MainContact = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
-    putContactInformation(token, profileId, dispatch, formData)
+    await putContactInformation(token, profileId, dispatch, formData)
   }
 
   const updateFormFields = () => {
@@ -58,11 +58,15 @@ const MainContact = () => {
     })
   }
 
+  const handleGetProfileOnMount = async () => {
+    await getUserProfile(token, userId, state.user.confirmed, dispatch)
+  }
+
   useEffect(() => {
     // If this person is not confirmed yet, send them back to the main dashboard. //
     if (!state.user && !state.user.confirmed)
       return navigate("/app/clinic-dashboard", { replace: true })
-    getUserProfile(token, userId, state.user.confirmed, dispatch)
+    handleGetProfileOnMount()
     updateFormFields()
   }, [])
 

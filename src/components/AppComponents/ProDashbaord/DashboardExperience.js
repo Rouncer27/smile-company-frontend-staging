@@ -3,6 +3,7 @@ import styled from "styled-components"
 
 import MainExperience from "./MainExperience"
 import SideBar from "./SideBar"
+import { mainDahsboard } from "./style/mainDashboard"
 
 const DashboardExperience = () => {
   return (
@@ -16,14 +17,7 @@ const DashboardExperience = () => {
 }
 
 const DashboardExperienceStyled = styled.div`
-  .dashWrapper {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    width: 100%;
-    min-height: 100vh;
-    margin: auto;
-  }
+  ${mainDahsboard};
 `
 
 export default DashboardExperience

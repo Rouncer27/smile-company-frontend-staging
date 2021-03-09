@@ -1,7 +1,6 @@
-import { Link, navigate } from "gatsby"
+import { Link } from "gatsby"
 import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
-import axios from "axios"
 import { UserContext } from "../../../context/UserContext"
 import getUserProfile from "./actions/getUserProfile"
 import getConfirmedEmail from "./actions/getConfirmedEmail"
@@ -29,8 +28,6 @@ const MainHome = () => {
   useEffect(() => {
     handleGetProfileOnMount()
   }, [])
-
-  console.log("HERE IS THE STATE: ", state, confirmed)
 
   const capitalize = s => {
     if (typeof s !== "string") return ""
