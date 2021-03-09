@@ -6,9 +6,9 @@ const CheckBoxInput = ({ name, label, options, onChange }) => {
   return (
     <CheckBoxInputStyled>
       <p>{label}</p>
-      {options.map(option => {
+      {options.map((option, index) => {
         return (
-          <div className="checkbox-wrapper">
+          <div key={index} className="checkbox-wrapper">
             <input
               type="checkbox"
               id={option.id}
