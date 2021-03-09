@@ -22,6 +22,7 @@ const MainLogin = () => {
 const MainLoginStyled = styled.div`
   .wrapper {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row-reverse;
     justify-content: center;
     width: 100%;
@@ -30,6 +31,7 @@ const MainLoginStyled = styled.div`
 
   .mainAppArea {
     width: 100vw;
+    padding: 2rem;
 
     @media (min-width: 768px) {
       width: 70vw;
@@ -48,6 +50,9 @@ const MainLoginStyled = styled.div`
 
     @media (min-width: 768px) {
       width: 30vw;
+    }
+
+    @media (min-width: 1025px) {
     }
   }
 `

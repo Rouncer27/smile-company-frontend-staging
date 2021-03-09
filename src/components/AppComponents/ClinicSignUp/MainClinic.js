@@ -24,6 +24,7 @@ const MainClinic = () => {
 const SignUpFieldsStyled = styled.div`
   .wrapper {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row-reverse;
     justify-content: center;
     width: 100%;
@@ -32,6 +33,7 @@ const SignUpFieldsStyled = styled.div`
 
   .mainAppArea {
     width: 100vw;
+    padding: 2rem;
 
     @media (min-width: 768px) {
       width: 70vw;

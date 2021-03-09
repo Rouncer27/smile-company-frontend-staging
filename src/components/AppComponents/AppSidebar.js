@@ -132,8 +132,20 @@ const AppSidebarStyled = styled.div`
 
   .sidebarContent {
     position: relative;
-    padding: 20rem 10rem 10rem;
+    padding: 5rem 4rem 2rem;
     z-index: 10;
+
+    @media (min-width: 768px) {
+      padding: 10rem 2rem 2rem;
+    }
+
+    @media (min-width: 1025px) {
+      padding: 15rem 2rem;
+    }
+
+    @media (min-width: 1200px) {
+      padding: 20rem 5rem 10rem;
+    }
 
     p {
       ${B1White};
