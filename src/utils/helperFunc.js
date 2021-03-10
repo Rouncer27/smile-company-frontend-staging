@@ -7,11 +7,14 @@ export const createSlug = url => {
         part !== "http:" &&
         part !== "https:" &&
         part !== "localhost"
-      )
+      ) {
         return part
+      }
+      return false
     })
     .filter((slug, index) => {
       if (index !== 0) return slug
+      return false
     })
     .join("/")
 

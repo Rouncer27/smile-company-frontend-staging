@@ -1,15 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 
-import {
-  B1Sage,
-  colors,
-  H1DarkPurple,
-  H4DarkPurple,
-  H4Lavender,
-  Nav1CharcoalGrey,
-  B1CharcoalGrey,
-} from "../../../../styles/helpers"
+import { colors, Nav1CharcoalGrey } from "../../../../styles/helpers"
 
 import PayPal from "./PayPal"
 
