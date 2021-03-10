@@ -1,15 +1,16 @@
+// NPM Packages
 import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
-import {
-  B1Sage,
-  colors,
-  H1DarkPurple,
-  Nav1CharcoalGrey,
-} from "../../../styles/helpers"
-import { UserContext } from "../../../context/UserContext"
 import { Link } from "gatsby"
-
+// Context
+import { UserContext } from "../../../context/UserContext"
+// Actions
 import getProfile from "./actions/getProfile"
+// Common styles
+import mainSection from "./styles/mainSection"
+import dashWrap from "./styles/dashWrap"
+import dashTitle from "./styles/dashTitle"
+import { Nav1CharcoalGrey } from "../../../styles/helpers"
 
 const MainInvoices = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -57,36 +58,14 @@ const MainInvoices = () => {
 }
 
 const MainInvoicesStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 80rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
   }
 
   .dashContent {

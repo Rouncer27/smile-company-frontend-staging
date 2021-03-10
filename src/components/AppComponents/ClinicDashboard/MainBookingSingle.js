@@ -1,22 +1,27 @@
+// NPM Packages
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import Skeleton from "react-loading-skeleton"
 import { globalHistory } from "@reach/router"
+// Context
 import { UserContext } from "../../../context/UserContext"
-
+// Actions
 import getCurrentBooking from "./actions/getCurrentBooking"
 import putCancelBooking from "./actions/putCancelBooking"
-import ProfessionalCard from "./booking/ProfessionalCard"
+// Common styles
+import mainSection from "./styles/mainSection"
+import dashWrap from "./styles/dashWrap"
+import dashTitle from "./styles/dashTitle"
 import {
-  B1Sage,
   colors,
-  H1DarkPurple,
   Nav1CharcoalGrey,
   H4DarkPurple,
   H2Lavender,
   Btn1DarkPurple,
 } from "../../../styles/helpers"
-
+// Components
+import ProfessionalCard from "./booking/ProfessionalCard"
+// Helper Functions
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
 
 const MainBookingSingle = () => {
@@ -240,36 +245,14 @@ const MainBookingSingle = () => {
 }
 
 const MainBookingSingleStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 80rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
   }
   .dashContent {
     width: 100%;

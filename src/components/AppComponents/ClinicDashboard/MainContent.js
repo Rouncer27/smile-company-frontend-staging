@@ -1,19 +1,22 @@
-import { Link } from "gatsby"
+// NPM Packages
 import React, { useContext, useEffect } from "react"
+import { Link } from "gatsby"
 import styled from "styled-components"
+// Context
 import { UserContext } from "../../../context/UserContext"
-
+// Actions
+import getProfile from "./actions/getProfile"
+import getConfirmEmail from "./actions/getConfirmEmail"
+// Common styles
+import mainSection from "./styles/mainSection"
+import dashWrap from "./styles/dashWrap"
+import dashTitle from "./styles/dashTitle"
 import {
   B1CharcoalGrey,
   Btn1DarkPurple,
   colors,
-  H1DarkPurple,
-  B1Sage,
   H4Lavender,
 } from "../../../styles/helpers"
-
-import getProfile from "./actions/getProfile"
-import getConfirmEmail from "./actions/getConfirmEmail"
 
 const MainDashboard = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -103,36 +106,14 @@ const MainDashboard = () => {
 }
 
 const MainDashboardStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 75rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashWelcome {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
   }
 
   .setupProfile,

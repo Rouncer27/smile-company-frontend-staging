@@ -1,13 +1,19 @@
+// NPM Packages
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import axios from "axios"
 import { navigate } from "gatsby"
+// Context
 import { UserContext } from "../../../context/UserContext"
-
-import { colors, Btn1DarkPurple, H1DarkPurple } from "../../../styles/helpers"
-
-import Input from "../FormFields/Input"
+// Actions
 import getProfile from "./actions/getProfile"
+// Common styles
+import mainSection from "./styles/mainSection"
+import dashWrap from "./styles/dashWrap"
+import dashTitle from "./styles/dashTitle"
+import { Btn1DarkPurple } from "../../../styles/helpers"
+// Components
+import Input from "../FormFields/Input"
 
 const MainSettings = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -386,27 +392,14 @@ const MainSettings = () => {
 }
 
 const MainSettingsStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 75rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {
-    h2 {
-      ${H1DarkPurple};
-    }
+    ${dashTitle};
   }
 
   .mainForm {

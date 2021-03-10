@@ -1,22 +1,26 @@
+// NPM Packages
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
+// Context
+import { UserContext } from "../../../context/UserContext"
+// Actions
+import postCreateBooking from "./actions/postCreateBooking"
+import getProfile from "./actions/getProfile"
+// Common styles
+import mainSection from "./styles/mainSection"
+import dashWrap from "./styles/dashWrap"
+import dashTitle from "./styles/dashTitle"
 import {
-  B1Sage,
   colors,
-  H1DarkPurple,
   H4Lavender,
   Btn1DarkPurple,
   Nav1CharcoalGrey,
 } from "../../../styles/helpers"
-import { UserContext } from "../../../context/UserContext"
-
+// Components
 import DateTimePicker from "../FormFields/DateTimePicker"
 import RadioInput from "../FormFields/RadioInput"
 import CheckBoxInput from "../FormFields/CheckBoxInput"
 import Input from "../FormFields/Input"
-
-import postCreateBooking from "./actions/postCreateBooking"
-import getProfile from "./actions/getProfile"
 
 const MainCreateBooking = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -201,36 +205,14 @@ const MainCreateBooking = () => {
 }
 
 const MainCreateBookingStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 80rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {
-    width: 100%;
-
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
-
-    p {
-      ${B1Sage};
-      margin-bottom: 0;
-      font-weight: bold;
-    }
+    ${dashTitle};
 
     p.dashTitle__subcontent {
       ${H4Lavender};

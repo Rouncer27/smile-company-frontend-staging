@@ -1,21 +1,25 @@
+// NPM Packages
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import { Link, navigate } from "gatsby"
-import { UserContext } from "../../../context/UserContext"
 import Skeleton from "react-loading-skeleton"
-
+// Context
+import { UserContext } from "../../../context/UserContext"
+// Actions
+import getProfile from "./actions/getProfile"
+import getBookingPackages from "./actions/getBookingPackages"
+// Common styles
+import mainSection from "./styles/mainSection"
+import dashWrap from "./styles/dashWrap"
+import dashTitle from "./styles/dashTitle"
 import {
   colors,
   Btn1LightSage,
-  H1DarkPurple,
   B1Sage,
   H4Lavender,
   H4DarkPurple,
   Nav1CharcoalGrey,
 } from "../../../styles/helpers"
-
-import getProfile from "./actions/getProfile"
-import getBookingPackages from "./actions/getBookingPackages"
 
 const MainPurchase = () => {
   const [bookingDetails, setBookingDetails] = useState({
@@ -202,37 +206,24 @@ const MainPurchase = () => {
 }
 
 const MainPurchaseStyled = styled.div`
-  align-self: stretch;
-  background-color: ${colors.white};
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(70vw);
-  }
+  ${mainSection};
 
   .dashWrap {
-    width: calc(100% - 5rem);
-    max-width: 80rem;
-    margin-left: 5rem;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    ${dashWrap};
   }
 
   .dashTitle {
+    ${dashTitle};
     .profileName {
       ${B1Sage};
       margin-bottom: 0;
       font-weight: bold;
     }
-    h2 {
-      ${H1DarkPurple};
-      margin-top: 0;
-    }
 
     .chooseText {
       ${H4Lavender};
-      margin-top: 5rem;
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
     }
   }
 

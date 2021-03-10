@@ -1,17 +1,21 @@
-import { Link } from "gatsby"
+// NPM Packages
 import React, { useContext } from "react"
+import { Link } from "gatsby"
 import styled from "styled-components"
-import { colors, Nav2Lavender } from "../../../styles/helpers"
+// Context
 import { UserContext } from "../../../context/UserContext"
-
+// Actions
+import handleLogout from "./actions/handleLogout"
+// Common styles
+import mainSidebar from "./styles/mainSidebar"
+import { colors, Nav2Lavender } from "../../../styles/helpers"
+// Components
 import Calendar from "../../Icons/AppIcons/Calendar"
 import Checked from "../../Icons/AppIcons/Checked"
 import Cog from "../../Icons/AppIcons/Cog"
 import Dash from "../../Icons/AppIcons/Dash"
 import List from "../../Icons/AppIcons/List"
 import Man from "../../Icons/AppIcons/Man"
-
-import handleLogout from "./actions/handleLogout"
 
 const SideBar = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -144,16 +148,7 @@ const SideBar = () => {
 }
 
 const AppSidebarStyled = styled.div`
-  display: flex;
-  align-self: stretch;
-  justify-content: center;
-  position: relative;
-  background-color: ${colors.colorAlt};
-  width: 100%;
-
-  @media (min-width: 768px) {
-    width: calc(30vw);
-  }
+  ${mainSidebar};
 
   .sidebarNav {
     position: relative;

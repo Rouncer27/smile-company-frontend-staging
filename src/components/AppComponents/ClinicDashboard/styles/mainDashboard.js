@@ -1,8 +1,9 @@
-import styled, { css } from "styled-components"
+import { css } from "styled-components"
 
 export const mainDahsboard = css`
   .dashWrapper {
     display: flex;
+    flex-wrap: wrap;
     align-items: stretch;
     justify-content: center;
     width: 100%;
