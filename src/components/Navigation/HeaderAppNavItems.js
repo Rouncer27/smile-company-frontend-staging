@@ -42,10 +42,10 @@ const HeaderAppNavItems = () => {
       ) : (
         <>
           <AppItemThree>
+            <Link to="/app">My Dashboard</Link>
+          </AppItemThree>
+          <AppItemThree>
             <button onClick={handleLogout} type="button">
-              <span>
-                <DefaultUser />
-              </span>
               LogOut
             </button>
           </AppItemThree>
@@ -91,17 +91,26 @@ const AppItemTwo = styled.li`
 
 const AppItemThree = styled.li`
   align-self: center;
-  button {
+  button,
+  a {
     ${Nav1White};
-    background-color: transparent;
-    border: none;
+    padding: 1rem;
+    border-radius: 0.6rem;
+    border: solid 0.1rem ${colors.white};
     text-transform: uppercase;
 
-    span {
-      display: block;
-      max-width: 2rem;
-      margin: auto;
+    &[aria-current="page"] {
+      background-color: rgba(173, 137, 166, 0.5);
+
+      &:hover {
+        color: ${colors.white};
+        cursor: default;
+      }
     }
+  }
+
+  button {
+    background-color: transparent;
   }
 `
 

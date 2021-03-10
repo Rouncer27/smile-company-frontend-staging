@@ -4,8 +4,9 @@ import displayErrorMessage from "./displayErrorMessage"
 export default async (token, dispatch, id) => {
   dispatch({ type: "USER_LOADING" })
   try {
-    const response = await axios.get(
+    const response = await axios.put(
       `${process.env.GATSBY_API_URL}/bookings/professionals-apply/${id}`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${token}`,

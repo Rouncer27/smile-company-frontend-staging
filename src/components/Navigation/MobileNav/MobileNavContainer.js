@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react"
-import { navigate } from "gatsby"
+import { Link, navigate } from "gatsby"
 import styled from "styled-components"
 import { UserContext } from "../../../context/UserContext"
 import MobileNavItem from "./MobileNavItem"
@@ -50,11 +50,16 @@ const MobileNavContainer = ({ navitems, setIsOpen }) => {
             <MobileNavItem item={{ label: "login", url: "/app/login" }} />
           </>
         ) : (
-          <li className="logoutBtn">
-            <button onClick={handleLogout} type="button">
-              Logout
-            </button>
-          </li>
+          <>
+            <li className="logoutBtn">
+              <Link to="/app">My Dashboard</Link>
+            </li>
+            <li className="logoutBtn">
+              <button onClick={handleLogout} type="button">
+                Logout
+              </button>
+            </li>
+          </>
         )}
       </ul>
     </MobileNavContainerStyled>
@@ -78,7 +83,8 @@ const MobileNavContainerStyled = styled.nav`
       border-bottom: 0.1rem solid ${colors.white};
       text-align: center;
 
-      button {
+      button,
+      a {
         ${Nav1White};
         display: block;
         width: 100%;
