@@ -20,7 +20,12 @@ import {
   Btn1DarkPurple,
 } from "../../../styles/helpers"
 // Components
-import ProfessionalCard from "./booking/ProfessionalCard"
+import PotentalCandidates from "./booking/PotentalCandidates"
+import BookingError from "./booking/BookingError"
+import CandidateAccepted from "./booking/CandidateAccepted"
+import BookingUnfulfilled from "./booking/BookingUnfulfilled"
+import BookingCancelled from "./booking/BookingCancelled"
+import BookingCancelledShort from "./booking/BookingCancelledShort"
 // Helper Functions
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
 
@@ -80,18 +85,34 @@ const MainBookingSingle = () => {
   let bookingStatusTitle
   let bookingStatus
   let isActive
+  let is_short_notice = false
 
   if (currentBooking !== null) {
+    const is_active = currentBooking.booking_active
+    const is_selected = currentBooking.candidate_selected
+    const is_expired = currentBooking.is_expired
+    const is_cancelled = currentBooking.was_cancelled
+    const is_cancelled_short = currentBooking.was_cancelled_with_short_notice
+
     bookingStatusTitle =
-      !currentBooking.booking_active && currentBooking.candidate_selected
+      // Booking Was Cancelled with short notice.
+      is_cancelled && is_cancelled_short
+        ? "SHORTCANCELLED"
+        : // Booking Was Cancelled with proper notice.
+        is_cancelled
+        ? "CANCELLED"
+        : // A Candidate was selected.
+        is_selected
         ? "FULFILLED"
-        : !currentBooking.booking_active && !currentBooking.candidate_selected
-        ? "UNFULFILLED"
-        : currentBooking.booking_active && !currentBooking.candidate_selected
+        : // This Post is active and has not expired yet and still needs to select a candiate
+        is_active && !is_expired && !is_selected
         ? "OPEN"
-        : currentBooking.booking_active && currentBooking.candidate_selected
-        ? "ERROR"
+        : // This Post is expired and has not selected a candiate
+        is_expired && !is_selected
+        ? "UNFULFILLED"
         : "ERROR"
+
+    is_short_notice = currentBooking.is_short_notice
 
     bookingStatus =
       !currentBooking.booking_active && currentBooking.candidate_selected
@@ -180,59 +201,39 @@ const MainBookingSingle = () => {
             {isActive && (
               <div className="bookingActivity">
                 <h3>Cancel Booking</h3>
+                {is_short_notice && (
+                  <p>
+                    <span className="shortNotice">
+                      Request Short Notice Cancellation - $50.00 Fee
+                    </span>
+                  </p>
+                )}
                 <div className="bookingactivity__button">
                   <button onClick={() => handleCancelBooking()}>
-                    Request Cancellation
+                    {is_short_notice
+                      ? "Request Short Notice Cancellation"
+                      : "Request Cancellation"}
                   </button>
                 </div>
               </div>
             )}
             <div className="bookingCandidates">
               {bookingStatusTitle === "OPEN" ? (
-                <div>
-                  <div>
-                    <h3>Potential Candidates</h3>
-                  </div>
-                  {currentBooking.professionals_applied &&
-                    currentBooking.professionals_applied.length > 0 && (
-                      <div className="bookingCandidates__wrapper">
-                        {currentBooking.professionals_applied.map(pro => (
-                          <ProfessionalCard
-                            key={pro.id}
-                            pro={pro}
-                            bookingId={currentBooking._id}
-                            accepted={false}
-                          />
-                        ))}
-                      </div>
-                    )}
-                </div>
+                <PotentalCandidates currentBooking={currentBooking} />
               ) : bookingStatusTitle === "ERROR" ? (
-                <div>
-                  <h3>Error With Booking</h3>
-                </div>
+                <BookingError />
               ) : bookingStatusTitle === "FULFILLED" ? (
-                <div>
-                  <div>
-                    <h3>Candidate Accepted</h3>
-                  </div>
-                  <div className="bookingCandidates__wrapper">
-                    <ProfessionalCard
-                      pro={currentBooking.professional_selected}
-                      bookingId={null}
-                      accepted={true}
-                    />
-                  </div>
-                </div>
+                <CandidateAccepted
+                  proSelected={currentBooking.professional_selected}
+                />
               ) : bookingStatusTitle === "UNFULFILLED" ? (
-                <div>
-                  <h3>Booking Unfulfilled</h3>
-                  <p>This booking expired or was canclled and was not filled</p>
-                </div>
+                <BookingUnfulfilled />
+              ) : bookingStatusTitle === "CANCELLED" ? (
+                <BookingCancelled />
+              ) : bookingStatusTitle === "SHORTCANCELLED" ? (
+                <BookingCancelledShort />
               ) : (
-                <div>
-                  <h3>Error With Booking</h3>
-                </div>
+                <BookingError />
               )}
             </div>
           </div>
@@ -303,8 +304,13 @@ const MainBookingSingleStyled = styled.div`
         background-color: #15cd72;
       }
 
-      &__unfulfilled {
+      &__unfulfilled,
+      &__cancelled {
         background-color: #ede04d;
+      }
+
+      &__shortcancelled {
+        background-color: #ed4f32;
       }
 
       &__error {
@@ -331,6 +337,19 @@ const MainBookingSingleStyled = styled.div`
         &:hover {
           color: ${colors.colorAlt};
           cursor: inherit;
+        }
+      }
+
+      .shortNotice {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        background-color: #ed4f32;
+        color: ${colors.black} !important;
+        text-align: center;
+
+        &:hover {
+          color: ${colors.black};
         }
       }
     }
