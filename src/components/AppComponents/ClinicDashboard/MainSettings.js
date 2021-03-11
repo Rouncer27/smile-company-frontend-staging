@@ -190,6 +190,7 @@ const MainSettings = () => {
           message: "Your profile has been updated successfully!",
         },
       })
+      return navigate("/app/clinic-dashboard", { replace: true })
     } catch (err) {
       console.dir(err)
       const message =

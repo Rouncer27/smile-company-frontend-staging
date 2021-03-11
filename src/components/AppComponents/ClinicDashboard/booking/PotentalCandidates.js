@@ -7,20 +7,8 @@ import {
 } from "../../../../styles/helpers"
 import ProfessionalCard from "./ProfessionalCard"
 
-const PotentalCandidates = currentBooking => {
-  const [hasCandidates, setHasCandidates] = useState(false)
-
-  useEffect(() => {
-    if (
-      currentBooking.professionals_applied &&
-      currentBooking.professionals_applied.length > 0
-    ) {
-      setHasCandidates(true)
-    } else {
-      setHasCandidates(false)
-    }
-  }, [])
-
+const PotentalCandidates = ({ proApplied, bookingID }) => {
+  console.log(proApplied)
   return (
     <PotentalCandidatesStyled>
       <div className="title">
@@ -29,13 +17,13 @@ const PotentalCandidates = currentBooking => {
           <span>OPEN</span>
         </p>
       </div>
-      {hasCandidates ? (
+      {proApplied ? (
         <div className="bookingCandidates__wrapper">
-          {currentBooking.professionals_applied.map(pro => (
+          {proApplied.map(pro => (
             <ProfessionalCard
               key={pro.id}
               pro={pro}
-              bookingId={currentBooking._id}
+              bookingId={bookingID}
               accepted={false}
             />
           ))}

@@ -13,6 +13,7 @@ import dashTitle from "./styles/dashTitle"
 import { colors, Nav1CharcoalGrey } from "../../../styles/helpers"
 // Helper Functions
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
+import getBookingStatus from "./helper/getBookingStatus"
 
 const MainBookings = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -59,14 +60,8 @@ const MainBookings = () => {
                 meridiem: endMeridiem,
               } = timeFormat(booking.shift_end)
 
-              const status =
-                !booking.booking_active && booking.candidate_selected
-                  ? "FULFILLED"
-                  : !booking.booking_active && !booking.candidate_selected
-                  ? "UNFULFILLED"
-                  : booking.booking_active && !booking.candidate_selected
-                  ? "OPEN"
-                  : "ERROR"
+              const statusInfo = getBookingStatus(booking)
+              const status = statusInfo.bookingStatusTitle
 
               return (
                 <li key={booking.id}>
@@ -154,6 +149,7 @@ const MainBookingsStyled = styled.div`
             background-color: #ede04d;
           }
 
+          &__shorcancelled,
           &__error {
             background-color: #ed4f32;
           }

@@ -7,7 +7,7 @@ import {
 } from "../../../../styles/helpers"
 import ProfessionalCard from "./ProfessionalCard"
 
-const CandidateAccepted = proSelected => {
+const CandidateAccepted = ({ proSelected }) => {
   return (
     <CandidateAcceptedStyled>
       <div className="title">

@@ -28,6 +28,7 @@ import BookingCancelled from "./booking/BookingCancelled"
 import BookingCancelledShort from "./booking/BookingCancelledShort"
 // Helper Functions
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
+import getBookingStatus from "./helper/getBookingStatus"
 
 const MainBookingSingle = () => {
   const [currentBookingId, setCurrentBookingId] = useState("")
@@ -88,49 +89,11 @@ const MainBookingSingle = () => {
   let is_short_notice = false
 
   if (currentBooking !== null) {
-    const is_active = currentBooking.booking_active
-    const is_selected = currentBooking.candidate_selected
-    const is_expired = currentBooking.is_expired
-    const is_cancelled = currentBooking.was_cancelled
-    const is_cancelled_short = currentBooking.was_cancelled_with_short_notice
-
-    bookingStatusTitle =
-      // Booking Was Cancelled with short notice.
-      is_cancelled && is_cancelled_short
-        ? "SHORTCANCELLED"
-        : // Booking Was Cancelled with proper notice.
-        is_cancelled
-        ? "CANCELLED"
-        : // A Candidate was selected.
-        is_selected
-        ? "FULFILLED"
-        : // This Post is active and has not expired yet and still needs to select a candiate
-        is_active && !is_expired && !is_selected
-        ? "OPEN"
-        : // This Post is expired and has not selected a candiate
-        is_expired && !is_selected
-        ? "UNFULFILLED"
-        : "ERROR"
-
-    is_short_notice = currentBooking.is_short_notice
-
-    bookingStatus =
-      !currentBooking.booking_active && currentBooking.candidate_selected
-        ? "closed and a candidate has been selected and posting if filled."
-        : !currentBooking.booking_active && !currentBooking.candidate_selected
-        ? "closed and no candidates have been selected, this post has not been filled."
-        : currentBooking.booking_active && !currentBooking.candidate_selected
-        ? "open and waiting for replies from protental candidates."
-        : "There has been an error. If required please contact Smile and Company for assitance."
-
-    isActive =
-      !currentBooking.booking_active && currentBooking.candidate_selected
-        ? false
-        : !currentBooking.booking_active && !currentBooking.candidate_selected
-        ? false
-        : currentBooking.booking_active && !currentBooking.candidate_selected
-        ? true
-        : false
+    const statusInfo = getBookingStatus(currentBooking)
+    bookingStatusTitle = statusInfo.bookingStatusTitle
+    is_short_notice = statusInfo.isShortNotice
+    bookingStatus = statusInfo.bookingStatus
+    isActive = statusInfo.isActive
   }
 
   const handleCancelBooking = async () => {
@@ -219,7 +182,14 @@ const MainBookingSingle = () => {
             )}
             <div className="bookingCandidates">
               {bookingStatusTitle === "OPEN" ? (
-                <PotentalCandidates currentBooking={currentBooking} />
+                <PotentalCandidates
+                  proApplied={
+                    currentBooking.professionals_applied
+                      ? currentBooking.professionals_applied
+                      : []
+                  }
+                  bookingID={currentBooking._id}
+                />
               ) : bookingStatusTitle === "ERROR" ? (
                 <BookingError />
               ) : bookingStatusTitle === "FULFILLED" ? (
