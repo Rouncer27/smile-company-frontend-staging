@@ -16,11 +16,13 @@ import {
   Btn1DarkPurple,
   colors,
   H4Lavender,
+  Nav1CharcoalGrey,
 } from "../../../styles/helpers"
 
 const MainDashboard = () => {
   const [state, dispatch] = useContext(UserContext)
-  const { token, user } = state
+  const { token, user, profile } = state
+  const { bookings } = profile
   const { confirmed, email } = user
   const userId = user.id
 
@@ -98,6 +100,66 @@ const MainDashboard = () => {
                 )}
               </p>
             </div>
+            <div className="mainDashBookings">
+              <p>
+                Temp jobs posts created:{" "}
+                <span>{bookings && bookings.length}</span>
+              </p>
+            </div>
+            <div className="mainDashInfo">
+              <p>
+                Clinic Name <span>{state.profile.clinic_name}</span>
+              </p>
+
+              <p>
+                Contact Name:{" "}
+                <span>
+                  {state.profile.contact_first_name}{" "}
+                  {state.profile.contact_last_name}
+                </span>
+              </p>
+              <p>
+                Phone Number: <span>{state.profile.phone}</span>
+              </p>
+              <p>
+                Text Message Number:{" "}
+                <span>{state.profile.text_message_number}</span>
+              </p>
+              <p>
+                Clinic street address / location:{" "}
+                <span>{state.profile.address}</span>
+              </p>
+              <p>
+                City: <span>{state.profile.city}</span>
+              </p>
+              <p>
+                Parking Information:{" "}
+                <span>{state.profile.parking_information}</span>
+              </p>
+              <p>
+                Additional Clinics:{" "}
+                <span>{state.profile.additional_clinics}</span>
+              </p>
+              <p>
+                Number of Dentists: <span>{state.profile.dentists_count}</span>
+              </p>
+              <p>
+                Dentists Names: <span>{state.profile.dentists_names}</span>
+              </p>
+              <p>
+                Office Hours: <span>{state.profile.office_hours}</span>
+              </p>
+              <p>
+                Benefits Offered: <span>{state.profile.benefits}</span>
+              </p>
+              <p>
+                Perks: <span>{state.profile.perks}</span>
+              </p>
+              <p>
+                What is the best thing about working at your office:{" "}
+                <span>{state.profile.best_thing}</span>
+              </p>
+            </div>
           </>
         )}
       </div>
@@ -148,6 +210,47 @@ const MainDashboardStyled = styled.div`
     p {
       ${H4Lavender};
       margin: 0;
+
+      span {
+        font-weight: bold;
+        color: ${colors.colorTertiary};
+      }
+    }
+  }
+
+  .mainDashBookings {
+    width: 100%;
+    margin-top: 2.5rem;
+    padding: 5rem 2.5rem;
+    border-radius: 2.5rem;
+    background-color: rgba(173, 137, 166, 0.25);
+
+    p {
+      ${H4Lavender};
+      margin: 0;
+
+      span {
+        font-weight: bold;
+        color: ${colors.colorTertiary};
+      }
+    }
+  }
+
+  .mainDashInfo {
+    width: 100%;
+    margin-top: 2.5rem;
+    padding: 5rem 2.5rem;
+    border-radius: 2.5rem;
+    background-color: rgba(173, 137, 166, 0.25);
+
+    p {
+      ${Nav1CharcoalGrey};
+      margin-bottom: 1.5rem;
+
+      &:hover {
+        color: ${colors.colorAlt};
+        cursor: inherit;
+      }
 
       span {
         font-weight: bold;
