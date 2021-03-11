@@ -79,6 +79,7 @@ const MainHistory = () => {
             ) : (
               <div className="pastBookingItems">
                 {pastBookings.map(booking => {
+                  if (!booking.is_expired) return null
                   return (
                     <div className="pastItem">
                       <p>

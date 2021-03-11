@@ -28,8 +28,11 @@ const MainCreateBooking = () => {
   const { token, user, profile } = state
   const userId = user.id
 
+  var tomorrow = new Date()
+  tomorrow.setDate(new Date().getDate() + 1)
+
   const [formData, setFormData] = useState({
-    day: "",
+    day: tomorrow,
     shift_start: "",
     shift_end: "",
     location: "",

@@ -49,9 +49,10 @@ const MainApproved = () => {
           <>
             {myApprovedBookings && myApprovedBookings.length > 0 ? (
               <div className="dashApproved">
-                {myApprovedBookings.map(item => (
-                  <ApprovedItem key={item.id} item={item} />
-                ))}
+                {myApprovedBookings.map(item => {
+                  if (item.is_expired) return null
+                  return <ApprovedItem key={item.id} item={item} />
+                })}
               </div>
             ) : (
               <div className="dashNothing">

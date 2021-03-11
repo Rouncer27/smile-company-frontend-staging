@@ -86,7 +86,7 @@ const AvailableCard = ({ booking }) => {
       dispatch({ type: "USER_ERROR", payload: { message } })
     }
   }
-
+  console.log("THIS IS THE SINGLE BOOKING: ", booking)
   const havApplied =
     booking.applied_ids.findIndex(id => id === profile.id) !== -1 ? true : false
   const isActive = booking.booking_active
