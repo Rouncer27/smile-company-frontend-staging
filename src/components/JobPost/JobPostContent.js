@@ -21,6 +21,11 @@ const JobPostContent = ({ data }) => {
 const JobPostContentStyled = styled.div`
   .wrapper {
     ${medWrapper};
+
+    @media (max-width: 767px) {
+      max-width: 50rem;
+      padding: 0;
+    }
   }
 `
 

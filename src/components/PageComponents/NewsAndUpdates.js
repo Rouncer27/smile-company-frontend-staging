@@ -104,6 +104,11 @@ const NewsAndUpdatesStyled = styled.div`
     ${medWrapper};
     justify-content: flex-start;
     padding-bottom: 10rem;
+
+    @media (max-width: 767px) {
+      margin: 0 auto;
+      max-width: 50rem;
+    }
   }
 
   .loadMore {

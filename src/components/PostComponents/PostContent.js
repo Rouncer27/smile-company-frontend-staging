@@ -67,6 +67,10 @@ const PostContentStyled = styled.main`
   .wrapper {
     ${standardWrapper};
 
+    @media (max-width: 767px) {
+      max-width: 50rem;
+    }
+
     @media (min-width: 1025px) {
       max-width: 90rem;
     }

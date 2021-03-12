@@ -19,7 +19,6 @@ const ContactForm = ({ data }) => {
   const [formData, setFormData] = useState({})
 
   const displaySidebar = data.sidebarDispaly
-  console.log(data)
 
   useEffect(() => {
     const startingState = {}
@@ -116,9 +115,11 @@ const ContactFormStyled = styled.div`
 
   form {
     width: 100%;
+    margin-bottom: 2.5rem;
 
     @media (min-width: 768px) {
       width: calc(66.66%);
+      margin-bottom: 0;
     }
 
     @media (min-width: 1025px) {

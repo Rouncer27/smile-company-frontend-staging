@@ -39,10 +39,12 @@ const JobCard = ({ data, index }) => {
 
 const JobCardStyled = styled.div`
   width: 100%;
-  margin-bottom: 3rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 
   @media (min-width: 768px) {
     width: calc(50% - 1.5rem);
+    margin-top: 0;
     margin-right: ${props => (props.index % 2 ? "0rem" : "1.5rem")};
     margin-left: ${props => (props.index % 2 ? "1.5rem" : "0rem")};
     margin-bottom: 3rem;

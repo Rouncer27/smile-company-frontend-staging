@@ -71,11 +71,13 @@ const JobPostingsStyled = styled.div`
     align-self: flex-start;
     width: calc(100%);
     padding: 4rem;
+    margin-bottom: 1.5rem;
     background-color: ${colors.colorTertiary};
 
     @media (min-width: 768px) {
       width: calc(33.33% - 1rem);
       margin-right: 1rem;
+      margin-bottom: 0;
     }
 
     &__title {

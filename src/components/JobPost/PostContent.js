@@ -40,12 +40,13 @@ const PostContent = ({ data }) => {
 const PostContentStyled = styled.div`
   width: calc(100%);
   margin-bottom: 4rem;
-  padding: 4rem;
+  padding: 4rem 2rem;
   background-color: rgba(208, 204, 202, 0.25);
 
   @media (min-width: 768px) {
     width: calc(66.66% - 1rem);
     margin-left: 1rem;
+    padding: 4rem;
   }
 
   .jobTitles {

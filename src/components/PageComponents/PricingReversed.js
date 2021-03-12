@@ -62,12 +62,13 @@ const PricingReversedSection = styled.section`
     position: relative;
     width: 100%;
     padding: 4rem;
-    transform: translateY(-10rem);
+    transform: translateY(-5rem);
     background-color: ${colors.colorTertiary};
 
     @media (min-width: 768px) {
       width: calc(33.33% - 5rem);
       margin-right: 5rem;
+      transform: translateY(-10rem);
     }
 
     h2 {

@@ -76,10 +76,12 @@ const PostCardStyled = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  margin-bottom: 2rem;
   width: 100%;
 
   @media (min-width: 768px) {
-    width: calc(50%);
+    width: calc(50% - 2rem);
+    margin: 1rem;
   }
 
   @media (min-width: 1025px) {

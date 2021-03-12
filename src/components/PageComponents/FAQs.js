@@ -26,10 +26,20 @@ const FAQsSection = styled.section`
 
   .wrapper {
     ${medWrapper};
+
+    @media (max-width: 768px) {
+      max-width: 50rem;
+      padding: 0;
+    }
   }
 
   .mainTitle {
     width: 100%;
+    padding: 0 3rem;
+
+    @media (min-width: 768px) {
+      padding: 0;
+    }
 
     h2 {
       ${H2Lavender};

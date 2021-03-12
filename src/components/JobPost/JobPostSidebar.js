@@ -25,12 +25,13 @@ const JobPostSidebar = () => {
 const Sidebar = styled.div`
   align-self: flex-start;
   width: calc(100%);
-  padding: 4rem;
+  padding: 4rem 2rem;
   background-color: ${colors.colorTertiary};
 
   @media (min-width: 768px) {
     width: calc(33.33% - 1rem);
     margin-right: 1rem;
+    padding: 4rem;
   }
 
   .postingSidebar__title {
