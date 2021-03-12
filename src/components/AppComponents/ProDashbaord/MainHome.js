@@ -18,6 +18,9 @@ import {
   H4Lavender,
   Nav1CharcoalGrey,
 } from "../../../styles/helpers"
+// Helpers
+import getReadablePosition from "./helper/getReadablePosition"
+import getReadableExperience from "./helper/getReadableExperience"
 
 const MainHome = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -127,10 +130,18 @@ const MainHome = () => {
               <span className="name">{state.profile.last_name}</span>
             </p>
             <p>
-              Position: <span>{state.profile.position}</span>
+              Position:{" "}
+              <span>
+                {state.profile.position &&
+                  getReadablePosition(state.profile.position)}
+              </span>
             </p>
             <p>
-              Experience: <span>{state.profile.experience}</span>
+              Experience:{" "}
+              <span>
+                {state.profile.experience &&
+                  getReadableExperience(state.profile.experience)}
+              </span>
             </p>
             <p>
               Year Graduated: <span>{state.profile.year_graduated}</span>

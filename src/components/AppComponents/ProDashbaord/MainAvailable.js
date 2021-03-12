@@ -1,5 +1,5 @@
 // NPM Packages
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 // Context
 import { UserContext } from "../../../context/UserContext"
@@ -10,13 +10,14 @@ import getBookings from "./actions/getBookings"
 import mainSection from "./style/mainSection"
 import dashWrap from "./style/dashWrap"
 import dashTitle from "./style/dashTitle"
+import dashAlert from "./style/dashAlert"
 // Components
 import AvailableCard from "./available/AvailableCard"
 import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
-import { H4DarkPurple } from "../../../styles/helpers"
 
 const MainAvailable = () => {
   const [state, dispatch] = useContext(UserContext)
+  const [bookingsNotIgnored, setBookingNotIgnored] = useState([])
   const { token, user, bookings } = state
   const userId = user.id
 
@@ -33,6 +34,10 @@ const MainAvailable = () => {
     handleGetBookings()
   }, [])
 
+  useEffect(() => {
+    setBookingNotIgnored(bookings.filter(book => !book.isIgnored))
+  }, [bookings])
+
   return (
     <MainAvailableStyled>
       <div className="dashWrap">
@@ -44,19 +49,19 @@ const MainAvailable = () => {
         </div>
         {!state.loading ? (
           <div>
-            {bookings && bookings.length > 0 ? (
+            {bookingsNotIgnored.length > 0 ? (
               <div className="bookingsWrapper">
-                {bookings.map(booking => {
-                  if (booking.isIgnored) return null
-                  return <AvailableCard key={booking.id} booking={booking} />
-                })}
+                {bookingsNotIgnored.map(booking => (
+                  <AvailableCard key={booking.id} booking={booking} />
+                ))}
               </div>
             ) : (
-              <div className="noBookings">
-                <h3>
+              <div className="dashAlert">
+                <span className="alertIndicator">Alert</span>
+                <p>
                   There is currenly no bookings you are matched for. Please
                   check again later.
-                </h3>
+                </p>
               </div>
             )}
           </div>
@@ -85,10 +90,8 @@ const MainAvailableStyled = styled.div`
     justify-content: flex-start;
   }
 
-  .noBookings {
-    h3 {
-      ${H4DarkPurple};
-    }
+  .dashAlert {
+    ${dashAlert};
   }
 `
 

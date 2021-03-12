@@ -8,6 +8,8 @@ import {
 
 import Checkmark from "../../../Icons/AppIcons/Checkmark"
 import { timeFormat, getMothName } from "../../../../utils/helperFunc"
+import getReadableLocation from "../helper/getReadableLocation"
+import getReadablePosition from "../helper/getReadablePosition"
 
 const ApprovedItem = ({ item }) => {
   const currentBookingStartTime = item ? item.shift_start : []
@@ -26,7 +28,8 @@ const ApprovedItem = ({ item }) => {
         </h2>
       </div>
       <div className="details">
-        <p>Location / City: {item.location}</p>
+        <p>Position: {getReadablePosition(item.position)}</p>
+        <p>Location / City: {getReadableLocation(item.location)}</p>
         <p>Address: {item.address}</p>
         <p>
           Date:{" "}

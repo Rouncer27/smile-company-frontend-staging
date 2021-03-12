@@ -1,5 +1,5 @@
 // NPM Packages
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 // Context
 import { UserContext } from "../../../context/UserContext"
@@ -10,6 +10,7 @@ import getBookings from "./actions/getBookings"
 import mainSection from "./style/mainSection"
 import dashWrap from "./style/dashWrap"
 import dashTitle from "./style/dashTitle"
+import dashAlert from "./style/dashAlert"
 // Components
 import ApprovedItem from "./approved/ApprovedItem"
 import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
@@ -27,13 +28,12 @@ const MainApproved = () => {
   useEffect(() => {
     handleGetProfileOnMount()
   }, [])
-
   const approvedBookings = bookings.filter(
     booking => booking.candidate_selected
   )
 
   const myApprovedBookings = approvedBookings.filter(
-    booking => booking.aceepted_profile_id === profile.id
+    booking => booking.aceepted_profile_id === profile.id && !booking.is_expired
   )
 
   return (
@@ -55,8 +55,9 @@ const MainApproved = () => {
                 })}
               </div>
             ) : (
-              <div className="dashNothing">
-                <p>Sorry, you haven't been matched with any temp jobs yet.</p>
+              <div className="dashAlert">
+                <span className="alertIndicator">Alert</span>
+                <p>There are no past bookings</p>
               </div>
             )}
           </>
@@ -83,6 +84,10 @@ const MainApprovedStyled = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+  }
+
+  .dashAlert {
+    ${dashAlert};
   }
 `
 

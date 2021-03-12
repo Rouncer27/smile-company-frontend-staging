@@ -14,10 +14,14 @@ import { UserContext } from "../../../../context/UserContext"
 
 import getBookings from "../actions/getBookings"
 import getBookingApply from "../actions/getBookingApply"
+import putBookingIgnore from "../actions/putBookingIgnore"
+// helpers
+import getReadablePosition from "../helper/getReadablePosition"
+import getReadableLocation from "../helper/getReadableLocation"
 
 const AvailableCard = ({ booking }) => {
   const [state, dispatch] = useContext(UserContext)
-  const { token, user, profile, bookings } = state
+  const { token, user, profile } = state
   const userId = user.id
 
   const [currentBookingTime, setCurrentBookingTime] = useState({
@@ -45,48 +49,16 @@ const AvailableCard = ({ booking }) => {
     })
   }, [])
 
-  const handleApplyForBooking = async id => {
-    await getBookingApply(token, dispatch, id)
+  const handleApplyForBooking = async () => {
+    await getBookingApply(token, dispatch, booking.id)
     await getBookings(token, userId, state.user.confirmed, dispatch)
   }
 
-  const handleIgnorePost = async id => {
-    dispatch({ type: "USER_LOADING" })
-    try {
-      const response = await axios.put(
-        `${process.env.GATSBY_API_URL}/bookings/ignore/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      dispatch({
-        type: "USER_ALERT",
-        payload: {
-          message: response.data.message,
-        },
-      })
-
-      await getBookings(token, userId, state.user.confirmed, dispatch)
-    } catch (err) {
-      console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
-    }
+  const handleIgnorePost = async () => {
+    await putBookingIgnore(token, booking.id, dispatch)
+    await getBookings(token, userId, state.user.confirmed, dispatch)
   }
-  console.log("THIS IS THE SINGLE BOOKING: ", booking)
+
   const havApplied =
     booking.applied_ids.findIndex(id => id === profile.id) !== -1 ? true : false
   const isActive = booking.booking_active
@@ -115,10 +87,10 @@ const AvailableCard = ({ booking }) => {
           Clinic Name: <span>{booking.clinic_name}</span>
         </p>
         <p>
-          Position: <span>{booking.position}</span>
+          Position: <span>{getReadablePosition(booking.position)}</span>
         </p>
         <p>
-          Location: <span>{booking.location}</span>
+          Location: <span>{getReadableLocation(booking.location)}</span>
         </p>
         <p>
           Street Address / Parking Details: <span>{booking.address}</span>
@@ -164,9 +136,7 @@ const AvailableCard = ({ booking }) => {
               Posting Status -- <span>OPEN</span>
             </p>
             <p>Apply to this temp job</p>
-            <button onClick={() => handleApplyForBooking(booking._id)}>
-              Yes
-            </button>
+            <button onClick={() => handleApplyForBooking()}>Yes</button>
           </div>
         )}
 
@@ -213,9 +183,7 @@ const AvailableCard = ({ booking }) => {
           <p>
             Click to remove this post forever from your available booking page.
           </p>
-          <button onClick={() => handleIgnorePost(booking.id)}>
-            Remove this post
-          </button>
+          <button onClick={() => handleIgnorePost()}>Remove this post</button>
         </div>
       </div>
     </AvailableCardStyled>

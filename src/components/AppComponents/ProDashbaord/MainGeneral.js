@@ -78,6 +78,8 @@ const MainGeneral = () => {
     updateFormFields()
   }, [])
 
+  console.log(profile.profile_satisfied)
+
   return (
     <MainGeneralStyled>
       <div className="dashWrap">
@@ -113,24 +115,26 @@ const MainGeneral = () => {
                   required={true}
                   size="half"
                 />
-                <RadioInput
-                  label="Position"
-                  name="position"
-                  handleOnRadioChange={handleOnChange}
-                  value={formData.position}
-                  options={[
-                    {
-                      id: "rda",
-                      label: "RDA",
-                    },
-                    { id: "rdh", label: "RDH" },
-                    { id: "admin", label: "Admin" },
-                    {
-                      id: "sterilizationAssistant",
-                      label: "Sterilization Assistant",
-                    },
-                  ]}
-                />
+                {!profile.profile_satisfied && (
+                  <RadioInput
+                    label="Position *** You will not be allowed to change your position once approved, you will need to contact Smile and Company if you wish to change this in the future."
+                    name="position"
+                    handleOnRadioChange={handleOnChange}
+                    value={formData.position}
+                    options={[
+                      {
+                        id: "rda",
+                        label: "RDA",
+                      },
+                      { id: "rdh", label: "RDH" },
+                      { id: "admin", label: "Admin" },
+                      {
+                        id: "sterilizationAssistant",
+                        label: "Sterilization Assistant",
+                      },
+                    ]}
+                  />
+                )}
                 <RadioInput
                   label="Years Experience"
                   name="experience"

@@ -14,6 +14,8 @@ import dashAlert from "./style/dashAlert"
 import { colors, Nav1CharcoalGrey } from "../../../styles/helpers"
 // Components
 import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
+import getReadablePosition from "./helper/getReadablePosition"
+import getReadableLocation from "./helper/getReadableLocation"
 
 const MainHistory = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -84,9 +86,9 @@ const MainHistory = () => {
                     <div className="pastItem">
                       <p>
                         <span>{booking.clinic_name}</span> &#124;{" "}
-                        <span>{booking.location}</span> &#124;{" "}
-                        <span>{booking.day}</span> &#124;{" "}
-                        <span>{booking.position}</span>
+                        <span>{getReadableLocation(booking.location)}</span>{" "}
+                        &#124; <span>{booking.day}</span> &#124;{" "}
+                        <span>{getReadablePosition(booking.position)}</span>
                       </p>
                     </div>
                   )
