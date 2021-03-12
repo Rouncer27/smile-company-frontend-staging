@@ -41,6 +41,7 @@ const PriceCard = ({ item }) => {
 const PriceCardStyled = styled.div`
   position: relative;
   width: 100%;
+  margin: 2rem auto;
   padding-bottom: 0;
   background-color: rgba(255, 255, 255, 1);
 

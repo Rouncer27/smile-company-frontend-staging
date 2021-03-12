@@ -74,9 +74,13 @@ const Affiliate = styled.div`
 
   .affiliateLogo {
     width: 100%;
+    max-width: 20rem;
+    margin: auto;
+    margin-bottom: 3rem;
 
     @media (min-width: 768px) {
       width: calc(20%);
+      margin: 0;
       padding: 0 2rem;
     }
 
@@ -88,10 +92,12 @@ const Affiliate = styled.div`
 
   .affiliateBio {
     width: 100%;
+    text-align: center;
 
     @media (min-width: 768px) {
       width: calc(80% - 2rem);
       margin-left: 2rem;
+      text-align: left;
     }
 
     @media (min-width: 1025px) {

@@ -232,9 +232,13 @@ const TestSection = styled.section`
     &__button {
       ${Btn1DarkPurple};
       position: absolute;
-      top: 50%;
+      top: 15%;
       transform: translateY(-50%);
       z-index: 99999999999;
+
+      @media (min-width: 768px) {
+        top: 50%;
+      }
     }
 
     &__next {
@@ -248,9 +252,7 @@ const TestSection = styled.section`
 `
 
 const Card = styled.div`
-  ${"" /* ${props => console.log(props)}; */}
   position: absolute;
-
   top: 0;
   right: auto;
   left: 50%;
@@ -258,7 +260,6 @@ const Card = styled.div`
   transform: ${props =>
     props.centercard ? "translate(-50%, -5rem)" : "translate( -50%, 20rem)"};
   transition: all 0.5s ease-in;
-
   align-items: center;
   background-color: ${props =>
     props.centercard ? "rgba(173,137,166,1)" : "rgba(173,137,166,0.25)"};
@@ -276,10 +277,14 @@ const Card = styled.div`
       props.leftcard ? "10rem" : props.centercard ? "50%" : "auto"};
     ${props => props.rightoff && "right: 25rem"};
     ${props => props.leftoff && "left: 25rem"};
-    padding: 8rem 4rem;
+    padding: 8rem 2rem;
     transform: ${props =>
       props.centercard ? "translate( -50%, -5rem)" : "translateX(0%)"};
     opacity: ${props => (props.cardactive ? "1" : "0")};
+  }
+
+  @media (min-width: 1025px) {
+    padding: 8rem 4rem;
   }
 
   .slideContent__icon {

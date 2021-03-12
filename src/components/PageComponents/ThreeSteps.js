@@ -91,7 +91,12 @@ const ThreeStepsSection = styled.section`
 
     &__links {
       a:last-of-type {
+        margin-top: 2rem;
         margin-left: 2rem;
+
+        @media (min-width: 768px) {
+          margin-top: 0;
+        }
       }
 
       a.button--purple {

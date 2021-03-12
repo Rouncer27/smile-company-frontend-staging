@@ -54,7 +54,11 @@ const OurValuesSection = styled.section`
     width: 100%;
     max-width: 70rem;
     margin: 2rem auto;
-    padding: 12.5rem 0;
+    padding: 2.5rem 0;
+
+    @media (min-width: 768px) {
+      padding: 12.5rem 0;
+    }
 
     &__title {
       width: 100%;
@@ -72,8 +76,11 @@ const OurValuesSection = styled.section`
       margin-top: 1.5rem;
 
       &--para {
-        width: calc(50% - 2rem);
-        margin-right: 2rem;
+        width: calc(100%);
+        @media (min-width: 768px) {
+          width: calc(50% - 2rem);
+          margin-right: 2rem;
+        }
 
         p {
           ${H4White};
@@ -81,8 +88,12 @@ const OurValuesSection = styled.section`
       }
 
       &--points {
-        width: calc(50% - 2rem);
-        margin-left: 2rem;
+        width: calc(100%);
+
+        @media (min-width: 768px) {
+          width: calc(50% - 2rem);
+          margin-left: 2rem;
+        }
 
         ul {
           li {

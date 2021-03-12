@@ -66,18 +66,36 @@ const BlockStyled = styled.div`
     padding: 6rem 7.5rem;
   }
   .blockTitle {
+    text-align: center;
+
+    @media (min-width: 768px) {
+      text-align: left;
+    }
+
     h2 {
       ${H3CharcoalGrey};
     }
   }
 
   .blockContent {
+    text-align: center;
+
+    @media (min-width: 768px) {
+      text-align: left;
+    }
+
     p {
       ${B1CharcoalGrey};
     }
   }
 
   .blockLink {
+    text-align: center;
+
+    @media (min-width: 768px) {
+      text-align: left;
+    }
+
     a {
       ${Btn1DarkPurple};
       background: transparent;

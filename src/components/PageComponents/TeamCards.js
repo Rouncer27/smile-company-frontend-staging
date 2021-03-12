@@ -46,6 +46,10 @@ const TeamCards = ({ data }) => {
 const TeamCardsSection = styled.section`
   .wrapper {
     ${medWrapper};
+
+    @media (max-width: 767px) {
+      max-width: 50rem;
+    }
   }
 
   .teamTitle {
