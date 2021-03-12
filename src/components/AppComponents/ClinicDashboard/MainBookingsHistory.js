@@ -15,41 +15,38 @@ import { colors, Nav1CharcoalGrey } from "../../../styles/helpers"
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
 import getBookingStatus from "./helper/getBookingStatus"
 
-const MainBookings = () => {
+const MainBookingsHistory = () => {
   const [state, dispatch] = useContext(UserContext)
+  const [expiredBookings, setExpiredBookings] = useState([])
   const { token, user, profile } = state
   const { bookings } = profile
-  const [validBookings, setValidBookings] = useState([])
   const userId = user.id
+
   // On page load get the user profile from server. //
-  const getUpToDateProfile = async () => getProfile(token, userId, dispatch)
+  const getUpToDateProfile = async () =>
+    await getProfile(token, userId, dispatch)
   useEffect(() => {
     getUpToDateProfile()
-    getValidBookings()
+    getExpiredBookings()
   }, [])
 
-  const getValidBookings = () => {
-    setValidBookings(
+  const getExpiredBookings = () => {
+    setExpiredBookings(
       bookings
-        .filter(book => !book.is_expired)
-        .sort((a, b) => new Date(a.day) - new Date(b.day))
+        .filter(book => book.is_expired)
+        .sort((a, b) => new Date(b.day) - new Date(a.day))
     )
   }
 
   return (
-    <MainBookingsStyled>
+    <MainBookingsHistoryStyled>
       <div className="dashWrap">
         <div className="dashTitle">
-          {state.profile && state.profile.profile_satisfied && (
-            <p>
-              <span /> {state.profile && state.profile.clinic_name}
-            </p>
-          )}
-          <h2>My Bookings</h2>
+          <h2>Booking Request History</h2>
         </div>
         <div className="dashContent">
           <ul>
-            {validBookings.map(booking => {
+            {expiredBookings.map(booking => {
               const bookDate = new Date(booking.day)
               console.log(bookDate)
               const year = booking.day.split("-")[0]
@@ -99,11 +96,11 @@ const MainBookings = () => {
           </ul>
         </div>
       </div>
-    </MainBookingsStyled>
+    </MainBookingsHistoryStyled>
   )
 }
 
-const MainBookingsStyled = styled.div`
+const MainBookingsHistoryStyled = styled.div`
   ${mainSection};
 
   .dashWrap {
@@ -167,4 +164,4 @@ const MainBookingsStyled = styled.div`
   }
 `
 
-export default MainBookings
+export default MainBookingsHistory

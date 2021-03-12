@@ -111,7 +111,7 @@ const MainBookingSingle = () => {
               <span /> {state.profile && state.profile.clinic_name}
             </p>
           )}
-          <h2>Booking Detail</h2>
+          <h2>Booking Request Details</h2>
         </div>
         {currentBooking ? (
           <div className="dashContent">

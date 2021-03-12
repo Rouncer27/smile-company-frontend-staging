@@ -15,6 +15,7 @@ import BookingPackages from "../components/AppRoutes/clinic-dashboard/BookingPac
 import Payments from "../components/AppRoutes/clinic-dashboard/Payments"
 import Bookings from "../components/AppRoutes/clinic-dashboard/Bookings"
 import Booking from "../components/AppRoutes/clinic-dashboard/Booking"
+import BookingsHistory from "../components/AppRoutes/clinic-dashboard/BookingsHistory"
 import Invoices from "../components/AppRoutes/clinic-dashboard/Invoices"
 import Invoice from "../components/AppRoutes/clinic-dashboard/Invoice"
 import CreateBooking from "../components/AppRoutes/clinic-dashboard/CreateBooking"
@@ -63,6 +64,12 @@ const App = ({ location }) => {
               path={`/app/clinic-dashboard/bookings/:id`}
               component={Booking}
             />
+
+            <PrivateRoute
+              path={`/app/clinic-dashboard/bookings-history`}
+              component={BookingsHistory}
+            />
+
             <PrivateRoute
               path="/app/clinic-dashboard/invoices"
               component={Invoices}

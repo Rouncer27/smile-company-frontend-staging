@@ -30,11 +30,17 @@ const SideBar = () => {
       : state.profile && state.profile.credits > 0
       ? true
       : false
+
   const accountHasInvoices =
     state.profile && state.profile.invoices && state.profile.invoices.length > 0
 
   const accountHasBookings =
     state.profile && state.profile.bookings && state.profile.bookings.length > 0
+
+  const bookings = state.profile.bookings ? state.profile.bookings : []
+  const hasExpiredBookings = bookings.filter(book => book.is_expired).length > 0
+
+  console.log(hasExpiredBookings)
 
   return (
     <AppSidebarStyled>
@@ -117,6 +123,26 @@ const SideBar = () => {
             )}
           </li>
           <li>
+            {userConfirmed &&
+            profileSatisfied &&
+            accountHasBookings &&
+            hasExpiredBookings ? (
+              <Link to="/app/clinic-dashboard/bookings-history">
+                <span className="icon">
+                  <Checked />
+                </span>{" "}
+                <span className="text">Booking History</span>
+              </Link>
+            ) : (
+              <button type="button" disabled={true}>
+                <span className="icon">
+                  <Checked />
+                </span>{" "}
+                <span className="text">Booking History</span>
+              </button>
+            )}
+          </li>
+          <li>
             {userConfirmed && profileSatisfied && accountHasInvoices ? (
               <Link to="/app/clinic-dashboard/invoices">
                 <span className="icon">
@@ -152,9 +178,13 @@ const AppSidebarStyled = styled.div`
 
   .sidebarNav {
     position: relative;
-    padding: 20rem 0;
+    padding: 0;
     width: 100%;
     z-index: 10;
+
+    @media (min-width: 768px) {
+      padding: 20rem 0;
+    }
 
     ul {
       width: 100%;

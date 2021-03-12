@@ -18,6 +18,7 @@ const DashboardSettings = () => {
 const DashboardSettingsStyled = styled.div`
   .dashWrapper {
     display: flex;
+    flex-wrap: wrap;
     align-items: stretch;
     justify-content: center;
     width: 100%;

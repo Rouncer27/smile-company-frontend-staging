@@ -13,6 +13,7 @@ import dashTitle from "./style/dashTitle"
 // Components
 import AvailableCard from "./available/AvailableCard"
 import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
+import { H4DarkPurple } from "../../../styles/helpers"
 
 const MainAvailable = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -51,11 +52,11 @@ const MainAvailable = () => {
                 })}
               </div>
             ) : (
-              <div>
-                <h2>
+              <div className="noBookings">
+                <h3>
                   There is currenly no bookings you are matched for. Please
                   check again later.
-                </h2>
+                </h3>
               </div>
             )}
           </div>
@@ -82,6 +83,12 @@ const MainAvailableStyled = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+  }
+
+  .noBookings {
+    h3 {
+      ${H4DarkPurple};
+    }
   }
 `
 

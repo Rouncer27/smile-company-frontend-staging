@@ -95,10 +95,16 @@ const MainCreateBooking = () => {
               <span /> {state.profile && state.profile.clinic_name}
             </p>
           )}
-          <h2>Create a Booking</h2>
+          <h2>Create a Booking Request</h2>
           <p className="dashTitle__subcontent">
             Please fill in the booking details you are looking for so that we
             can match you with the right personnel.
+          </p>
+          <p className="dashTitle__disclaimer">
+            If your booking can't be filled we will not charge you for this
+            booking. Your booking credit will be refunded. <br />
+            There is a $50 fee for short notice cancellations (less than 24
+            hours) for any reason.
           </p>
         </div>
         {!hasCredits && (
@@ -219,6 +225,17 @@ const MainCreateBookingStyled = styled.div`
 
     p.dashTitle__subcontent {
       ${H4Lavender};
+    }
+
+    p.dashTitle__disclaimer {
+      ${Nav1CharcoalGrey};
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+
+      &:hover {
+        color: ${colors.colorAlt};
+        cursor: inherit;
+      }
     }
   }
 

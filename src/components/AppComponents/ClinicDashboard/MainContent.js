@@ -102,7 +102,7 @@ const MainDashboard = () => {
             </div>
             <div className="mainDashBookings">
               <p>
-                Temp jobs posts created:{" "}
+                Booking Requests created:{" "}
                 <span>{bookings && bookings.length}</span>
               </p>
             </div>
