@@ -26,6 +26,8 @@ const MainDashboard = () => {
   const { confirmed, email } = user
   const userId = user.id
 
+  console.log("CLINIC PROFILE: ", profile)
+
   const handleGetProfileOnMount = async () => {
     if (!userId) return
     if (!confirmed) return
@@ -88,6 +90,25 @@ const MainDashboard = () => {
                 your bookings.
               </h3>
             </div>
+            {state.profile.has_short_fee && (
+              <div className="mainCancelFee">
+                <h3>Cancel Booking Fee - Payment Required</h3>
+                <p>
+                  <span className="mainCancelFee__shortNotice">
+                    Request Short Notice Cancellation - $50.00 Fee
+                  </span>
+                </p>
+                <p>
+                  Your account has a fee of $
+                  {50 * state.profile.number_of_short_fees} that must be paid
+                  before you can make any more bookings. Please click this
+                  button to pay this fee.
+                </p>
+                <Link to={"/app/clinic-dashboard/payment?product=fee"}>
+                  Pay Fee Now
+                </Link>
+              </div>
+            )}
             <div className="mainDashCredits">
               <p>
                 Current account credits:{" "}
@@ -197,6 +218,42 @@ const MainDashboardStyled = styled.div`
     width: 100%;
     h3 {
       ${H4Lavender};
+    }
+  }
+
+  .mainCancelFee {
+    width: 100%;
+    padding: 2.5rem 0;
+
+    h3 {
+      ${H4Lavender};
+    }
+
+    p {
+      ${Nav1CharcoalGrey};
+      margin-bottom: 1.5rem;
+
+      &:hover {
+        color: ${colors.colorAlt};
+        cursor: inherit;
+      }
+    }
+
+    a {
+      ${Btn1DarkPurple};
+    }
+
+    &__shortNotice {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      background-color: #ed4f32;
+      color: ${colors.black} !important;
+      text-align: center;
+
+      &:hover {
+        color: ${colors.black};
+      }
     }
   }
 

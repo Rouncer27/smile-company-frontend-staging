@@ -56,6 +56,9 @@ const MainPurchase = () => {
     if (!state.profile.profile_satisfied)
       return navigate("/app/clinic-dashboard", { replace: true })
 
+    if (state.profile.has_short_fee)
+      navigate("/app/clinic-dashboard", { replace: true })
+
     // Get the booking details. //
     getTheBookingPackages()
   }

@@ -1,6 +1,7 @@
 // NPM Packages
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
+import { navigate } from "gatsby"
 // Context
 import { UserContext } from "../../../context/UserContext"
 // Actions
@@ -84,6 +85,9 @@ const MainCreateBooking = () => {
     } else {
       setHasCredits(false)
     }
+
+    if (state.profile.has_short_fee)
+      navigate("/app/clinic-dashboard", { replace: true })
   }, [profile])
 
   return (

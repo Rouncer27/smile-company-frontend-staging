@@ -23,6 +23,7 @@ const PayPal = ({ productType }) => {
   const setOneBooking = data => {
     setPaymentDetails({
       name: "One Booking",
+      qty: 1,
       price: data.booking_one_price,
       description: data.booking_one_description,
       details: data.booking_one_includes_details,
@@ -34,6 +35,7 @@ const PayPal = ({ productType }) => {
   const setSmilePass = data => {
     setPaymentDetails({
       name: "10 Smile Pass",
+      qty: 1,
       price: data.ten_pass_price,
       description: data.ten_pass_description,
       details: data.ten_pass_includes_details,
@@ -45,10 +47,24 @@ const PayPal = ({ productType }) => {
   const setMembership = data => {
     setPaymentDetails({
       name: "Monthly Membership",
+      qty: 1,
       price: data.smile_member_price,
       description: data.smile_member_description,
       details: data.smile_member_included_details,
       terms: data.smile_member_purchase_terms,
+      active: true,
+    })
+  }
+
+  const setCancelFee = () => {
+    setPaymentDetails({
+      name: "Short Notice Cancellation Fee",
+      qty: state.profile.number_of_short_fees,
+      price: 50 * state.profile.number_of_short_fees,
+      description:
+        "Cancellation fee for requesting a short notice cancelling of a temp job booking.",
+      details: "$50 Fee for each short notice cancellation",
+      terms: "Must be paid before you can create any other bookings.",
       active: true,
     })
   }
@@ -70,6 +86,8 @@ const PayPal = ({ productType }) => {
         setSmilePass(reponse.data)
       } else if (productType === "membership") {
         setMembership(reponse.data)
+      } else if (productType === "fee") {
+        setCancelFee()
       }
     } catch (err) {
       console.dir(err)
@@ -136,7 +154,7 @@ const PayPal = ({ productType }) => {
                   items: [
                     {
                       name: paymentDetails.name,
-                      quantity: 1,
+                      quantity: paymentDetails.qty,
                       unit_amount: {
                         currency_code: "CAD",
                         value: paymentDetails.price.toFixed(2),

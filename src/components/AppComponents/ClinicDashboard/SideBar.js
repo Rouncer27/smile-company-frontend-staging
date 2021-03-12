@@ -39,8 +39,7 @@ const SideBar = () => {
 
   const bookings = state.profile.bookings ? state.profile.bookings : []
   const hasExpiredBookings = bookings.filter(book => book.is_expired).length > 0
-
-  console.log(hasExpiredBookings)
+  const accountHasFees = state.profile.has_short_fee
 
   return (
     <AppSidebarStyled>
@@ -72,7 +71,7 @@ const SideBar = () => {
             )}
           </li>
           <li>
-            {userConfirmed && profileSatisfied ? (
+            {userConfirmed && profileSatisfied && !accountHasFees ? (
               <Link to="/app/clinic-dashboard/booking-packages">
                 <span className="icon">
                   <Dash />
@@ -89,7 +88,10 @@ const SideBar = () => {
             )}
           </li>
           <li>
-            {userConfirmed && profileSatisfied && accountHasCredits ? (
+            {userConfirmed &&
+            profileSatisfied &&
+            accountHasCredits &&
+            !accountHasFees ? (
               <Link to="/app/clinic-dashboard/create-booking">
                 <span className="icon">
                   <Calendar />

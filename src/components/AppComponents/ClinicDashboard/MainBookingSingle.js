@@ -6,6 +6,7 @@ import { globalHistory } from "@reach/router"
 // Context
 import { UserContext } from "../../../context/UserContext"
 // Actions
+import getProfile from "./actions/getProfile"
 import getCurrentBooking from "./actions/getCurrentBooking"
 import putCancelBooking from "./actions/putCancelBooking"
 // Common styles
@@ -29,8 +30,12 @@ import BookingCancelledShort from "./booking/BookingCancelledShort"
 // Helper Functions
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
 import getBookingStatus from "./helper/getBookingStatus"
+import getReadablePosition from "./helper/getReadablePosition"
+import ModalFee from "../../UiElements/ModalFee"
+import getReadableLocation from "./helper/getReadableLocation"
 
 const MainBookingSingle = () => {
+  const [feeModalActive, setFeeModalActive] = useState(false)
   const [currentBookingId, setCurrentBookingId] = useState("")
   const [currentBooking, setCurrentBooking] = useState(null)
   const [currentBookingTime, setCurrentBookingTime] = useState({
@@ -87,6 +92,8 @@ const MainBookingSingle = () => {
   let bookingStatus
   let isActive
   let is_short_notice = false
+  let postionDisplay
+  let locationDisplay
 
   if (currentBooking !== null) {
     const statusInfo = getBookingStatus(currentBooking)
@@ -94,11 +101,19 @@ const MainBookingSingle = () => {
     is_short_notice = statusInfo.isShortNotice
     bookingStatus = statusInfo.bookingStatus
     isActive = statusInfo.isActive
+
+    postionDisplay = getReadablePosition(currentBooking.position)
+    locationDisplay = getReadableLocation(currentBooking.location)
+  }
+
+  const handleShortCancelBooking = async () => {
+    setFeeModalActive(true)
   }
 
   const handleCancelBooking = async () => {
     await putCancelBooking(token, dispatch, profile, currentBooking)
     await getBookingFromServer()
+    await getProfile(token, userId, dispatch)
   }
 
   return (
@@ -154,11 +169,11 @@ const MainBookingSingle = () => {
 
             <div className="bookingPosition">
               <h3>Booking Position</h3>
-              <p>Position Reqested: {currentBooking.position}</p>
+              <p>Position Reqested: {postionDisplay}</p>
             </div>
             <div className="bookingLocation">
               <h3>Booking Location</h3>
-              <p>Location Reqested: {currentBooking.location}</p>
+              <p>Location Reqested: {locationDisplay}</p>
               <p>Location Address: {currentBooking.address}</p>
             </div>
             {isActive && (
@@ -172,11 +187,15 @@ const MainBookingSingle = () => {
                   </p>
                 )}
                 <div className="bookingactivity__button">
-                  <button onClick={() => handleCancelBooking()}>
-                    {is_short_notice
-                      ? "Request Short Notice Cancellation"
-                      : "Request Cancellation"}
-                  </button>
+                  {is_short_notice ? (
+                    <button onClick={() => handleShortCancelBooking()}>
+                      Request Short Notice Cancellation
+                    </button>
+                  ) : (
+                    <button onClick={() => handleCancelBooking()}>
+                      Request Cancellation
+                    </button>
+                  )}
                 </div>
               </div>
             )}
@@ -211,6 +230,13 @@ const MainBookingSingle = () => {
           <Skeleton count={10} />
         )}
       </div>
+      {is_short_notice && (
+        <ModalFee
+          active={feeModalActive}
+          setFeeModalActive={setFeeModalActive}
+          handleShortCancelBooking={handleCancelBooking}
+        />
+      )}
     </MainBookingSingleStyled>
   )
 }

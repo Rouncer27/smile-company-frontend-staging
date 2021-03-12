@@ -14,6 +14,7 @@ import { colors, Nav1CharcoalGrey } from "../../../styles/helpers"
 // Helper Functions
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
 import getBookingStatus from "./helper/getBookingStatus"
+import getReadablePosition from "./helper/getReadablePosition"
 
 const MainBookingsHistory = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -42,13 +43,17 @@ const MainBookingsHistory = () => {
     <MainBookingsHistoryStyled>
       <div className="dashWrap">
         <div className="dashTitle">
+          {state.profile && state.profile.profile_satisfied && (
+            <p>
+              <span /> {state.profile && state.profile.clinic_name}
+            </p>
+          )}
           <h2>Booking Request History</h2>
         </div>
         <div className="dashContent">
           <ul>
             {expiredBookings.map(booking => {
-              const bookDate = new Date(booking.day)
-              console.log(bookDate)
+              const positionDisplay = getReadablePosition(booking.position)
               const year = booking.day.split("-")[0]
               const monthName = getMothName(booking.day)
               const dayNumber = booking.day.split("-")[2]
@@ -88,7 +93,7 @@ const MainBookingsHistory = () => {
                       Shift: {`${startHour}:${startMinutes} ${startMeridiem}`}{" "}
                       to {`${endHour}:${endMinutes} ${endMeridiem}`}
                     </span>
-                    &#124; <span>Position: {booking.position}</span>
+                    &#124; <span>{positionDisplay}</span>
                   </Link>
                 </li>
               )
@@ -105,6 +110,7 @@ const MainBookingsHistoryStyled = styled.div`
 
   .dashWrap {
     ${dashWrap};
+    max-width: 80rem;
   }
 
   .dashTitle {
@@ -119,8 +125,10 @@ const MainBookingsHistoryStyled = styled.div`
       width: 100%;
 
       li {
+        position: relative;
         width: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
+        padding-left: 15rem;
 
         a {
           ${Nav1CharcoalGrey};
@@ -132,6 +140,9 @@ const MainBookingsHistoryStyled = styled.div`
         }
 
         span.bookingStatus {
+          position: absolute;
+          left: 0;
+          top: 0.25rem;
           display: inline-block;
           padding: 0.5rem 1rem;
           border-radius: 0.5rem;

@@ -14,6 +14,7 @@ import { colors, Nav1CharcoalGrey } from "../../../styles/helpers"
 // Helper Functions
 import { timeFormat, getMothName } from "../../../utils/helperFunc"
 import getBookingStatus from "./helper/getBookingStatus"
+import getReadablePosition from "./helper/getReadablePosition"
 
 const MainBookings = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -50,8 +51,8 @@ const MainBookings = () => {
         <div className="dashContent">
           <ul>
             {validBookings.map(booking => {
-              const bookDate = new Date(booking.day)
-              console.log(bookDate)
+              const positionDisplay = getReadablePosition(booking.position)
+
               const year = booking.day.split("-")[0]
               const monthName = getMothName(booking.day)
               const dayNumber = booking.day.split("-")[2]
@@ -91,7 +92,7 @@ const MainBookings = () => {
                       Shift: {`${startHour}:${startMinutes} ${startMeridiem}`}{" "}
                       to {`${endHour}:${endMinutes} ${endMeridiem}`}
                     </span>
-                    &#124; <span>Position: {booking.position}</span>
+                    &#124; <span>{positionDisplay}</span>
                   </Link>
                 </li>
               )
@@ -108,6 +109,7 @@ const MainBookingsStyled = styled.div`
 
   .dashWrap {
     ${dashWrap};
+    max-width: 80rem;
   }
 
   .dashTitle {
@@ -122,8 +124,10 @@ const MainBookingsStyled = styled.div`
       width: 100%;
 
       li {
+        position: relative;
         width: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
+        padding-left: 15rem;
 
         a {
           ${Nav1CharcoalGrey};
@@ -135,6 +139,9 @@ const MainBookingsStyled = styled.div`
         }
 
         span.bookingStatus {
+          position: absolute;
+          left: 0;
+          top: 0.25rem;
           display: inline-block;
           padding: 0.5rem 1rem;
           border-radius: 0.5rem;
@@ -153,11 +160,12 @@ const MainBookingsStyled = styled.div`
             background-color: #15cd72;
           }
 
+          &__cancelled,
           &__unfulfilled {
             background-color: #ede04d;
           }
 
-          &__shorcancelled,
+          &__shortcancelled,
           &__error {
             background-color: #ed4f32;
           }
