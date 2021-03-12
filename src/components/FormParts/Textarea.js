@@ -12,7 +12,6 @@ const Textarea = ({
   fieldvalid,
   size,
 }) => {
-  console.log({ size })
   return (
     <TextareaStyled size={size} fieldvalid={true}>
       <label id={`label-${name}`} htmlFor={name}>

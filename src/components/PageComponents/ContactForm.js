@@ -1,5 +1,6 @@
 import { Link } from "gatsby"
 import React, { useState, useEffect } from "react"
+import axios from "axios"
 import styled from "styled-components"
 import {
   Btn1DarkPurple,
@@ -14,9 +15,19 @@ import {
 import Input from "../FormParts/Input"
 import Textarea from "../FormParts/Textarea"
 
+import FormSuccess from "../UiElements/formModals/FormSuccess"
+import FormSubmit from "../UiElements/formModals/FormSubmit"
+import FormErrors from "../UiElements/formModals/FormErrors"
+
 const ContactForm = ({ data }) => {
   const { formFields } = data
   const [formData, setFormData] = useState({})
+  const [formStatus, setFormStatus] = useState({
+    submitting: false,
+    errorWarnDisplay: false,
+    success: false,
+    errors: [],
+  })
 
   const displaySidebar = data.sidebarDispaly
 
@@ -27,20 +38,91 @@ const ContactForm = ({ data }) => {
   }, [])
 
   const handleOnChange = event => {
+    console.log(event.target.name)
+    console.log(event.target.value)
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     })
   }
 
-  const handleOnSubmit = () => {
-    console.log("Submitting the form!")
+  const submitToWebServer = async (formID, data) => {
+    console.log("DATA", data)
+    const FORM_POST_URL = `https://dedi105.canspace.ca/~smileswbusercom/wp-json/contact-form-7/v1/contact-forms/${formID}/feedback`
+    const config = { headers: { "Content-Type": "multipart/form-data" } }
+    const serverResponse = await axios.post(FORM_POST_URL, data, config)
+
+    if (serverResponse.data.status === "mail_sent") {
+      return { errors: false, errorMessages: [] }
+    } else {
+      return { errors: true, errorMessages: serverResponse.data.invalid_fields }
+    }
   }
+
+  const handleOnSubmit = async e => {
+    e.preventDefault()
+    setFormStatus({
+      ...formStatus,
+      submitting: true,
+    })
+
+    const formDataArray = Object.entries(formData)
+    const bodyFormData = new FormData()
+    formDataArray.forEach(field => {
+      bodyFormData.append(field[0], field[1])
+    })
+
+    const response = await submitToWebServer(424, bodyFormData)
+
+    handleUpdateServerResponse(response)
+  }
+
+  const handleUpdateServerResponse = response => {
+    if (!response.errors) {
+      setFormStatus({
+        ...formStatus,
+        submitting: false,
+        errorWarnDisplay: false,
+        success: true,
+        errors: [],
+      })
+    } else {
+      setFormStatus({
+        ...formStatus,
+        submitting: false,
+        errorWarnDisplay: true,
+        success: false,
+        errors: response.errorMessages,
+      })
+    }
+  }
+
+  const handleErrorModalClose = () => {
+    setFormStatus({
+      ...formStatus,
+      submitting: false,
+      errorWarnDisplay: false,
+      success: false,
+    })
+  }
+
+  const handleSuccessModalClose = () => {
+    setFormStatus({
+      ...formStatus,
+      submitting: false,
+      errorWarnDisplay: false,
+      success: false,
+      errors: [],
+    })
+    setFormData({})
+  }
+
+  console.log(formData)
 
   return (
     <ContactFormStyled sidebar={displaySidebar}>
       <div className="wrapper">
-        <form onSubmit={handleOnSubmit}>
+        <form onSubmit={e => handleOnSubmit(e)}>
           {data.formMainTitle && (
             <div className="mainFormTitle">
               <h2>{data.formMainTitle}</h2>
@@ -61,7 +143,7 @@ const ContactForm = ({ data }) => {
                     onChange={handleOnChange}
                     fieldvalid={true}
                     size={size}
-                    required={true}
+                    required={false}
                   />
                 )
               } else if (type === "textarea") {
@@ -74,7 +156,7 @@ const ContactForm = ({ data }) => {
                     onChange={handleOnChange}
                     fieldvalid={true}
                     size={size}
-                    required={true}
+                    required={false}
                   />
                 )
               }
@@ -103,6 +185,15 @@ const ContactForm = ({ data }) => {
           </FormSidebar>
         )}
       </div>
+      <FormSubmit isActive={formStatus.submitting} />
+      <FormSuccess
+        isActive={formStatus.success}
+        handleClose={handleSuccessModalClose}
+      />
+      <FormErrors
+        isActive={formStatus.errorWarnDisplay}
+        handleClose={handleErrorModalClose}
+      />
     </ContactFormStyled>
   )
 }
