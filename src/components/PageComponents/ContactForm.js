@@ -149,7 +149,7 @@ const ContactForm = ({ data }) => {
                     onChange={handleOnChange}
                     fieldvalid={true}
                     size={size}
-                    required={false}
+                    required={required}
                     error={errorMessage ? errorMessage.message : ""}
                   />
                 )
@@ -163,7 +163,7 @@ const ContactForm = ({ data }) => {
                     value={formData[id] ? formData[id] : ""}
                     onChange={handleOnChange}
                     size={size}
-                    required={false}
+                    required={required}
                     error={errorMessage ? errorMessage.message : ""}
                   />
                 )
