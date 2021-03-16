@@ -1,5 +1,5 @@
 import { Link } from "gatsby"
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import {
@@ -21,7 +21,6 @@ import FormErrors from "../UiElements/formModals/FormErrors"
 
 const ContactForm = ({ data }) => {
   const { formFields } = data
-  const mainForm = useRef(null)
   const [formData, setFormData] = useState({})
   const [formStatus, setFormStatus] = useState({
     submitting: false,
@@ -70,7 +69,7 @@ const ContactForm = ({ data }) => {
       bodyFormData.append(field[0], field[1])
     })
 
-    const response = await submitToWebServer(424, bodyFormData)
+    const response = await submitToWebServer(data.formId, bodyFormData)
 
     handleUpdateServerResponse(response)
   }
@@ -124,7 +123,7 @@ const ContactForm = ({ data }) => {
   return (
     <ContactFormStyled sidebar={displaySidebar}>
       <div className="wrapper">
-        <form ref={mainForm} onSubmit={e => handleOnSubmit(e)}>
+        <form onSubmit={e => handleOnSubmit(e)}>
           {data.formMainTitle && (
             <div className="mainFormTitle">
               <h2>{data.formMainTitle}</h2>
@@ -141,25 +140,27 @@ const ContactForm = ({ data }) => {
               if (type === "text" || type === "email") {
                 formField = (
                   <Input
+                    key={id}
                     label={label}
                     name={id}
                     type={type}
                     placeholder={placeholder}
-                    value={formData[id]}
+                    value={formData[id] ? formData[id] : ""}
                     onChange={handleOnChange}
                     fieldvalid={true}
                     size={size}
-                    required={required}
+                    required={false}
                     error={errorMessage ? errorMessage.message : ""}
                   />
                 )
               } else if (type === "textarea") {
                 formField = (
                   <Textarea
+                    key={id}
                     label={label}
                     name={id}
                     placeholder={placeholder}
-                    value={formData[id]}
+                    value={formData[id] ? formData[id] : ""}
                     onChange={handleOnChange}
                     size={size}
                     required={false}
