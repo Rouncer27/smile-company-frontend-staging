@@ -1,17 +1,17 @@
 import React from "react"
 import styled from "styled-components"
-import { colors, H4DarkGrey } from "../../../styles/helpers"
-// import Lottie from "react-lottie"
-// import * as formError from "../../styles/elements/lottieAnimations/formError.json"
+import { colors, H4White } from "../../../styles/helpers"
+import Lottie from "react-lottie"
+import * as formError from "../lottie/error-cross.json"
 
-// const defaultOptions = {
-//   loop: false,
-//   autoplay: false,
-//   animationData: formError.default,
-//   rendererSettings: {
-//     preserveAspectRatio: "xMidYMid slice",
-//   },
-// }
+const defaultOptions = {
+  loop: false,
+  autoplay: false,
+  animationData: formError.default,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+}
 
 const ErrorModal = styled.div`
   display: block;
@@ -91,7 +91,7 @@ const ErrorModal = styled.div`
         width: 100%;
       }
       h2 {
-        ${H4DarkGrey};
+        ${H4White};
         width: 100%;
         text-align: center;
       }
@@ -105,12 +105,12 @@ const FormErrors = ({ isActive, handleClose }) => {
       <div className="modalInner">
         <div className="modalInner__content">
           <div>
-            {/* <Lottie
+            <Lottie
               options={defaultOptions}
               isPaused={!isActive}
               height={150}
               width={150}
-            /> */}
+            />
           </div>
           <h2>
             There were a few errors in your form. <br />

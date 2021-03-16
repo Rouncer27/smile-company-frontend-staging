@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
-import { fontSizer, colors, Nav1Lavender } from "../../styles/helpers"
+import { colors, Nav1Lavender } from "../../styles/helpers"
 
 const Input = ({
   label,
@@ -10,35 +10,26 @@ const Input = ({
   placeholder,
   value,
   onChange,
-  fieldvalid,
   size,
   required,
+  error,
 }) => {
   const [currentFieldVal, setCurrentFieldVal] = useState({
-    fieldName: name,
     valid: true,
     message: "",
   })
-  // useEffect(() => {
-  //   const currentField = fieldvalid.find(field => field.fieldName === name)
-  //   if (currentField) {
-  //     setCurrentFieldVal({ ...currentField })
-  //   }
-  // }, [fieldvalid])
+
+  useEffect(() => {
+    if (error !== "") {
+      setCurrentFieldVal({ valid: false, message: error })
+    }
+  }, [error])
 
   const handleOnFocus = () => {
-    // setCurrentFieldVal({
-    //   fieldName: name,
-    //   valid: true,
-    //   message: "",
-    // })
-  }
-
-  const handleOnBlur = () => {
-    // const currentField = fieldvalid.find(field => field.fieldName === name)
-    // if (currentField && currentFieldVal.valid !== currentField.valid) {
-    //   setCurrentFieldVal({ ...currentField })
-    // }
+    setCurrentFieldVal({
+      valid: true,
+      message: "",
+    })
   }
 
   return (
@@ -63,7 +54,6 @@ const Input = ({
         value={value}
         onChange={onChange}
         onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
       />
     </InputFieldStyled>
   )
@@ -86,12 +76,12 @@ const InputFieldStyled = styled.div`
   }
 
   .errorMessage {
-    ${fontSizer(1.2, 1.4, 76.8, 150, 1.2)};
+    ${Nav1Lavender};
     position: absolute;
     top: 1.5rem;
     left: 0;
     margin: 0;
-    color: ${colors.strongRed};
+    color: rgba(255, 0, 0, 1);
 
     @media (min-width: 768px) {
       top: 1rem;

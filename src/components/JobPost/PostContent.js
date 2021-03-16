@@ -11,7 +11,6 @@ import JobWysiwyg from "./JobWysiwyg"
 import { Link } from "gatsby"
 
 const PostContent = ({ data }) => {
-  console.log(data)
   return (
     <PostContentStyled>
       <div className="jobTitles">

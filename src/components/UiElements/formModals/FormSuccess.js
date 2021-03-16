@@ -1,17 +1,17 @@
 import React from "react"
 import styled from "styled-components"
-import { colors, H4DarkGrey } from "../../../styles/helpers"
-// import Lottie from "react-lottie"
-// import * as formSuccess from "../../styles/elements/lottieAnimations/AFR-furniture-intro.json"
+import { colors, H4Lavender } from "../../../styles/helpers"
+import Lottie from "react-lottie"
+import * as formSuccess from "../lottie/checked-done.json"
 
-// const defaultOptions = {
-//   loop: false,
-//   autoplay: false,
-//   animationData: formSuccess.default,
-//   rendererSettings: {
-//     preserveAspectRatio: "xMidYMid slice",
-//   },
-// }
+const defaultOptions = {
+  loop: false,
+  autoplay: false,
+  animationData: formSuccess.default,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+}
 
 const SuccessModal = styled.div`
   display: block;
@@ -93,10 +93,11 @@ const SuccessModal = styled.div`
 
       &--lottie {
         width: 100%;
+        padding: 2rem;
       }
 
       h2 {
-        ${H4DarkGrey};
+        ${H4Lavender};
         width: 100%;
         text-align: center;
       }
@@ -110,12 +111,12 @@ const FormSuccess = ({ isActive, handleClose }) => {
       <div className="modalInner">
         <div className="modalInner__content">
           <div className="modalInner__content--lottie">
-            {/* <Lottie
+            <Lottie
               options={defaultOptions}
               isPaused={!isActive}
-              height={150}
+              height={190}
               width={250}
-            /> */}
+            />
           </div>
           <h2>
             Your from has been successfully sent. <br />

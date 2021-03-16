@@ -1,5 +1,5 @@
 import { Link } from "gatsby"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import {
@@ -21,6 +21,7 @@ import FormErrors from "../UiElements/formModals/FormErrors"
 
 const ContactForm = ({ data }) => {
   const { formFields } = data
+  const mainForm = useRef(null)
   const [formData, setFormData] = useState({})
   const [formStatus, setFormStatus] = useState({
     submitting: false,
@@ -38,8 +39,6 @@ const ContactForm = ({ data }) => {
   }, [])
 
   const handleOnChange = event => {
-    console.log(event.target.name)
-    console.log(event.target.value)
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
@@ -47,7 +46,6 @@ const ContactForm = ({ data }) => {
   }
 
   const submitToWebServer = async (formID, data) => {
-    console.log("DATA", data)
     const FORM_POST_URL = `https://dedi105.canspace.ca/~smileswbusercom/wp-json/contact-form-7/v1/contact-forms/${formID}/feedback`
     const config = { headers: { "Content-Type": "multipart/form-data" } }
     const serverResponse = await axios.post(FORM_POST_URL, data, config)
@@ -114,13 +112,19 @@ const ContactForm = ({ data }) => {
       success: false,
       errors: [],
     })
-    setFormData({})
+
+    const resetFields = {}
+    for (const key in formData) {
+      resetFields[`${key}`] = ""
+    }
+
+    setFormData({ ...resetFields })
   }
 
   return (
     <ContactFormStyled sidebar={displaySidebar}>
       <div className="wrapper">
-        <form onSubmit={e => handleOnSubmit(e)}>
+        <form ref={mainForm} onSubmit={e => handleOnSubmit(e)}>
           {data.formMainTitle && (
             <div className="mainFormTitle">
               <h2>{data.formMainTitle}</h2>
@@ -129,6 +133,10 @@ const ContactForm = ({ data }) => {
           <fieldset>
             {formFields.map(field => {
               const { id, type, label, placeholder, required, size } = field
+              const errorMessage = formStatus.errors.find(
+                error => error.idref === id
+              )
+
               let formField
               if (type === "text" || type === "email") {
                 formField = (
@@ -141,7 +149,8 @@ const ContactForm = ({ data }) => {
                     onChange={handleOnChange}
                     fieldvalid={true}
                     size={size}
-                    required={false}
+                    required={required}
+                    error={errorMessage ? errorMessage.message : ""}
                   />
                 )
               } else if (type === "textarea") {
@@ -152,9 +161,9 @@ const ContactForm = ({ data }) => {
                     placeholder={placeholder}
                     value={formData[id]}
                     onChange={handleOnChange}
-                    fieldvalid={true}
                     size={size}
                     required={false}
+                    error={errorMessage ? errorMessage.message : ""}
                   />
                 )
               }

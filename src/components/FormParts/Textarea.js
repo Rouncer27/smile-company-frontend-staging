@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Nav1Lavender, colors } from "../../styles/helpers"
 
@@ -9,17 +9,37 @@ const Textarea = ({
   required,
   value,
   onChange,
-  fieldvalid,
+  error,
   size,
 }) => {
+  const [currentFieldVal, setCurrentFieldVal] = useState({
+    valid: true,
+    message: "",
+  })
+
+  useEffect(() => {
+    if (error !== "") {
+      setCurrentFieldVal({ valid: false, message: error })
+    }
+  }, [error])
+
+  const handleOnFocus = () => {
+    setCurrentFieldVal({
+      valid: true,
+      message: "",
+    })
+  }
   return (
-    <TextareaStyled size={size} fieldvalid={true}>
+    <TextareaStyled size={size} fieldvalid={currentFieldVal.valid}>
       <label id={`label-${name}`} htmlFor={name}>
         {label}
         {required && (
           <>
             &#42;<span> required field</span>
           </>
+        )}
+        {!currentFieldVal.valid && (
+          <p className="errorMessage">{currentFieldVal.message}</p>
         )}
       </label>
       <textarea
@@ -30,6 +50,7 @@ const Textarea = ({
         required={required}
         value={value}
         onChange={onChange}
+        onFocus={handleOnFocus}
       />
     </TextareaStyled>
   )
@@ -49,6 +70,19 @@ const TextareaStyled = styled.div`
     ${Nav1Lavender};
     display: block;
     width: 100%;
+  }
+
+  .errorMessage {
+    ${Nav1Lavender};
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    margin: 0;
+    color: rgba(255, 0, 0, 1);
+
+    @media (min-width: 768px) {
+      top: 1rem;
+    }
   }
 
   textarea {

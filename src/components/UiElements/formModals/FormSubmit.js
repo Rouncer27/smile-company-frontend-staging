@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-// import BeatLoader from "react-spinners/BeatLoader"
-import { colors, H4DarkGrey } from "../../../styles/helpers"
+import { HashLoader } from "react-spinners"
+import { colors, H1White } from "../../../styles/helpers"
 
 const FormSubmitModal = styled.div`
   display: block;
@@ -62,12 +62,13 @@ const FormSubmitModal = styled.div`
       }
 
       &--loader {
-        margin: 2rem auto;
+        width: 100%;
+        margin: 2rem auto 4rem;
         text-align: center;
       }
 
       h2 {
-        ${H4DarkGrey};
+        ${H1White};
         width: 100%;
         color: ${colors.white};
         text-align: center;
@@ -82,12 +83,7 @@ const FormSubmit = ({ isActive }) => {
       <div className="modalInner">
         <div className="modalInner__content">
           <div className="modalInner__content--loader">
-            {/* <BeatLoader
-              size={25}
-              height={4}
-              color={"#deb46e"}
-              loading={isActive}
-            /> */}
+            <HashLoader size={75} color={"#ad89a6"} />
           </div>
           <h2>
             Thank you, submitting your form. <br />
