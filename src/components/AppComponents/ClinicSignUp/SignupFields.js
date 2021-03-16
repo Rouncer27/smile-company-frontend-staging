@@ -11,7 +11,6 @@ import Input from "../FormFields/Input"
 const SignUpFields = () => {
   const [state, dispatch] = useContext(UserContext)
   const [formData, setFormData] = useState({
-    clinicname: "",
     username: "",
     email: "",
     password: "",
@@ -27,6 +26,35 @@ const SignUpFields = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
+
+    if (formData.username === "") {
+      return dispatch({
+        type: "USER_ERROR",
+        payload: {
+          message: "Your must provide a username.",
+        },
+      })
+    }
+
+    if (formData.email === "") {
+      return dispatch({
+        type: "USER_ERROR",
+        payload: {
+          message: "Your must provide an email address.",
+        },
+      })
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      return dispatch({
+        type: "USER_ERROR",
+        payload: {
+          message:
+            "Your password and confirm password does not match. Please correct.",
+        },
+      })
+    }
+
     dispatch({ type: "USER_LOADING" })
     try {
       const reponse = await axios.post(

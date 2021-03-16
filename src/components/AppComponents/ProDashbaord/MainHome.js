@@ -199,7 +199,7 @@ const MainHome = () => {
               </p>
               <p>
                 Email Notifications will be sent to:{" "}
-                <span>{state.profile.email}</span>
+                <span>{state.user.email}</span>
               </p>
               <p>
                 Days of temp job posting I want to be notified about:{" "}

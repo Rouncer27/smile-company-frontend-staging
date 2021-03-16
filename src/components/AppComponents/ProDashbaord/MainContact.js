@@ -167,17 +167,7 @@ const MainContact = () => {
                   required={false}
                   size="full"
                 />
-                <Input
-                  label="Email"
-                  name="email"
-                  type="text"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleOnChange}
-                  fieldvalid={true}
-                  required={true}
-                  size="full"
-                />
+
                 <CheckBoxInput
                   name="days_working"
                   label="I want to be notified of Temp job postings that fall on these days of the week"

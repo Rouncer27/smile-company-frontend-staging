@@ -27,6 +27,13 @@ const ApprovedItem = ({ item }) => {
           <span>{item.clinic_name}</span>
         </h2>
       </div>
+      <div className="cancelWarn">
+        <p>
+          <span>&#42; NOTE.</span> If you need to cancel, for any reason, you
+          need to call Smile and Co. at 403-899-2055. There might be a $50 fee
+          for cancellations.
+        </p>
+      </div>
       <div className="details">
         <p>Position: {getReadablePosition(item.position)}</p>
         <p>Location / City: {getReadableLocation(item.location)}</p>
@@ -62,6 +69,23 @@ const ApprovedItemStyled = styled.div`
     .icon {
       width: 3rem;
       margin-right: 2rem;
+    }
+  }
+
+  .cancelWarn {
+    p {
+      ${Nav1CharcoalGrey};
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+
+      &:hover {
+        color: ${colors.colorAlt};
+        cursor: initial;
+      }
+
+      span {
+        color: #ed4f32;
+      }
     }
   }
 

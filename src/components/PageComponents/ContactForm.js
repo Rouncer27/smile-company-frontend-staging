@@ -117,8 +117,6 @@ const ContactForm = ({ data }) => {
     setFormData({})
   }
 
-  console.log(formData)
-
   return (
     <ContactFormStyled sidebar={displaySidebar}>
       <div className="wrapper">

@@ -118,6 +118,14 @@ const AvailableCard = ({ booking }) => {
           </span>
         </p>
 
+        <div className="cancelWarn">
+          <p>
+            <span>&#42; NOTE.</span> If you and are selected for this temp job
+            booking and need to cancel, there might be a $50.00 fee for
+            cancelling.
+          </p>
+        </div>
+
         {bookingStatus === "PENDING" && (
           <div className="status status__pending">
             <p className="status__indicator">
@@ -222,6 +230,14 @@ const AvailableCardStyled = styled.div`
     }
   }
 
+  .cancelWarn {
+    p {
+      span {
+        color: #ed4f32;
+      }
+    }
+  }
+
   .detailsShift {
     width: 100%;
     margin-bottom: 2rem;
@@ -281,7 +297,7 @@ const AvailableCardStyled = styled.div`
 
   .status {
     width: 100%;
-    padding: 1.5rem;
+    padding: 1.5rem 0;
 
     p {
       margin-bottom: 0;

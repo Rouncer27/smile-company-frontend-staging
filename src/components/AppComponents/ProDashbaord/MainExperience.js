@@ -76,6 +76,7 @@ const MainExperience = () => {
     updateFormFields()
   }, [])
 
+  console.log(profile)
   return (
     <MainExperienceStyled>
       <div className="dashWrap">
@@ -89,28 +90,34 @@ const MainExperience = () => {
           <div className="mainForm">
             <form onSubmit={event => handleOnSubmit(event)}>
               <fieldset>
-                <Input
-                  label="Associated Registration Number"
-                  name="associated_registration_number"
-                  type="text"
-                  placeholder="Associated Registration Number"
-                  value={formData.associated_registration_number}
-                  onChange={handleOnChange}
-                  fieldvalid={true}
-                  required={true}
-                  size="full"
-                />
-                <Input
-                  label="Name registered with"
-                  name="name_registered_with"
-                  type="text"
-                  placeholder="Name registered with"
-                  value={formData.name_registered_with}
-                  onChange={handleOnChange}
-                  fieldvalid={true}
-                  required={true}
-                  size="full"
-                />
+                {(state.profile && state.profile.position === "rdh") ||
+                (state.profile && state.profile.position === "rda") ? (
+                  <>
+                    <Input
+                      label="Associated Registration Number"
+                      name="associated_registration_number"
+                      type="text"
+                      placeholder="Associated Registration Number"
+                      value={formData.associated_registration_number}
+                      onChange={handleOnChange}
+                      fieldvalid={true}
+                      required={true}
+                      size="full"
+                    />
+
+                    <Input
+                      label="Name registered with"
+                      name="name_registered_with"
+                      type="text"
+                      placeholder="Name registered with"
+                      value={formData.name_registered_with}
+                      onChange={handleOnChange}
+                      fieldvalid={true}
+                      required={true}
+                      size="full"
+                    />
+                  </>
+                ) : null}
                 <TextArea
                   label="What additional qualifications do you have?"
                   name="additional_qualifications"
