@@ -109,7 +109,7 @@ const MainBookingsStyled = styled.div`
 
   .dashWrap {
     ${dashWrap};
-    max-width: 80rem;
+    max-width: 85rem;
   }
 
   .dashTitle {

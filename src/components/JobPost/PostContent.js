@@ -30,6 +30,13 @@ const PostContent = ({ data }) => {
       <div className="mainJobContent">
         <JobWysiwyg content={data.jobPostingData.content} />
       </div>
+      <div className="jobApply">
+        <a
+          href={`mailto:info@smile-and-company.com?subject=${data.title} - ${data.jobPostingData.titleOfPosition} - ${data.jobPostingData.dentalClinicName}`}
+        >
+          Apply to this job posting
+        </a>
+      </div>
       <div className="jobNav">
         <Link to="/permanent-hiring/job-board">Back to Job Board</Link>
       </div>
@@ -88,6 +95,15 @@ const PostContentStyled = styled.div`
 
   .mainJobContent {
     width: 100%;
+  }
+
+  .jobApply {
+    width: 100%;
+    margin-bottom: 2rem;
+
+    a {
+      ${Btn1DarkPurple};
+    }
   }
 
   .jobNav {
