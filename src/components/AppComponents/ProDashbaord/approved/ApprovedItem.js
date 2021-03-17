@@ -17,24 +17,41 @@ const ApprovedItem = ({ item }) => {
   const startTimes = timeFormat(currentBookingStartTime)
   const endTimes = timeFormat(currentBookingEndTime)
 
+  console.log(item)
+
   return (
     <ApprovedItemStyled>
       <div>
         <h2>
-          <span className="icon">
-            <Checkmark />
-          </span>
+          {item.was_cancelled ? (
+            <span className="icon">
+              <Checkmark />
+            </span>
+          ) : (
+            <span className="icon">
+              <Checkmark />
+            </span>
+          )}
           <span>{item.clinic_name}</span>
         </h2>
       </div>
       <div className="cancelWarn">
-        <p>
-          <span>&#42; NOTE.</span> If you need to cancel, for any reason, you
-          need to call Smile and Co. at 403-899-2055. There might be a $50 fee
-          for cancellations.
-        </p>
+        {!item.was_cancelled ? (
+          <p>
+            <span>&#42; NOTE.</span> If you need to cancel, for any reason, you
+            need to call Smile and Co. at 403-899-2055. There might be a $50 fee
+            for cancellations.
+          </p>
+        ) : (
+          <p>
+            <span>&#42; JOB CANCELLED BY CLINIC</span> -- If you have any
+            questions please call Smile and Co. at 403-899-2055
+          </p>
+        )}
       </div>
-      <div className="details">
+      <div
+        className={`details${item.was_cancelled ? " details__cancelled" : ""}`}
+      >
         <p>Position: {getReadablePosition(item.position)}</p>
         <p>Location / City: {getReadableLocation(item.location)}</p>
         <p>Address: {item.address}</p>
@@ -99,6 +116,18 @@ const ApprovedItemStyled = styled.div`
       &:hover {
         color: ${colors.colorAlt};
         cursor: initial;
+      }
+    }
+
+    &__cancelled {
+      opacity: 0.9;
+
+      p {
+        color: #ed4f32;
+
+        &:hover {
+          color: #ed4f32;
+        }
       }
     }
   }

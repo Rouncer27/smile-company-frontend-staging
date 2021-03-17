@@ -61,6 +61,8 @@ const AvailableCard = ({ booking }) => {
 
   const havApplied =
     booking.applied_ids.findIndex(id => id === profile.id) !== -1 ? true : false
+
+  const isCancelled = booking.was_cancelled
   const isActive = booking.booking_active
   const isSelected = booking.candidate_selected
   const acceptedId = booking.aceepted_profile_id
@@ -68,7 +70,11 @@ const AvailableCard = ({ booking }) => {
   const isAccepted = acceptedId === myId
 
   const bookingStatus =
-    isActive && !isSelected && havApplied
+    isCancelled && isAccepted
+      ? "APPROVED POSTING CANCELLED"
+      : isCancelled
+      ? "POSTING CANCELLED"
+      : isActive && !isSelected && havApplied
       ? "PENDING"
       : isActive && !isSelected && !havApplied
       ? "OPEN"
@@ -76,8 +82,6 @@ const AvailableCard = ({ booking }) => {
       ? "NOT SELECTED"
       : !isActive && isSelected && havApplied && isAccepted
       ? "APPROVED"
-      : !isActive && !isSelected
-      ? "POSTING CANCELLED"
       : "ERROR"
 
   return (
@@ -118,13 +122,34 @@ const AvailableCard = ({ booking }) => {
           </span>
         </p>
 
-        <div className="cancelWarn">
-          <p>
-            <span>&#42; NOTE.</span> If you and are selected for this temp job
-            booking and need to cancel, there might be a $50.00 fee for
-            cancelling.
-          </p>
-        </div>
+        {bookingStatus !== "APPROVED POSTING CANCELLED" ? (
+          <div className="cancelWarn">
+            <p>
+              <span>&#42; NOTE.</span> If you and are selected for this temp job
+              booking and need to cancel, there might be a $50.00 fee for
+              cancelling.
+            </p>
+          </div>
+        ) : (
+          <div className="cancelWarn">
+            <p>
+              <span>&#42; JOB CANCELLED BY CLINIC</span> -- If you have any
+              questions please call Smile and Co. at 403-899-2055
+            </p>
+          </div>
+        )}
+
+        {bookingStatus === "APPROVED POSTING CANCELLED" && (
+          <div className="status status__concelled">
+            <p className="status__indicator">
+              Posting Status -- <span>POSTING CANCELLED</span>
+            </p>
+            <p>
+              Sorry, you were selected for this temp job but the clinic has now
+              cancelled this job posting.
+            </p>
+          </div>
+        )}
 
         {bookingStatus === "PENDING" && (
           <div className="status status__pending">

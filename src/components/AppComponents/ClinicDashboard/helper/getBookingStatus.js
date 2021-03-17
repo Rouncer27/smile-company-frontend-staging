@@ -24,6 +24,8 @@ export default booking => {
       : "ERROR"
 
   const isShortNotice = booking.is_short_notice
+  const isCandidateSelected = booking.candidate_selected
+  const isCancelled = booking.was_cancelled
 
   const bookingStatus =
     is_cancelled && is_cancelled_short
@@ -51,5 +53,12 @@ export default booking => {
       ? false
       : false
 
-  return { bookingStatusTitle, isShortNotice, bookingStatus, isActive }
+  return {
+    bookingStatusTitle,
+    isShortNotice,
+    bookingStatus,
+    isActive,
+    isCandidateSelected,
+    isCancelled,
+  }
 }

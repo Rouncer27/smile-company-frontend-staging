@@ -91,7 +91,9 @@ const MainBookingSingle = () => {
   let bookingStatusTitle
   let bookingStatus
   let isActive
+  let candidate_selected
   let is_short_notice = false
+  let isCancelled = false
   let postionDisplay
   let locationDisplay
 
@@ -99,9 +101,10 @@ const MainBookingSingle = () => {
     const statusInfo = getBookingStatus(currentBooking)
     bookingStatusTitle = statusInfo.bookingStatusTitle
     is_short_notice = statusInfo.isShortNotice
+    candidate_selected = statusInfo.isCandidateSelected
     bookingStatus = statusInfo.bookingStatus
     isActive = statusInfo.isActive
-
+    isCancelled = statusInfo.isCancelled
     postionDisplay = getReadablePosition(currentBooking.position)
     locationDisplay = getReadableLocation(currentBooking.location)
   }
@@ -176,10 +179,10 @@ const MainBookingSingle = () => {
               <p>Location Reqested: {locationDisplay}</p>
               <p>Location Address: {currentBooking.address}</p>
             </div>
-            {isActive && (
+            {!isCancelled && (
               <div className="bookingActivity">
                 <h3>Cancel Booking</h3>
-                {is_short_notice && (
+                {is_short_notice && candidate_selected && (
                   <p>
                     <span className="shortNotice">
                       Request Short Notice Cancellation - $50.00 Fee
@@ -187,7 +190,7 @@ const MainBookingSingle = () => {
                   </p>
                 )}
                 <div className="bookingactivity__button">
-                  {is_short_notice ? (
+                  {is_short_notice && candidate_selected ? (
                     <button onClick={() => handleShortCancelBooking()}>
                       Request Short Notice Cancellation
                     </button>
