@@ -17,6 +17,7 @@ import ContactForm from "./PageComponents/ContactForm"
 import ContactBanner from "./PageComponents/ContactBanner"
 import NewsAndUpdates from "./PageComponents/NewsAndUpdates"
 import JobPostings from "./PageComponents/JobPostings"
+import SimpleWysiwyg from "./PageComponents/SimpleWysiwyg"
 
 const ComponentGroups = props => {
   const { components } = props
@@ -60,6 +61,8 @@ const ComponentGroups = props => {
                 return <NewsAndUpdates key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_JobPostings":
                 return <JobPostings key={index} data={component} />
+              case "page_Acfmaintemplatefields_PageComponents_SimpleWysiwyg":
+                return <SimpleWysiwyg key={index} data={component} />
               default:
                 return (
                   <p>Cannot find this component {component.fieldGroupName}</p>

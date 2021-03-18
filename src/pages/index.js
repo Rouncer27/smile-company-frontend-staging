@@ -319,6 +319,11 @@ export const homeQuery = graphql`
             sidebarContent
             sidebarTitle
           }
+
+          ... on WpPage_Acfmaintemplatefields_PageComponents_SimpleWysiwyg {
+            fieldGroupName
+            wysiwygContent
+          }
         }
       }
     }

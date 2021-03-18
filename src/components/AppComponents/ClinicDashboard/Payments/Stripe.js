@@ -1,7 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"
-import axios from "axios"
 import { UserContext } from "../../../../context/UserContext"
-import { navigate } from "gatsby"
 import getProductData from "../actions/getProductData"
 import { loadStripe } from "@stripe/stripe-js"
 import styled from "styled-components"

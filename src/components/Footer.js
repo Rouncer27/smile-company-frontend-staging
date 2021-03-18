@@ -2,7 +2,14 @@ import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import styled from "styled-components"
 import { Link } from "gatsby"
-import { BigWrapper, colors, Nav1Lavender, B2White } from "../styles/helpers"
+import {
+  BigWrapper,
+  colors,
+  Nav1Lavender,
+  B2White,
+  standardWrapper,
+  Nav1White,
+} from "../styles/helpers"
 
 import SocialMediaContainer from "./SocialMedia/SocialMediaContainer"
 
@@ -87,6 +94,35 @@ const Footer = () => {
           <SocialMediaContainer socialMediaLinks={socialMediaLinks} />
         </div>
       </div>
+      <div className="footCredWrap">
+        <div className="policyLinks">
+          <p>
+            <Link to="/privacy-policy">Privacy Policy</Link> {" | "}
+            <Link to="/disclaimer">Disclaimer</Link>
+          </p>
+        </div>
+        <div className="swbCopy">
+          <p>
+            Smile and Company © 2021 All Rights Reserved Designed, and developed
+            by{" "}
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://switchbackcreative.ca/"
+            >
+              Switchback Creative
+            </a>
+            . Built with ♡ and{" "}
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.gatsbyjs.com/"
+            >
+              Gatsby
+            </a>
+          </p>
+        </div>
+      </div>
     </FooterStyled>
   )
 }
@@ -94,6 +130,42 @@ const Footer = () => {
 const FooterStyled = styled.footer`
   width: 100%;
   background-color: ${colors.colorAlt};
+
+  .footCredWrap {
+    ${standardWrapper};
+
+    .policyLinks {
+      p {
+        margin-bottom: 1rem;
+      }
+
+      a,
+      p {
+        ${B2White};
+      }
+    }
+
+    .swbCopy {
+      width: 100%;
+      text-align: center;
+
+      p,
+      a {
+        ${Nav1White};
+        font-weight: 300;
+
+        &:hover {
+          color: ${colors.white};
+          cursor: inherit;
+        }
+      }
+
+      a:hover {
+        color: ${colors.colorTertiary};
+        cursor: pointer;
+      }
+    }
+  }
 
   .footWrap {
     ${BigWrapper};
