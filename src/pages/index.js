@@ -7,7 +7,8 @@ import SEO from "../components/SEO"
 import ComponentGroups from "../components/PageComponentGroups"
 
 const IndexPage = props => {
-  const { components } = props.data
+  const { components, seo } = props.data
+  console.log("HERE IS THE SEO: ", seo)
   return (
     <Layout>
       <SEO title="Smile and Copmany" />
@@ -18,6 +19,18 @@ const IndexPage = props => {
 
 export const homeQuery = graphql`
   {
+    seo: wpPage(slug: { eq: "home" }) {
+      pageSeoData {
+        swbThemeDescription
+        swbThemeMetaTitle
+        swbThemeImage {
+          localFile {
+            relativePath
+          }
+        }
+      }
+    }
+
     components: wpPage(slug: { eq: "home" }) {
       acfMainTemplateFields {
         pageComponents {

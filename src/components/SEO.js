@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
+import SchemaOrg from "./SchemaOrg"
 
 function SEO({ description, lang, meta, title }) {
   const { site } = useStaticQuery(
@@ -12,7 +13,18 @@ function SEO({ description, lang, meta, title }) {
             title
             description
             author
+            siteLogo
+            metaImg
+            siteUrl
           }
+        }
+
+        siteLogo: file(relativePath: { eq: "smile-and-company-logo.png" }) {
+          publicURL
+        }
+
+        defaultFb: file(relativePath: { eq: "social-media.png" }) {
+          publicURL
         }
       }
     `

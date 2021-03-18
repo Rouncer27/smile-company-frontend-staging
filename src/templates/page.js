@@ -7,10 +7,16 @@ import SEO from "../components/SEO"
 import ComponentGroups from "../components/PageComponentGroups"
 
 const page = props => {
-  const { components } = props.data
+  const { components, seo } = props.data
+  console.log("HERE IS THE SEO: ", seo)
   return (
     <Layout location={props?.location?.pathname}>
-      <SEO title="Page Template" />
+      <SEO
+        title={seo.pageSeoData.swbThemeMetaTitle}
+        description={seo.pageSeoData.swbThemeDescription}
+        metaImg={seo.pageSeoData.swbThemeImage.localFile.relativePath}
+        location={props.location.pathname}
+      />
       <ComponentGroups components={components} />
     </Layout>
   )
@@ -18,6 +24,17 @@ const page = props => {
 
 export const pageTempQuery = graphql`
   query pageTempPage($id: String!) {
+    seo: wpPage(id: { eq: $id }) {
+      pageSeoData {
+        swbThemeDescription
+        swbThemeMetaTitle
+        swbThemeImage {
+          localFile {
+            relativePath
+          }
+        }
+      }
+    }
     components: wpPage(id: { eq: $id }) {
       acfMainTemplateFields {
         pageComponents {

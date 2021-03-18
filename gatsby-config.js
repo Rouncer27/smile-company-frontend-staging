@@ -6,6 +6,9 @@ module.exports = {
     title: `Smile and Company`,
     description: `Smile and Company`,
     author: `@switchback4ever`,
+    metaImg: `src/images/social-media.png`,
+    siteLogo: `src/images/smile-and-company-logo.png`,
+    siteUrl: `https://smile-and-company.com/`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
