@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { colors, Nav1CharcoalGrey } from "../../../../styles/helpers"
 
 import PayPal from "./PayPal"
+import Stripe from "./Stripe"
 
 const PaymentGateways = ({ productType }) => {
   const [gateway, setGateway] = useState("")
@@ -52,6 +53,7 @@ const PaymentGateways = ({ productType }) => {
         <div className="paymentGateway">
           <p>you have selected {gateway}</p>
           {gateway === "paypalGateway" && <PayPal productType={productType} />}
+          {gateway === "stripeGateway" && <Stripe productType={productType} />}
         </div>
       )}
     </PaymentGatewaysStyled>
