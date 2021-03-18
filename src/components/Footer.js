@@ -133,6 +133,7 @@ const FooterStyled = styled.footer`
 
   .footCredWrap {
     ${standardWrapper};
+    padding-bottom: 0;
 
     .policyLinks {
       p {
@@ -142,6 +143,15 @@ const FooterStyled = styled.footer`
       a,
       p {
         ${B2White};
+      }
+
+      a[aria-current="page"] {
+        color: ${colors.colorTertiary};
+
+        &:hover {
+          color: ${colors.colorTertiary};
+          cursor: default;
+        }
       }
     }
 
