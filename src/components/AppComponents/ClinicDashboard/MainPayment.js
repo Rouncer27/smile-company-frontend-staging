@@ -6,6 +6,9 @@ import { globalHistory } from "@reach/router"
 import { UserContext } from "../../../context/UserContext"
 import PaymentGateways from "./Payments/PaymentGateways"
 import CartTotals from "./Payments/CartTotals"
+import getTermsConditions from "./actions/getTermsConditions"
+import marked from "marked"
+import TermsModal from "../../UiElements/TermsModal"
 
 import {
   calulateTax,
@@ -21,10 +24,14 @@ import {
   H4Lavender,
   Nav1CharcoalGrey,
   B1CharcoalGrey,
+  Btn1DarkPurple,
 } from "../../../styles/helpers"
 import Skeleton from "react-loading-skeleton"
 
 const MainPayment = () => {
+  const [terms, setTerms] = useState("")
+  const [termsModalActive, setTermsModalActive] = useState(false)
+  const [termsRead, setTermsRead] = useState(false)
   const [termsAgree, setTermsAgree] = useState(false)
   const [productType, setProductType] = useState("")
   const [state, dispatch] = useContext(UserContext)
@@ -150,9 +157,16 @@ const MainPayment = () => {
     }
   }
 
+  const getTerms = async () => {
+    const termsDoc = await getTermsConditions(token, dispatch)
+    const termsDocClean = marked(termsDoc)
+    setTerms(termsDocClean)
+  }
+
   useEffect(() => {
     const queryData = queryString.parse(globalHistory.location.search)
     setProductType(queryData.product)
+    getTerms()
   }, [])
 
   useEffect(() => {
@@ -202,33 +216,45 @@ const MainPayment = () => {
           <div className="termsConditions">
             <div className="termsConditions__title">
               <h2>Terms and Conditions</h2>
-              <p>Please read and approve our terms</p>
             </div>
-            <div className="termsConditions__agree">
-              <div className="checkbox-wrapper">
-                <input
-                  onChange={() => setTermsAgree(!termsAgree)}
-                  name="agree"
-                  id="agree"
-                  type="checkbox"
-                  checked={termsAgree}
-                  value="agree"
-                />
-                <label htmlFor="agree">
-                  I have read and I agree to Smile and Company terms and
-                  conditions
-                </label>
+            {!termsRead ? (
+              <div className="termsConditions__read">
+                <p>Please read and approve our terms</p>
+                <button onClick={() => setTermsModalActive(true)}>Read</button>
               </div>
-            </div>
+            ) : (
+              <div className="termsConditions__agree">
+                <div className="checkbox-wrapper">
+                  <input
+                    onChange={() => setTermsAgree(!termsAgree)}
+                    name="agree"
+                    id="agree"
+                    type="checkbox"
+                    checked={termsAgree}
+                    value="agree"
+                  />
+                  <label htmlFor="agree">
+                    I have read and I agree to Smile and Company terms and
+                    conditions
+                  </label>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <Skeleton count={8} />
         )}
 
-        {cart.active && termsAgree && (
+        {cart.active && termsRead && termsAgree && (
           <PaymentGateways productType={productType} />
         )}
       </div>
+      <TermsModal
+        terms={terms}
+        activemodal={termsModalActive}
+        setTermsModalActive={setTermsModalActive}
+        setTermsRead={setTermsRead}
+      />
     </MainPaymentStyled>
   )
 }
@@ -284,6 +310,26 @@ const MainPaymentStyled = styled.div`
         ${B1CharcoalGrey};
         text-transform: uppercase;
         margin: 0;
+      }
+    }
+
+    &__read {
+      width: 100%;
+      margin: 2rem auto;
+
+      p {
+        ${Nav1CharcoalGrey};
+        margin: 0;
+        margin-bottom: 1.5rem;
+
+        &:hover {
+          color: ${colors.colorAlt};
+          cursor: inherit;
+        }
+      }
+
+      button {
+        ${Btn1DarkPurple};
       }
     }
 

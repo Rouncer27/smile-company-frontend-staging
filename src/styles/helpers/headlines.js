@@ -48,6 +48,11 @@ export const H2Lavender = css`
   color: ${colors.colorSecondary};
 `
 
+export const H2DarkPurple = css`
+  ${H2Base};
+  color: ${colors.colorPrimary};
+`
+
 export const H2White = css`
   ${H2Base};
   color: ${colors.white};

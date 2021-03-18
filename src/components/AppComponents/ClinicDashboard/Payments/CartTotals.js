@@ -50,18 +50,7 @@ const CartTotals = ({ productType }) => {
           <div className="cartTitle">
             <h2>Cart Totals</h2>
           </div>
-          {productType === "membership" || productType === "fee" ? null : (
-            <div className="qtyBtn">
-              <button type="button" onClick={handleAddQty}>
-                Add
-              </button>
-              {cart.qty > 1 && (
-                <button type="button" onClick={handleSubtractQty}>
-                  Remove
-                </button>
-              )}
-            </div>
-          )}
+
           <div className="cartTable">
             <p>
               {cart.name} --- Terms: {cart.terms}
@@ -81,6 +70,18 @@ const CartTotals = ({ productType }) => {
               <span>&#36;{cart.total}</span>{" "}
             </p>
           </div>
+          {productType === "membership" || productType === "fee" ? null : (
+            <div className="qtyBtn">
+              <button type="button" onClick={handleAddQty}>
+                Add 1 more
+              </button>
+              {cart.qty > 1 && (
+                <button type="button" onClick={handleSubtractQty}>
+                  Remove 1
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
     </CartTotalsStyled>
