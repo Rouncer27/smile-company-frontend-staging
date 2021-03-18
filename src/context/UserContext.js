@@ -7,6 +7,19 @@ const initialState = {
   user: {},
   profile: {},
   bookings: [],
+  cart: {
+    name: "",
+    price: "",
+    description: "",
+    details: "",
+    terms: "",
+    active: false,
+    qty: 0,
+    itemPrice: 0,
+    subTotal: 0,
+    tax: 0,
+    total: 0,
+  },
   loading: false,
   error: false,
   errMessage: "",
@@ -16,12 +29,61 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "ADD_TO_CART":
+      return {
+        ...state,
+        cart: action.payload,
+      }
+
+    case "CHANGE_QTY_CART":
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          qty: action.payload.qty,
+          subTotal: action.payload.subTotal,
+          tax: action.payload.tax,
+          total: action.payload.total,
+        },
+      }
+
+    case "CLEAR_CART":
+      return {
+        ...state,
+        loading: false,
+        cart: {
+          name: "",
+          price: "",
+          description: "",
+          details: "",
+          terms: "",
+          active: false,
+          qty: 0,
+          itemPrice: 0,
+          subTotal: 0,
+          tax: 0,
+          total: 0,
+        },
+      }
+
     case "USER_LOGOUT":
       return {
         token: "",
         user: {},
         profile: {},
         bookings: [],
+        cart: {
+          name: "",
+          price: "",
+          description: "",
+          details: "",
+          terms: "",
+          active: false,
+          qty: 0,
+          subTotal: 0,
+          tax: 0,
+          total: 0,
+        },
         loading: false,
         error: false,
         errMessage: "",

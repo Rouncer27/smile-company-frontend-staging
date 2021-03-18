@@ -15,7 +15,7 @@ const PaymentGateways = ({ productType }) => {
       </div>
       <div className="paymentOptions">
         <div className="checkbox-wrapper">
-          <div className="checkbox-wrapper__paypal">
+          {/* <div className="checkbox-wrapper__paypal">
             <input
               type="radio"
               id="paypalGateway"
@@ -30,7 +30,7 @@ const PaymentGateways = ({ productType }) => {
             >
               PayPal
             </label>
-          </div>
+          </div> */}
           <div className="checkbox-wrapper__stripe">
             <input
               type="radio"
@@ -51,8 +51,7 @@ const PaymentGateways = ({ productType }) => {
       </div>
       {gateway !== "" && (
         <div className="paymentGateway">
-          <p>you have selected {gateway}</p>
-          {gateway === "paypalGateway" && <PayPal productType={productType} />}
+          {/* {gateway === "paypalGateway" && <PayPal productType={productType} />} */}
           {gateway === "stripeGateway" && <Stripe productType={productType} />}
         </div>
       )}

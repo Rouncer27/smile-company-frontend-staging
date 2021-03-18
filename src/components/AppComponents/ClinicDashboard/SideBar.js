@@ -37,6 +37,8 @@ const SideBar = () => {
   const accountHasBookings =
     state.profile && state.profile.bookings && state.profile.bookings.length > 0
 
+  const isActiveMembership = state.profile.monthly_subscription
+
   const bookings = state.profile.bookings ? state.profile.bookings : []
   const hasExpiredBookings = bookings.filter(book => book.is_expired).length > 0
   const accountHasFees = state.profile.has_short_fee
@@ -71,7 +73,10 @@ const SideBar = () => {
             )}
           </li>
           <li>
-            {userConfirmed && profileSatisfied && !accountHasFees ? (
+            {userConfirmed &&
+            profileSatisfied &&
+            !accountHasFees &&
+            !isActiveMembership ? (
               <Link to="/app/clinic-dashboard/booking-packages">
                 <span className="icon">
                   <Dash />

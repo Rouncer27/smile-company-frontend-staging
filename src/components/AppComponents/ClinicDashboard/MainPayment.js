@@ -5,6 +5,13 @@ import axios from "axios"
 import { globalHistory } from "@reach/router"
 import { UserContext } from "../../../context/UserContext"
 import PaymentGateways from "./Payments/PaymentGateways"
+import CartTotals from "./Payments/CartTotals"
+
+import {
+  calulateTax,
+  calculateSubTotal,
+  calculateCartTotal,
+} from "./helper/cartTotals"
 
 import {
   B1Sage,
@@ -20,63 +27,96 @@ import Skeleton from "react-loading-skeleton"
 const MainPayment = () => {
   const [termsAgree, setTermsAgree] = useState(false)
   const [productType, setProductType] = useState("")
-  const [productDetails, setproductDetails] = useState({
-    name: "",
-    price: "",
-    description: "",
-    details: "",
-    terms: "",
-    active: false,
-  })
   const [state, dispatch] = useContext(UserContext)
   const token = state.token
+  const cart = state.cart
 
   const setOneBooking = data => {
-    setproductDetails({
-      name: "One Booking",
-      qty: 1,
-      price: data.booking_one_price,
-      description: data.booking_one_description,
-      details: data.booking_one_includes_details,
-      terms: data.booking_one_purchase_terms,
-      active: true,
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: {
+        name: "One Booking",
+        price: data.booking_one_price,
+        description: data.booking_one_description,
+        details: data.booking_one_includes_details,
+        terms: data.booking_one_purchase_terms,
+        active: true,
+        qty: 1,
+        itemPrice: data.booking_one_price,
+        subTotal: calculateSubTotal(data.booking_one_price, 1),
+        tax: calulateTax(data.booking_one_price),
+        total: calculateCartTotal(
+          calculateSubTotal(data.booking_one_price, 1),
+          calulateTax(data.booking_one_price)
+        ),
+      },
     })
   }
 
   const setSmilePass = data => {
-    setproductDetails({
-      name: "10 Smile Pass",
-      qty: 1,
-      price: data.ten_pass_price,
-      description: data.ten_pass_description,
-      details: data.ten_pass_includes_details,
-      terms: data.ten_pass_purchase_terms,
-      active: true,
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: {
+        name: "10 Smile Pass",
+        price: data.ten_pass_price,
+        description: data.ten_pass_description,
+        details: data.ten_pass_includes_details,
+        terms: data.ten_pass_purchase_terms,
+        active: true,
+        qty: 1,
+        itemPrice: data.ten_pass_price,
+        subTotal: calculateSubTotal(data.ten_pass_price, 1),
+        tax: calulateTax(data.ten_pass_price),
+        total: calculateCartTotal(
+          calculateSubTotal(data.ten_pass_price, 1),
+          calulateTax(data.ten_pass_price)
+        ),
+      },
     })
   }
 
   const setMembership = data => {
-    setproductDetails({
-      name: "Monthly Membership",
-      qty: 1,
-      price: data.smile_member_price,
-      description: data.smile_member_description,
-      details: data.smile_member_included_details,
-      terms: data.smile_member_purchase_terms,
-      active: true,
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: {
+        name: "Monthly Membership",
+        price: data.smile_member_price,
+        description: data.smile_member_description,
+        details: data.smile_member_included_details,
+        terms: data.smile_member_purchase_terms,
+        active: true,
+        itemPrice: data.smile_member_price,
+        qty: 1,
+        subTotal: calculateSubTotal(data.smile_member_price, 1),
+        tax: calulateTax(data.smile_member_price),
+        total: calculateCartTotal(
+          calculateSubTotal(data.smile_member_price, 1),
+          calulateTax(data.smile_member_price)
+        ),
+      },
     })
   }
 
   const setCancelFee = () => {
-    setproductDetails({
-      name: "Short Notice Cancellation Fee",
-      qty: state.profile.number_of_short_fees,
-      price: 50 * state.profile.number_of_short_fees,
-      description:
-        "Cancellation fee for requesting a short notice cancelling of a temp job booking.",
-      details: "$50 Fee for each short notice cancellation",
-      terms: "Must be paid before you can create any other bookings.",
-      active: true,
+    console.log("ADD TO CART")
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: {
+        name: "Short Notice Cancellation Fee",
+        price: 50,
+        description:
+          "Cancellation fee for requesting a short notice cancelling of a temp job booking.",
+        details: "$50 Fee for each short notice cancellation",
+        terms: "Must be paid before you can create any other bookings.",
+        active: true,
+        qty: state.profile.number_of_short_fees,
+        subTotal: calculateSubTotal(50, state.profile.number_of_short_fees),
+        tax: calulateTax(50),
+        total: calculateCartTotal(
+          calculateSubTotal(50, state.profile.number_of_short_fees),
+          calulateTax(50)
+        ),
+      },
     })
   }
 
@@ -129,36 +169,36 @@ const MainPayment = () => {
           <h2>Purchase Booking Package</h2>
           <p className="chooseText">This is the package you have selected.</p>
         </div>
-        {productDetails.active ? (
+        {cart.active ? (
           <DetailsCard className="bookDetail smilePass">
             <div className="bookDetail__price">
-              <h2>
-                {productDetails.name}{" "}
-                {productDetails.qty > 1 && (
-                  <span>&#215; {productDetails.qty}</span>
-                )}
-              </h2>
+              <h2>{cart.name}</h2>
 
-              <p>&#36;{productDetails.price}</p>
+              <p>&#36;{cart.price}</p>
             </div>
             <div className="bookDetail__descriptions">
-              <p className="bookDetail__descriptions--terms">
-                {productDetails.terms}
-              </p>
+              <p className="bookDetail__descriptions--terms">{cart.terms}</p>
 
               <p className="bookDetail__descriptions--description">
-                {productDetails.description}
+                {cart.description}
               </p>
 
               <p className="bookDetail__descriptions--includes">
-                Includes: {productDetails.details}
+                Includes: {cart.details}
               </p>
             </div>
           </DetailsCard>
         ) : (
           <Skeleton count={8} />
         )}
-        {productDetails.active ? (
+
+        {cart.active ? (
+          <CartTotals productType={productType} />
+        ) : (
+          <Skeleton count={8} />
+        )}
+
+        {cart.active ? (
           <div className="termsConditions">
             <div className="termsConditions__title">
               <h2>Terms and Conditions</h2>
@@ -184,7 +224,8 @@ const MainPayment = () => {
         ) : (
           <Skeleton count={8} />
         )}
-        {productDetails.active && termsAgree && (
+
+        {cart.active && termsAgree && (
           <PaymentGateways productType={productType} />
         )}
       </div>
@@ -233,6 +274,7 @@ const MainPaymentStyled = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+    margin-top: 5rem;
 
     &__title {
       width: 100%;
@@ -247,7 +289,8 @@ const MainPaymentStyled = styled.div`
 
     &__agree {
       width: 100%;
-      margin: 5rem auto;
+      margin: 2rem auto;
+
       .checkbox-wrapper {
         position: relative;
 
