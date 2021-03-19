@@ -31,9 +31,8 @@ const MainApproved = () => {
   const approvedBookings = bookings.filter(
     booking => booking.candidate_selected
   )
-
   const myApprovedBookings = approvedBookings.filter(
-    booking => booking.aceepted_profile_id === profile.id && !booking.is_expired
+    booking => booking.user_selected
   )
 
   return (

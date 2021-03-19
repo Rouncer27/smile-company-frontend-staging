@@ -59,15 +59,11 @@ const AvailableCard = ({ booking }) => {
     await getBookings(token, userId, state.user.confirmed, dispatch)
   }
 
-  const havApplied =
-    booking.applied_ids.findIndex(id => id === profile.id) !== -1 ? true : false
-
+  const havApplied = booking.user_applied
   const isCancelled = booking.was_cancelled
   const isActive = booking.booking_active
   const isSelected = booking.candidate_selected
-  const acceptedId = booking.aceepted_profile_id
-  const myId = profile.id
-  const isAccepted = acceptedId === myId
+  const isAccepted = booking.user_selected
 
   const bookingStatus =
     isCancelled && isAccepted

@@ -35,7 +35,7 @@ const MainHistory = () => {
 
   const getPastBooking = () => {
     const pastBooking = bookings.filter(booking => {
-      if (booking.aceepted_profile_id !== profile.id) return false
+      if (!booking.user_selected) return false
       const dateObj = new Date()
       const month = String(dateObj.getMonth())
       const day = String(dateObj.getDate())

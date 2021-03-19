@@ -16,9 +16,6 @@ const ApprovedItem = ({ item }) => {
   const currentBookingEndTime = item ? item.shift_end : []
   const startTimes = timeFormat(currentBookingStartTime)
   const endTimes = timeFormat(currentBookingEndTime)
-
-  console.log(item)
-
   return (
     <ApprovedItemStyled>
       <div>
