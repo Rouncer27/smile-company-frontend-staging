@@ -14,11 +14,6 @@ export default async (token, id, profile, cart, user, dispatch) => {
       }
     )
 
-    console.log(
-      "RESPONCE FROM SERVER MEMBERSHIP: ",
-      reponse.data.payment_status
-    )
-
     if (reponse.data.payment_status === "succeeded") {
       dispatch({ type: "CLEAR_CART" })
       dispatch({ type: "USER_UPDATE", payload: { token, user } })
