@@ -15,6 +15,12 @@ const {
   greyBrown,
   black,
   strongred,
+  open,
+  fulfilled,
+  unfulfilled,
+  cancelled,
+  shortcancelled,
+  error,
 } = themeColors
 const { maxWidth, bpTablet, bpDesksm, bpDeskmd, bpDesklg, bpMax } = themeSize
 const { fontPrimary, fontSecondary, fontAwesome, baseLineHeight } = themeFonts
@@ -42,6 +48,12 @@ const theme = {
   fontSecondary,
   fontAwesome,
   baseLineHeight,
+  open,
+  fulfilled,
+  unfulfilled,
+  cancelled,
+  shortcancelled,
+  error,
 }
 
 export default theme

@@ -14,11 +14,17 @@ import {
 import Input from "../FormFields/Input"
 
 const ForgotFields = () => {
-  const [state, dispatch] = useContext(UserContext)
+  const [, dispatch] = useContext(UserContext)
 
   const [formData, setFormData] = useState({
     email: "",
   })
+
+  const resetFormData = () => {
+    setFormData({
+      email: "",
+    })
+  }
 
   const handleOnChange = event => {
     setFormData({
@@ -38,6 +44,7 @@ const ForgotFields = () => {
 
       if (response.data.ok) {
         dispatch({ type: "USER_RESET" })
+        resetFormData()
       }
     } catch (err) {
       console.log(err)

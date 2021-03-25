@@ -11,6 +11,12 @@ const themeColors = {
   greyBrown: "rgba(67,67,67, 1)",
   black: "rgba(0,0,0, 1)",
   strongred: "rgba(255, 0, 0, 1)",
+  open: "#4bb1cf",
+  fulfilled: "#15cd72",
+  unfulfilled: "#ede04d",
+  cancelled: "#ffcc00",
+  shortcancelled: "#ff9966",
+  error: "#ed4f32",
 }
 
 export default themeColors

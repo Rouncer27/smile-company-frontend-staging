@@ -41,7 +41,7 @@ const BookingUnfulfilledStyled = styled.div`
         display: inline-block;
         padding: 0.5rem 1rem;
         border-radius: 0.25rem;
-        background-color: #ede04d;
+        background-color: ${colors.unfulfilled};
         color: ${colors.black} !important;
         text-align: center;
 

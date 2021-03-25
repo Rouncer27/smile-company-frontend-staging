@@ -6,6 +6,7 @@ import {
   Nav1CharcoalGrey,
 } from "../../../../styles/helpers"
 import ProfessionalCard from "./ProfessionalCard"
+import ProfileNotFound from "./ProfileNotFound"
 
 const CandidateAccepted = ({ proSelected }) => {
   return (
@@ -17,7 +18,15 @@ const CandidateAccepted = ({ proSelected }) => {
         </p>
       </div>
       <div className="bookingCandidates__wrapper">
-        <ProfessionalCard pro={proSelected} bookingId={null} accepted={true} />
+        {proSelected === undefined ? (
+          <ProfileNotFound />
+        ) : (
+          <ProfessionalCard
+            pro={proSelected}
+            bookingId={null}
+            accepted={true}
+          />
+        )}
       </div>
     </CandidateAcceptedStyled>
   )
@@ -42,7 +51,7 @@ const CandidateAcceptedStyled = styled.div`
         display: inline-block;
         padding: 0.5rem 1rem;
         border-radius: 0.25rem;
-        background-color: #15cd72;
+        background-color: ${colors.fulfilled};
         color: ${colors.black} !important;
         text-align: center;
 

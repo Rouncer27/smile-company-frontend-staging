@@ -58,12 +58,13 @@ const AvailableCard = ({ booking }) => {
     await putBookingIgnore(token, booking.id, dispatch)
     await getBookings(token, userId, state.user.confirmed, dispatch)
   }
-
+  console.log(booking)
   const havApplied = booking.user_applied
   const isCancelled = booking.was_cancelled
   const isActive = booking.booking_active
   const isSelected = booking.candidate_selected
   const isAccepted = booking.user_selected
+  const isExpired = booking.is_expired
 
   const bookingStatus =
     isCancelled && isAccepted
@@ -78,6 +79,8 @@ const AvailableCard = ({ booking }) => {
       ? "NOT SELECTED"
       : !isActive && isSelected && havApplied && isAccepted
       ? "APPROVED"
+      : !isActive && !isSelected && isExpired
+      ? "EXPIRED"
       : "ERROR"
 
   return (
@@ -199,6 +202,15 @@ const AvailableCard = ({ booking }) => {
           </div>
         )}
 
+        {bookingStatus === "EXPIRED" && (
+          <div className="status status__expired">
+            <p className="status__indicator">
+              Posting Status -- <span>EXPIRED</span>
+            </p>
+            <p>Sorry, This temp job posting has expired.</p>
+          </div>
+        )}
+
         {bookingStatus === "ERROR" && (
           <div className="status status__error">
             <p className="status__indicator">
@@ -254,7 +266,7 @@ const AvailableCardStyled = styled.div`
   .cancelWarn {
     p {
       span {
-        color: #ed4f32;
+        color: ${colors.error};
       }
     }
   }
@@ -292,7 +304,7 @@ const AvailableCardStyled = styled.div`
       ${B2CharcoalGrey};
       margin-top: 2rem;
       margin-bottom: 0;
-      color: rgba(255, 0, 0, 1);
+      color: ${colors.cancelled};
       font-weight: bold;
       line-height: 1.35;
     }
@@ -335,7 +347,7 @@ const AvailableCardStyled = styled.div`
     &__open {
       .status__indicator {
         span {
-          background-color: #4bb1cf;
+          background-color: ${colors.open};
         }
       }
     }
@@ -343,7 +355,7 @@ const AvailableCardStyled = styled.div`
     &__pending {
       .status__indicator {
         span {
-          background-color: #4bb1cf;
+          background-color: ${colors.open};
         }
       }
     }
@@ -351,7 +363,15 @@ const AvailableCardStyled = styled.div`
     &__approved {
       .status__indicator {
         span {
-          background-color: #15cd72;
+          background-color: ${colors.fulfilled};
+        }
+      }
+    }
+
+    &__expired {
+      .status__indicator {
+        span {
+          background-color: ${colors.cancelled};
         }
       }
     }
@@ -359,7 +379,7 @@ const AvailableCardStyled = styled.div`
     &__concelled {
       .status__indicator {
         span {
-          background-color: #ede04d;
+          background-color: ${colors.cancelled};
         }
       }
     }
@@ -367,14 +387,14 @@ const AvailableCardStyled = styled.div`
     &__notSelected {
       .status__indicator {
         span {
-          background-color: #ff7200;
+          background-color: ${colors.shortcancelled};
         }
       }
     }
     &__error {
       .status__indicator {
         span {
-          background-color: #ed4f32;
+          background-color: ${colors.error};
         }
       }
     }

@@ -26,6 +26,7 @@ export default booking => {
   const isShortNotice = booking.is_short_notice
   const isCandidateSelected = booking.candidate_selected
   const isCancelled = booking.was_cancelled
+  const isExpired = booking.is_expired
 
   const bookingStatus =
     is_cancelled && is_cancelled_short
@@ -60,5 +61,6 @@ export default booking => {
     isActive,
     isCandidateSelected,
     isCancelled,
+    isExpired,
   }
 }

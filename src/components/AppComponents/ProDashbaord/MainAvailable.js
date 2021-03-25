@@ -38,8 +38,6 @@ const MainAvailable = () => {
     setBookingNotIgnored(bookings.filter(book => !book.isIgnored))
   }, [bookings])
 
-  console.log("BOOKINGS IN STATE: ", bookings)
-
   return (
     <MainAvailableStyled>
       <div className="dashWrap">

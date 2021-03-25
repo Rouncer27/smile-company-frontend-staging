@@ -92,6 +92,7 @@ const MainBookingSingle = () => {
   let bookingStatus
   let isActive
   let candidate_selected
+  let is_expired = false
   let is_short_notice = false
   let isCancelled = false
   let postionDisplay
@@ -105,6 +106,7 @@ const MainBookingSingle = () => {
     bookingStatus = statusInfo.bookingStatus
     isActive = statusInfo.isActive
     isCancelled = statusInfo.isCancelled
+    is_expired = statusInfo.isExpired
     postionDisplay = getReadablePosition(currentBooking.position)
     locationDisplay = getReadableLocation(currentBooking.location)
   }
@@ -118,6 +120,8 @@ const MainBookingSingle = () => {
     await getBookingFromServer()
     await getProfile(token, userId, dispatch)
   }
+
+  console.log("HERE: ", candidate_selected)
 
   return (
     <MainBookingSingleStyled>
@@ -179,7 +183,7 @@ const MainBookingSingle = () => {
               <p>Location Reqested: {locationDisplay}</p>
               <p>Location Address: {currentBooking.address}</p>
             </div>
-            {!isCancelled && (
+            {!isCancelled && !is_expired && (
               <div className="bookingActivity">
                 <h3>Cancel Booking</h3>
                 {is_short_notice && candidate_selected && (
@@ -296,24 +300,27 @@ const MainBookingSingleStyled = styled.div`
       }
 
       &__open {
-        background-color: #4bb1cf;
+        background-color: ${colors.open};
       }
 
       &__fulfilled {
-        background-color: #15cd72;
+        background-color: ${colors.fulfilled};
       }
 
-      &__unfulfilled,
+      &__unfulfilled {
+        background-color: ${colors.unfulfilled};
+      }
+
       &__cancelled {
-        background-color: #ede04d;
+        background-color: ${colors.cancelled};
       }
 
       &__shortcancelled {
-        background-color: #ed4f32;
+        background-color: ${colors.shortcancelled};
       }
 
       &__error {
-        background-color: #ed4f32;
+        background-color: #${colors.error};
       }
     }
 

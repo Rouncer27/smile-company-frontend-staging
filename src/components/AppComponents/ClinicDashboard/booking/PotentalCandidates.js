@@ -8,7 +8,6 @@ import {
 import ProfessionalCard from "./ProfessionalCard"
 
 const PotentalCandidates = ({ proApplied, bookingID }) => {
-  console.log(proApplied)
   return (
     <PotentalCandidatesStyled>
       <div className="title">
@@ -59,7 +58,7 @@ const PotentalCandidatesStyled = styled.div`
         display: inline-block;
         padding: 0.5rem 1rem;
         border-radius: 0.25rem;
-        background-color: #4bb1cf;
+        background-color: ${colors.open};
         color: ${colors.black} !important;
         text-align: center;
 

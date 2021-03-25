@@ -153,21 +153,27 @@ const MainBookingsStyled = styled.div`
           }
 
           &__open {
-            background-color: #4bb1cf;
+            background-color: ${colors.open};
           }
 
           &__fulfilled {
-            background-color: #15cd72;
+            background-color: ${colors.fulfilled};
           }
 
-          &__cancelled,
           &__unfulfilled {
-            background-color: #ede04d;
+            background-color: ${colors.unfulfilled};
           }
 
-          &__shortcancelled,
+          &__cancelled {
+            background-color: ${colors.cancelled};
+          }
+
+          &__shortcancelled {
+            background-color: ${colors.shortcancelled};
+          }
+
           &__error {
-            background-color: #ed4f32;
+            background-color: #${colors.error};
           }
         }
       }

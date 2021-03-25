@@ -13,6 +13,12 @@ export const {
   greyBrown,
   black,
   strongRed,
+  open,
+  fulfilled,
+  unfulfilled,
+  cancelled,
+  shortcancelled,
+  error,
 } = themeColors
 
 export default {
@@ -28,4 +34,10 @@ export default {
   greyBrown,
   black,
   strongRed,
+  open,
+  fulfilled,
+  unfulfilled,
+  cancelled,
+  shortcancelled,
+  error,
 }

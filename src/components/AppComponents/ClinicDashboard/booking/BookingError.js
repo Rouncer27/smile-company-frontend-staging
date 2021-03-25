@@ -44,7 +44,7 @@ const BookingErrorStyled = styled.div`
         display: inline-block;
         padding: 0.5rem 1rem;
         border-radius: 0.25rem;
-        background-color: #ed4f32;
+        background-color: ${colors.error};
         color: ${colors.black} !important;
         text-align: center;
 

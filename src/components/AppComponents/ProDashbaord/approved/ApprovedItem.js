@@ -98,7 +98,7 @@ const ApprovedItemStyled = styled.div`
       }
 
       span {
-        color: #ed4f32;
+        color: ${colors.cancelled};
       }
     }
   }
@@ -120,10 +120,10 @@ const ApprovedItemStyled = styled.div`
       opacity: 0.9;
 
       p {
-        color: #ed4f32;
+        color: ${colors.cancelled};
 
         &:hover {
-          color: #ed4f32;
+          color: ${colors.cancelled};
         }
       }
     }
