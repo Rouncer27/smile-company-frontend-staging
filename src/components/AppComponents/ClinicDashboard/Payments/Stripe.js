@@ -47,15 +47,20 @@ const Checkout = ({ token, productType, profile }) => {
         if (!error) {
           const { id } = paymentMethod
           postStripeMembership(token, id, profile, cart, user, dispatch)
+        } else {
+          dispatch({ type: "USER_ERROR", payload: { message: error.message } })
         }
       } else {
         const { error, paymentMethod } = await stripe.createPaymentMethod({
           type: "card",
           card: elements.getElement(CardElement),
         })
+
         if (!error) {
           const { id } = paymentMethod
           postStripePayment(token, id, productType, cart, user, dispatch)
+        } else {
+          dispatch({ type: "USER_ERROR", payload: { message: error.message } })
         }
       }
     } catch (err) {
