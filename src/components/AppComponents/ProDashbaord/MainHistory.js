@@ -36,6 +36,7 @@ const MainHistory = () => {
   const getPastBooking = () => {
     const pastBooking = bookings.filter(booking => {
       if (!booking.user_selected) return false
+      if (!booking.is_expired) return false
       const dateObj = new Date()
       const month = String(dateObj.getMonth())
       const day = String(dateObj.getDate())
