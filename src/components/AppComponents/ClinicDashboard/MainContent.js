@@ -170,16 +170,6 @@ const MainDashboard = () => {
               <p>
                 Office Hours: <span>{state.profile.office_hours}</span>
               </p>
-              <p>
-                Benefits Offered: <span>{state.profile.benefits}</span>
-              </p>
-              <p>
-                Perks: <span>{state.profile.perks}</span>
-              </p>
-              <p>
-                What is the best thing about working at your office:{" "}
-                <span>{state.profile.best_thing}</span>
-              </p>
             </div>
           </>
         )}

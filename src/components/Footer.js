@@ -75,7 +75,7 @@ const Footer = () => {
         </div>
 
         <div className="footPermeanant footBlock">
-          <h3>Permeanant Placement</h3>
+          <h3>Permanent Placement</h3>
           <ul>
             {footerMenu.map(item => {
               const slug = item.url

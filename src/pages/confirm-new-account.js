@@ -11,9 +11,9 @@ const ConfirmNewAccount = () => {
         </p>
         <h2>
           <span>Success!</span>{" "}
-          <span>You account email has been confirmed.</span>{" "}
+          <span>Your account email has been confirmed.</span>{" "}
           <span>
-            Closed this window and go back to your original dashboard screen.
+            Close this window and go back to your original dashboard screen.
           </span>
         </h2>
       </div>

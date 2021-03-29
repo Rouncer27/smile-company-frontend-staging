@@ -61,7 +61,7 @@ const MainCreateBooking = () => {
   const handleOnCheckBoxChange = event => {
     setFormData({
       ...formData,
-      [event.target.id]: true,
+      [event.target.id]: !formData[event.target.id],
     })
   }
 
@@ -90,6 +90,9 @@ const MainCreateBooking = () => {
       navigate("/app/clinic-dashboard", { replace: true })
   }, [profile])
 
+  const disableSubmit =
+    formData.hiringFees && formData.notifyAgree && formData.shortNotice
+
   return (
     <MainCreateBookingStyled>
       <div className="dashWrap">
@@ -102,13 +105,14 @@ const MainCreateBooking = () => {
           <h2>Create a Booking Request</h2>
           <p className="dashTitle__subcontent">
             Please fill in the booking details you are looking for so that we
-            can match you with the right personnel.
+            can match you with the right personnel. Repeat this process every
+            time you need additional help.
           </p>
           <p className="dashTitle__disclaimer">
             If your booking can't be filled we will not charge you for this
-            booking. Your booking credit will be refunded. <br />
-            There is a $50 fee for short notice cancellations (less than 24
-            hours) for any reason.
+            booking. Your booking credit will be refunded. 
+            <br />
+            Cancellations with less than 24 hours are subjected to a $50 fee 
           </p>
         </div>
         {!hasCredits && (
@@ -154,28 +158,42 @@ const MainCreateBooking = () => {
 
               <RadioInput
                 name="location"
-                label="What location area are you looking placement in?"
+                label="What location are you looking for?"
                 handleOnRadioChange={handleOnChange}
                 value={formData.location}
                 options={[
                   {
-                    id: "nwNeSwSeCalgary",
-                    label: "NW, NE, SW, SE Calgary",
+                    id: "nwCalgary",
+                    label: "NW Calgary",
+                  },
+                  {
+                    id: "neCalgary",
+                    label: "NE Calgary",
+                  },
+                  {
+                    id: "swCalgary",
+                    label: "SW Calgary",
+                  },
+                  {
+                    id: "seCalgary",
+                    label: "SE Calgary",
                   },
                   { id: "innerCityCalgary", label: "Inner-city Calgary" },
                   { id: "airdrie", label: "Airdrie" },
                   { id: "chestermere", label: "Chestermere" },
                   { id: "cochrane", label: "Cochrane" },
                   { id: "okotoks", label: "Okotoks" },
+                  { id: "crossfield", label: "Crossfield" },
+                  { id: "canmore", label: "Canmore" },
                   { id: "banff", label: "Banff" },
                 ]}
               />
 
               <Input
-                label="clinic street address / location"
+                label="Clinic Name / clinic street address / location"
                 name="address"
                 type="text"
-                placeholder="clinic street address / location"
+                placeholder="Clinic Name / clinic street address / location"
                 value={formData.address}
                 onChange={handleOnChange}
                 fieldvalid={true}
@@ -207,7 +225,9 @@ const MainCreateBooking = () => {
                 />
               </div>
               <div className="submitButton">
-                <button type="submit">Submit Booking</button>
+                <button disabled={!disableSubmit} type="submit">
+                  Submit Booking
+                </button>
               </div>
             </fieldset>
           </form>

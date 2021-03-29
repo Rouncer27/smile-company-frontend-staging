@@ -91,35 +91,35 @@ const SideBar = () => {
           </li>
           <li>
             {userConfirmed && generalSettingSatisfied && experienceSatisfied ? (
-              <Link to="/app/professional-dashboard/contact">
+              <Link to="/app/professional-dashboard/availability">
                 <span className="icon">
                   <Cog />
                 </span>{" "}
-                <span className="text">My Contact Information</span>
+                <span className="text">My Availability</span>
               </Link>
             ) : (
               <button type="button" disabled={true}>
                 <span className="icon">
                   <Cog />
                 </span>{" "}
-                <span className="text">My Contact Information</span>
+                <span className="text">My Availability</span>
               </button>
             )}
           </li>
           <li>
             {userConfirmed && profileSatisfied ? (
-              <Link to="/app/professional-dashboard/booking-available">
+              <Link to="/app/professional-dashboard/booking-requests">
                 <span className="icon">
                   <Checked />
                 </span>{" "}
-                <span className="text">Available Bookings</span>
+                <span className="text">Booking Requests</span>
               </Link>
             ) : (
               <button type="button" disabled={true}>
                 <span className="icon">
                   <Checked />
                 </span>{" "}
-                <span className="text">Available Bookings</span>
+                <span className="text">Booking Requests</span>
               </button>
             )}
           </li>

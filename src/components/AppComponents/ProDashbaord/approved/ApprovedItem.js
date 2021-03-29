@@ -36,8 +36,8 @@ const ApprovedItem = ({ item }) => {
         {!item.was_cancelled ? (
           <p>
             <span>&#42; NOTE.</span> If you need to cancel, for any reason, you
-            need to call Smile and Co. at 403-899-2055. There might be a $50 fee
-            for cancellations.
+            need to call Smile and Co. at 403-899-2055. Less than 24 hours,
+            cancellations are subjected to a $50 fee.
           </p>
         ) : (
           <p>

@@ -74,7 +74,7 @@ const StepCardStyled = styled.div`
     transition: all 0.3s ease-out;
 
     @media (min-width: 768px) {
-      height: 28rem;
+      height: 35rem;
     }
 
     h3 {

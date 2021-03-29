@@ -10,10 +10,13 @@ import {
   H2White,
   medWrapper,
   H1DarkPurple,
+  Nav1Lavender,
+  Nav1CharcoalGrey,
 } from "../../styles/helpers"
 
 import Input from "../FormParts/Input"
 import Textarea from "../FormParts/Textarea"
+import CheckBoxInput from "../FormParts/CheckBoxInput"
 
 import FormSuccess from "../UiElements/formModals/FormSuccess"
 import FormSubmit from "../UiElements/formModals/FormSubmit"
@@ -29,13 +32,34 @@ const ContactForm = ({ data }) => {
     errors: [],
   })
 
+  const { mustReadTerms } = data
   const displaySidebar = data.sidebarDispaly
 
   useEffect(() => {
     const startingState = {}
-    data.formFields.forEach(field => (startingState[field.id] = ""))
+    data.formFields.forEach(field => {
+      if (field.type !== "checkbox") {
+        return (startingState[field.id] = "")
+      }
+    })
     setFormData({ ...formData, ...startingState })
   }, [])
+
+  const handleOnCheckboxChange = event => {
+    if (!formData[event.target.name]) {
+      setFormData({
+        ...formData,
+        [event.target.name]: event.target.value,
+      })
+    } else {
+      const formCopy = formData
+      delete formCopy[event.target.name]
+
+      setFormData({
+        ...formCopy,
+      })
+    }
+  }
 
   const handleOnChange = event => {
     setFormData({
@@ -120,6 +144,9 @@ const ContactForm = ({ data }) => {
     setFormData({ ...resetFields })
   }
 
+  console.log("FORM FEILDS: ", formData)
+  console.log(mustReadTerms)
+
   return (
     <ContactFormStyled sidebar={displaySidebar}>
       <div className="wrapper">
@@ -131,7 +158,15 @@ const ContactForm = ({ data }) => {
           )}
           <fieldset>
             {formFields.map(field => {
-              const { id, type, label, placeholder, required, size } = field
+              const {
+                id,
+                type,
+                label,
+                placeholder,
+                required,
+                size,
+                options,
+              } = field
               const errorMessage = formStatus.errors.find(
                 error => error.idref === id
               )
@@ -167,9 +202,30 @@ const ContactForm = ({ data }) => {
                     error={errorMessage ? errorMessage.message : ""}
                   />
                 )
+              } else if (type === "checkbox") {
+                formField = (
+                  <CheckBoxInput
+                    name={id}
+                    label={label}
+                    options={options}
+                    onChange={handleOnCheckboxChange}
+                    thisCheckValue={formData[id]}
+                  />
+                )
               }
               return formField
             })}
+            {mustReadTerms && (
+              <div className="termsConditions">
+                <p>
+                  You must read and agree to our terms and conditions. Here are
+                  our{" "}
+                  <a target="_blank" href="/terms-and-conditions">
+                    Terms and Conditions
+                  </a>
+                </p>
+              </div>
+            )}
             <div className="submitButton">
               <button type="submit">Submit</button>
             </div>
@@ -242,6 +298,25 @@ const ContactFormStyled = styled.div`
     border: none;
     outline: none;
     width: 100%;
+  }
+
+  .termsConditions {
+    width: 100%;
+    padding-left: 0.5rem;
+
+    p {
+      ${Nav1CharcoalGrey};
+
+      &:hover {
+        color: ${colors.colorAlt};
+        cursor: inherit;
+      }
+    }
+
+    a {
+      ${Nav1CharcoalGrey};
+      text-decoration: underline;
+    }
   }
 
   .submitButton {

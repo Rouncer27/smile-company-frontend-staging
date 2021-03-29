@@ -34,9 +34,6 @@ const MainSettings = () => {
     dentistsCount: "",
     dentistsNames: "",
     officeHours: "",
-    benefits: "",
-    perks: "",
-    bestThing: "",
   })
 
   const updateFormFields = () => {
@@ -67,9 +64,6 @@ const MainSettings = () => {
         ? state.profile.dentists_names
         : "",
       officeHours: state.profile.office_hours ? state.profile.office_hours : "",
-      benefits: state.profile.benefits ? state.profile.benefits : "",
-      perks: state.profile.perks ? state.profile.perks : "",
-      bestThing: state.profile.best_thing ? state.profile.best_thing : "",
     })
   }
 
@@ -123,15 +117,6 @@ const MainSettings = () => {
     if (formData.officeHours.trim() === "") {
       return { goToSend: false, message: "Office Hours" }
     }
-    if (formData.benefits.trim() === "") {
-      return { goToSend: false, message: "Benefits Offered" }
-    }
-    if (formData.perks.trim() === "") {
-      return { goToSend: false, message: "Perks" }
-    }
-    if (formData.bestThing.trim() === "") {
-      return { goToSend: false, message: "Best Thing" }
-    }
 
     return { goToSend: true, message: "" }
   }
@@ -173,9 +158,6 @@ const MainSettings = () => {
           dentists_count: formData.dentistsCount,
           dentists_names: formData.dentistsNames,
           office_hours: formData.officeHours,
-          benefits: formData.benefits,
-          perks: formData.perks,
-          best_thing: formData.bestThing,
         },
         {
           headers: {
@@ -343,39 +325,6 @@ const MainSettings = () => {
                 type="text"
                 placeholder="office hours"
                 value={formData.officeHours}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <Input
-                label="Do you offer benefits?"
-                name="benefits"
-                type="text"
-                placeholder="benefits"
-                value={formData.benefits}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <Input
-                label="What perks does your clinic have that sets you apart from other dental clinics?"
-                name="perks"
-                type="text"
-                placeholder="perks"
-                value={formData.perks}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <Input
-                label="Bonus: What is the best thing about working at your office?"
-                name="bestThing"
-                type="text"
-                placeholder="best thing about working at your office"
-                value={formData.bestThing}
                 onChange={handleOnChange}
                 fieldvalid={true}
                 required={true}

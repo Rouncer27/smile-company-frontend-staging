@@ -10,6 +10,7 @@ import putExperience from "./actions/putExperience"
 // Components
 import Input from "../FormFields/Input"
 import TextArea from "../FormFields/Textarea"
+import RadioInput from "../FormFields/RadioInput"
 import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
 // Common styles
 import mainSection from "./style/mainSection"
@@ -28,10 +29,13 @@ const MainExperience = () => {
   const userId = user.id
   const profileId = profile && profile.id
   const [formData, setFormData] = useState({
+    experience: "",
     associated_registration_number: "",
     name_registered_with: "",
     additional_qualifications: "",
     greatest_strengths: "",
+    clinics_worked_at: "",
+    dental_software: "",
   })
 
   const handleOnChange = event => {
@@ -48,6 +52,10 @@ const MainExperience = () => {
 
   const updateFormFields = () => {
     setFormData({
+      experience: state.profile.experience ? state.profile.experience : "",
+      clinics_worked_at: state.profile.clinics_worked_at
+        ? state.profile.clinics_worked_at
+        : "",
       associated_registration_number: state.profile
         .associated_registration_number
         ? state.profile.associated_registration_number
@@ -55,11 +63,15 @@ const MainExperience = () => {
       name_registered_with: state.profile.name_registered_with
         ? state.profile.name_registered_with
         : "",
+
       additional_qualifications: state.profile.additional_qualifications
         ? state.profile.additional_qualifications
         : "",
       greatest_strengths: state.profile.greatest_strengths
         ? state.profile.greatest_strengths
+        : "",
+      dental_software: state.profile.dental_software
+        ? state.profile.dental_software
         : "",
     })
   }
@@ -90,6 +102,24 @@ const MainExperience = () => {
           <div className="mainForm">
             <form onSubmit={event => handleOnSubmit(event)}>
               <fieldset>
+                <RadioInput
+                  label="Years Experience"
+                  name="experience"
+                  handleOnRadioChange={handleOnChange}
+                  value={formData.experience}
+                  options={[
+                    {
+                      id: "oneYear",
+                      label: "Less than 1 year",
+                    },
+                    { id: "twoFiveYear", label: "1 to 5 years" },
+                    { id: "sixNineYear", label: "6 to 9 years" },
+                    {
+                      id: "tenPlus",
+                      label: "10 years +",
+                    },
+                  ]}
+                />
                 {(state.profile && state.profile.position === "rdh") ||
                 (state.profile && state.profile.position === "rda") ? (
                   <>
@@ -119,11 +149,33 @@ const MainExperience = () => {
                   </>
                 ) : null}
                 <TextArea
+                  label="Clinics Worked At"
+                  name="clinics_worked_at"
+                  type="text"
+                  placeholder="Clinics Worked At"
+                  value={formData.clinics_worked_at}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={false}
+                  size="full"
+                />
+                <TextArea
                   label="What additional qualifications do you have?"
                   name="additional_qualifications"
                   type="text"
                   placeholder="What additional qualifications do you have?"
                   value={formData.additional_qualifications}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={false}
+                  size="full"
+                />
+                <TextArea
+                  label="What dental software do you have experience with?"
+                  name="dental_software"
+                  type="text"
+                  placeholder="What dental software do you have experience with?"
+                  value={formData.dental_software}
                   onChange={handleOnChange}
                   fieldvalid={true}
                   required={true}

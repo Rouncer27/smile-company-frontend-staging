@@ -31,11 +31,12 @@ const MainGeneral = () => {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
+    mobile_phone: "",
+    home_phone: "",
     position: "",
-    experience: "",
     year_graduated: "",
     school: "",
-    clinics_worked_at: "",
+    wage: "",
   })
 
   const handleOnChange = event => {
@@ -54,15 +55,16 @@ const MainGeneral = () => {
     setFormData({
       first_name: state.profile.first_name ? state.profile.first_name : "",
       last_name: state.profile.last_name ? state.profile.last_name : "",
+      mobile_phone: state.profile.mobile_phone
+        ? state.profile.mobile_phone
+        : "",
+      home_phone: state.profile.home_phone ? state.profile.home_phone : "",
       position: state.profile.position ? state.profile.position : "",
-      experience: state.profile.experience ? state.profile.experience : "",
       year_graduated: state.profile.year_graduated
         ? state.profile.year_graduated
         : "",
       school: state.profile.school ? state.profile.school : "",
-      clinics_worked_at: state.profile.clinics_worked_at
-        ? state.profile.clinics_worked_at
-        : "",
+      wage: state.profile.wage ? state.profile.wage : "",
     })
   }
 
@@ -115,6 +117,28 @@ const MainGeneral = () => {
                   required={true}
                   size="half"
                 />
+                <Input
+                  label="Mobile Phone (for text messages)"
+                  name="mobile_phone"
+                  type="text"
+                  placeholder="Mobile Phone Number"
+                  value={formData.mobile_phone}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={true}
+                  size="half"
+                />
+                <Input
+                  label="Home Phone (optional)"
+                  name="home_phone"
+                  type="text"
+                  placeholder="Home Phone Number"
+                  value={formData.home_phone}
+                  onChange={handleOnChange}
+                  fieldvalid={true}
+                  required={false}
+                  size="half"
+                />
                 {!profile.profile_satisfied && (
                   <RadioInput
                     label="Position *** You will not be allowed to change your position once approved, you will need to contact Smile and Company if you wish to change this in the future."
@@ -135,24 +159,6 @@ const MainGeneral = () => {
                     ]}
                   />
                 )}
-                <RadioInput
-                  label="Years Experience"
-                  name="experience"
-                  handleOnRadioChange={handleOnChange}
-                  value={formData.experience}
-                  options={[
-                    {
-                      id: "oneYear",
-                      label: "Less than 1 year",
-                    },
-                    { id: "twoFiveYear", label: "1 to 5 years" },
-                    { id: "sixNineYear", label: "6 to 9 years" },
-                    {
-                      id: "tenPlus",
-                      label: "10 years +",
-                    },
-                  ]}
-                />
                 <Input
                   label="Year Graduated From Program"
                   name="year_graduated"
@@ -175,12 +181,12 @@ const MainGeneral = () => {
                   required={true}
                   size="full"
                 />
-                <TextArea
-                  label="Clinics Worked At"
-                  name="clinics_worked_at"
+                <Input
+                  label="Wage Expectations"
+                  name="wage"
                   type="text"
-                  placeholder="Clinics Worked At"
-                  value={formData.clinics_worked_at}
+                  placeholder="Wage Expectations"
+                  value={formData.wage}
                   onChange={handleOnChange}
                   fieldvalid={true}
                   required={true}

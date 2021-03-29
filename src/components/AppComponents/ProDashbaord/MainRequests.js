@@ -45,7 +45,7 @@ const MainAvailable = () => {
           <p>
             <span /> {state.profile && state.profile.username}
           </p>
-          <h2>Available Bookings</h2>
+          <h2>Booking Requests</h2>
         </div>
         {!state.loading ? (
           <div>
@@ -59,8 +59,8 @@ const MainAvailable = () => {
               <div className="dashAlert">
                 <span className="alertIndicator">Alert</span>
                 <p>
-                  There is currenly no bookings you are matched for. Please
-                  check again later.
+                  There is currenly no bookings requests you are matched for.
+                  Please check again later.
                 </p>
               </div>
             )}

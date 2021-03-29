@@ -23,8 +23,8 @@ import CreateBooking from "../components/AppRoutes/clinic-dashboard/CreateBookin
 import ProDashboard from "../components/AppRoutes/ProDashboard"
 import DashboardGeneral from "../components/AppRoutes/pro-dashboard/GeneralSettings"
 import Experience from "../components/AppRoutes/pro-dashboard/Experience"
-import ContactInfo from "../components/AppRoutes/pro-dashboard/ContactInfo"
-import Available from "../components/AppRoutes/pro-dashboard/Available"
+import Availability from "../components/AppRoutes/pro-dashboard/Availability"
+import Requests from "../components/AppRoutes/pro-dashboard/Requests"
 import Approved from "../components/AppRoutes/pro-dashboard/Approved"
 import History from "../components/AppRoutes/pro-dashboard/History"
 
@@ -95,12 +95,12 @@ const App = ({ location }) => {
               component={Experience}
             />
             <PrivateRoute
-              path="/app/professional-dashboard/contact"
-              component={ContactInfo}
+              path="/app/professional-dashboard/availability"
+              component={Availability}
             />
             <PrivateRoute
-              path="/app/professional-dashboard/booking-available"
-              component={Available}
+              path="/app/professional-dashboard/booking-requests"
+              component={Requests}
             />
             <PrivateRoute
               path="/app/professional-dashboard/booking-approved"

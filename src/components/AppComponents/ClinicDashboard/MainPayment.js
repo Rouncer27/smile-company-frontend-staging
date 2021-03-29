@@ -219,8 +219,10 @@ const MainPayment = () => {
             </div>
             {!termsRead ? (
               <div className="termsConditions__read">
-                <p>Please read and approve our terms</p>
-                <button onClick={() => setTermsModalActive(true)}>Read</button>
+                <p>Please read and approve our terms to continue to checkout</p>
+                <button onClick={() => setTermsModalActive(true)}>
+                  Read Terms and Conditions
+                </button>
               </div>
             ) : (
               <div className="termsConditions__agree">

@@ -124,7 +124,7 @@ const AvailableCard = ({ booking }) => {
         {bookingStatus !== "APPROVED POSTING CANCELLED" ? (
           <div className="cancelWarn">
             <p>
-              <span>&#42; NOTE.</span> If you and are selected for this temp job
+              <span>&#42; NOTE.</span> If you are selected for this temp job
               booking and need to cancel, there might be a $50.00 fee for
               cancelling.
             </p>

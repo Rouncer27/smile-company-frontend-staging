@@ -19,17 +19,14 @@ import {
 } from "../../../styles/helpers"
 // Components
 import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
-import Input from "../FormFields/Input"
 import CheckBoxInput from "../FormFields/CheckBoxInput"
 
-const MainContact = () => {
+const MainAvailability = () => {
   const [state, dispatch] = useContext(UserContext)
   const { token, user, profile } = state
   const userId = user.id
   const profileId = profile && profile.id
   const [formData, setFormData] = useState({
-    mobile_phone: "",
-    home_phone: "",
     email: "",
     days_working: [],
     locations_working: [],
@@ -49,10 +46,6 @@ const MainContact = () => {
 
   const updateFormFields = () => {
     setFormData({
-      mobile_phone: state.profile.mobile_phone
-        ? state.profile.mobile_phone
-        : "",
-      home_phone: state.profile.home_phone ? state.profile.home_phone : "",
       email: state.profile.email ? state.profile.email : "",
       days_working: state.profile.days_working
         ? state.profile.days_working
@@ -133,41 +126,18 @@ const MainContact = () => {
   }
 
   return (
-    <MainContactStyled>
+    <MainAvailabilityStyled>
       <div className="dashWrap">
         <div className="dashTitle">
           <p>
             <span /> {state.profile && state.profile.username}
           </p>
-          <h2>Contact Information</h2>
+          <h2>My Availability</h2>
         </div>
         {!state.loading ? (
           <div className="mainForm">
             <form onSubmit={event => handleOnSubmit(event)}>
               <fieldset>
-                <Input
-                  label="Mobile Phone Number (for text messages)"
-                  name="mobile_phone"
-                  type="text"
-                  placeholder="Mobile Phone Number"
-                  value={formData.mobile_phone}
-                  onChange={handleOnChange}
-                  fieldvalid={true}
-                  required={true}
-                  size="full"
-                />
-                <Input
-                  label="Home Phone Number (optional)"
-                  name="home_phone"
-                  type="text"
-                  placeholder="Home Phone Number"
-                  value={formData.home_phone}
-                  onChange={handleOnChange}
-                  fieldvalid={true}
-                  required={false}
-                  size="full"
-                />
-
                 <CheckBoxInput
                   name="days_working"
                   label="I want to be notified of Temp job postings that fall on these days of the week"
@@ -215,10 +185,30 @@ const MainContact = () => {
                   name="locations_working"
                   label="I want to be notified of Temp job postings that are at these locations"
                   options={[
+                    // {
+                    //   id: "nwNeSwSeCalgary",
+                    //   label: "NW NE SW SW Calgary",
+                    //   checked: checkIfLocationChecked("nwNeSwSeCalgary"),
+                    // },
                     {
-                      id: "nwNeSwSeCalgary",
-                      label: "NW NE SW SW Calgary",
-                      checked: checkIfLocationChecked("nwNeSwSeCalgary"),
+                      id: "nwCalgary",
+                      label: "NW Calgary",
+                      checked: checkIfLocationChecked("nwCalgary"),
+                    },
+                    {
+                      id: "neCalgary",
+                      label: "NE Calgary",
+                      checked: checkIfLocationChecked("neCalgary"),
+                    },
+                    {
+                      id: "swCalgary",
+                      label: "SW Calgary",
+                      checked: checkIfLocationChecked("swCalgary"),
+                    },
+                    {
+                      id: "seCalgary",
+                      label: "SE Calgary",
+                      checked: checkIfLocationChecked("seCalgary"),
                     },
                     {
                       id: "innerCityCalgary",
@@ -246,6 +236,16 @@ const MainContact = () => {
                       checked: checkIfLocationChecked("okotoks"),
                     },
                     {
+                      id: "crossfield",
+                      label: "Crossfield",
+                      checked: checkIfLocationChecked("crossfield"),
+                    },
+                    {
+                      id: "canmore",
+                      label: "Canmore",
+                      checked: checkIfLocationChecked("canmore"),
+                    },
+                    {
                       id: "banff",
                       label: "Banff",
                       checked: checkIfLocationChecked("banff"),
@@ -263,11 +263,11 @@ const MainContact = () => {
           <LoadingSkeleton />
         )}
       </div>
-    </MainContactStyled>
+    </MainAvailabilityStyled>
   )
 }
 
-const MainContactStyled = styled.div`
+const MainAvailabilityStyled = styled.div`
   ${mainSection};
 
   .dashWrap {
@@ -344,4 +344,4 @@ const MainContactStyled = styled.div`
   }
 `
 
-export default MainContact
+export default MainAvailability

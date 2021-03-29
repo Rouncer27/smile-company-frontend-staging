@@ -303,12 +303,18 @@ export const homeQuery = graphql`
               required
               size
               type
+              options {
+                label
+                id
+                required
+              }
             }
             sidebarButtonSlug
             sidebarButtonText
             sidebarContent
             sidebarDispaly
             sidebarTitle
+            mustReadTerms
           }
 
           ... on WpPage_Acfmaintemplatefields_PageComponents_ContactBanner {

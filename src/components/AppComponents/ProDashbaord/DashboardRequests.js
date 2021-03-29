@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import MainAvailable from "./MainAvailable"
+import MainRequests from "./MainRequests"
 import SideBar from "./SideBar"
 import { mainDahsboard } from "./style/mainDashboard"
 
@@ -10,7 +10,7 @@ const DashboardAvailable = () => {
     <DashboardAvailableStyled>
       <div className="dashWrapper">
         <SideBar />
-        <MainAvailable />
+        <MainRequests />
       </div>
     </DashboardAvailableStyled>
   )

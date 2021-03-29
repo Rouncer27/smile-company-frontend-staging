@@ -77,8 +77,9 @@ const MainHome = () => {
                 : state.user.username}
             </p>
             <p>
-              This is your dashboard for all of your profile information. Keep
-              this up to date and valid for the best results.
+              This is your dashboard for all of your profile information.
+              <br />
+              Remember to keep your availability up to date.
             </p>
           </div>
         )}
@@ -114,11 +115,11 @@ const MainHome = () => {
           !state.profile.contact_satisfied && (
             <div className="dashWarn">
               <p>
-                Finish the setup of your profile by filling out your contact
-                information
+                Finish the setup of your profile by filling out your
+                Availability information
               </p>
-              <Link to="/app/professional-dashboard/contact">
-                Fill Out contact information
+              <Link to="/app/professional-dashboard/availability">
+                Fill Out Availability
               </Link>
             </div>
           )}
@@ -130,19 +131,29 @@ const MainHome = () => {
               <span className="name">{state.profile.last_name}</span>
             </p>
             <p>
+              Text Messages will be sent to:{" "}
+              <span>{state.profile.mobile_phone}</span>
+            </p>
+            <p>
+              Home Number:{" "}
+              <span>
+                {state.profile.home_phone
+                  ? state.profile.home_phone
+                  : "No home phone given"}
+              </span>
+            </p>
+            <p>
+              Email Notifications will be sent to:{" "}
+              <span>{state.user.email}</span>
+            </p>
+            <p>
               Position:{" "}
               <span>
                 {state.profile.position &&
                   getReadablePosition(state.profile.position)}
               </span>
             </p>
-            <p>
-              Experience:{" "}
-              <span>
-                {state.profile.experience &&
-                  getReadableExperience(state.profile.experience)}
-              </span>
-            </p>
+
             <p>
               Year Graduated: <span>{state.profile.year_graduated}</span>
             </p>
@@ -150,7 +161,7 @@ const MainHome = () => {
               School Graduated: <span>{state.profile.school}</span>
             </p>
             <p>
-              Clinics Worked At: <span>{state.profile.clinics_worked_at}</span>
+              Wage Expectations: <span>{state.profile.wage}</span>
             </p>
           </div>
         )}
@@ -161,16 +172,38 @@ const MainHome = () => {
             <div className="dashExperience">
               <h2>Experience</h2>
               <p>
-                Associated Registration Number:{" "}
-                <span>{state.profile.associated_registration_number}</span>
+                Experience:{" "}
+                <span>
+                  {state.profile.experience &&
+                    getReadableExperience(state.profile.experience)}
+                </span>
               </p>
               <p>
-                Name Registered With:{" "}
-                <span>{state.profile.name_registered_with}</span>
+                Clinics Worked At:{" "}
+                <span>{state.profile.clinics_worked_at}</span>
+              </p>
+              {state.profile.associated_registration_number !== "" && (
+                <p>
+                  Associated Registration Number:{" "}
+                  <span>{state.profile.associated_registration_number}</span>
+                </p>
+              )}
+              {state.profile.name_registered_with !== "" && (
+                <p>
+                  Name Registered With:{" "}
+                  <span>{state.profile.name_registered_with}</span>
+                </p>
+              )}
+              <p>
+                Dental Software : <span>{state.profile.dental_software}</span>
               </p>
               <p>
                 Additional Qualifications:{" "}
-                <span>{state.profile.additional_qualifications}</span>
+                <span>
+                  {state.profile.additional_qualifications !== ""
+                    ? state.profile.additional_qualifications
+                    : "No information filled out."}
+                </span>
               </p>
               <p>
                 Greatest Strengths:{" "}
@@ -184,23 +217,7 @@ const MainHome = () => {
           state.profile.experience_satisfied &&
           state.profile.contact_satisfied && (
             <div className="dashContact">
-              <h2>Contact Information</h2>
-              <p>
-                Text Messages will be sent to:{" "}
-                <span>{state.profile.mobile_phone}</span>
-              </p>
-              <p>
-                Home Number:{" "}
-                <span>
-                  {state.profile.home_phone
-                    ? state.profile.home_phone
-                    : "No home phone given"}
-                </span>
-              </p>
-              <p>
-                Email Notifications will be sent to:{" "}
-                <span>{state.user.email}</span>
-              </p>
+              <h2>My Availability</h2>
               <p>
                 Days of temp job posting I want to be notified about:{" "}
                 {state.profile.days_working.map(day => (
