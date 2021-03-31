@@ -58,7 +58,6 @@ const AvailableCard = ({ booking }) => {
     await putBookingIgnore(token, booking.id, dispatch)
     await getBookings(token, userId, state.user.confirmed, dispatch)
   }
-  console.log(booking)
   const havApplied = booking.user_applied
   const isCancelled = booking.was_cancelled
   const isActive = booking.booking_active
@@ -156,8 +155,8 @@ const AvailableCard = ({ booking }) => {
               Posting Status -- <span>PENDING</span>
             </p>
             <p>
-              You have applied to this posting. We will let you know if you got
-              this temp job.
+              You have applied to this posting. please wait for confirmation
+              from the clinic.
             </p>
           </div>
         )}

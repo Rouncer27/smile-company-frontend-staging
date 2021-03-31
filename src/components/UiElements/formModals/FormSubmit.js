@@ -86,7 +86,7 @@ const FormSubmit = ({ isActive }) => {
             <HashLoader size={75} color={"#ad89a6"} />
           </div>
           <h2>
-            Thank you, submitting your form. <br />
+            Thank you for submitting your form, <br />
             Please standby.
           </h2>
         </div>

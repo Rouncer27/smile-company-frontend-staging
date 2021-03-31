@@ -45,6 +45,7 @@ const ProfessionalCard = ({ pro, bookingId, accepted }) => {
             <span>{pro.first_name}</span> <span>{pro.last_name}</span>
           </h3>
           <p>Position: {pro.position}</p>
+          <p>Wage expectations: {pro.wage}</p>
         </div>
         <div className="cardExperience">
           <h4>Candidate's Experience</h4>
@@ -52,18 +53,11 @@ const ProfessionalCard = ({ pro, bookingId, accepted }) => {
             Years of experience: <span>{yearsDisplay}</span>
           </p>
           <p>
-            Registration Number:{" "}
-            <span>{pro.associated_registration_number}</span>
-          </p>
-          <p>
-            Name Registered With: <span>{pro.name_registered_with}</span>
+            Dental Sofeware experience: <span>{pro.dental_software}</span>
           </p>
           <p>
             Additional Qualifications:{" "}
             <span>{pro.additional_qualifications}</span>
-          </p>
-          <p>
-            Greatest Strengths: <span>{pro.greatest_strengths}</span>
           </p>
         </div>
         <div className="cardEducation">

@@ -4,7 +4,6 @@ export default async (token, userId, dispatch, bookingId) => {
   if (!userId) return
 
   dispatch({ type: "USER_LOADING" })
-  console.log("HERE IS THE ID: ", bookingId)
 
   try {
     const response = await axios.get(

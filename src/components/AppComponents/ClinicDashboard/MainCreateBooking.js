@@ -90,8 +90,21 @@ const MainCreateBooking = () => {
       navigate("/app/clinic-dashboard", { replace: true })
   }, [profile])
 
+  const timesDontMakeSense =
+    formData.shift_start !== "" &&
+    formData.shift_end !== "" &&
+    formData.shift_start >= formData.shift_end
+
   const disableSubmit =
-    formData.hiringFees && formData.notifyAgree && formData.shortNotice
+    formData.hiringFees &&
+    formData.notifyAgree &&
+    formData.shortNotice &&
+    formData.shift_start !== "" &&
+    formData.shift_end !== "" &&
+    formData.address !== "" &&
+    formData.location !== "" &&
+    formData.position !== "" &&
+    !timesDontMakeSense
 
   return (
     <MainCreateBookingStyled>
@@ -135,6 +148,7 @@ const MainCreateBooking = () => {
                 setStartTime={handleDatePicker}
                 endTime={formData.shift_end}
                 setEndTime={handleDatePicker}
+                timesDontMakeSense={timesDontMakeSense}
               />
 
               <RadioInput
@@ -316,21 +330,94 @@ const MainCreateBookingStyled = styled.div`
         }
 
         &__calendar {
-          width: calc(65% - 2rem);
-          margin-right: 2rem;
+          width: calc(100% - 2rem);
+
+          @media (min-width: 1025px) {
+            width: calc(65% - 2rem);
+            margin-right: 2rem;
+          }
         }
 
         &__time {
-          width: calc(35% - 2rem);
-          margin-left: 2rem;
+          width: calc(100% - 2rem);
+
+          @media (min-width: 1025px) {
+            width: calc(35% - 2rem);
+            margin-left: 2rem;
+          }
+
+          .inputError {
+            color: rgba(255, 0, 0, 1);
+
+            &:hover {
+              color: rgba(255, 0, 0, 1);
+              cursor: inherit;
+            }
+          }
 
           &--startTime {
+            margin-top: 5rem;
             margin-bottom: 5rem;
+
+            @media (min-width: 1025px) {
+              margin-top: 0;
+            }
+
+            input {
+              width: 100%;
+              padding: 1rem 2rem;
+              border: 0.2rem solid ${colors.colorSecondary};
+              border-color: ${colors.colorSecondary};
+              border-radius: 1rem;
+              box-shadow: 0 0 0 0 rgba(1, 0, 0, 0.5);
+              background-color: rgba(208, 204, 202, 0.25);
+
+              &:focus {
+                outline: none;
+                border-color: ${colors.colorTertiary};
+              }
+
+              &::placeholder {
+                color: ${colors.colorAccent};
+              }
+            }
+
+            .react-datepicker__time-container {
+              width: 18rem !important;
+            }
+          }
+
+          &--endTime {
+            margin-top: 5rem;
+
+            input {
+              width: 100%;
+              padding: 1rem 2rem;
+              border: 0.2rem solid ${colors.colorSecondary};
+              border-color: ${colors.colorSecondary};
+              border-radius: 1rem;
+              box-shadow: 0 0 0 0 rgba(1, 0, 0, 0.5);
+              background-color: rgba(208, 204, 202, 0.25);
+
+              &:focus {
+                outline: none;
+                border-color: ${colors.colorTertiary};
+              }
+
+              &::placeholder {
+                color: ${colors.colorAccent};
+              }
+            }
+
+            .react-datepicker__time-container {
+              width: 18rem !important;
+            }
           }
         }
 
         &__wrapper {
           display: flex;
+          flex-wrap: wrap;
           justify-content: space-between;
         }
       }
