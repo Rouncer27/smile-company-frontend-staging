@@ -1,21 +1,35 @@
 import React, { useContext, useState, useEffect } from "react"
 import { Link, navigate } from "gatsby"
+import { Magic } from "magic-sdk"
 import styled from "styled-components"
 import { UserContext } from "../../context/UserContext"
 import { colors, Nav1White } from "../../styles/helpers"
 
 import DefaultUser from "../Icons/DefaultUser"
 
+let magic
 const HeaderAppNavItems = () => {
   const [state, dispatch] = useContext(UserContext)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    if (!isLoggedIn) return
+    magic = new Magic(process.env.GATSBY_MAGIC_PK)
+  }, [isLoggedIn])
 
   useEffect(() => {
     if (state.token !== "") return setIsLoggedIn(true)
     return setIsLoggedIn(false)
   }, [state.token])
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    dispatch({ type: "USER_LOADING" })
+
+    try {
+      await magic.user.logout()
+    } catch (err) {
+      console.log(err)
+    }
     dispatch({ type: "USER_LOGOUT" })
     navigate("/app/login", { replace: true })
   }

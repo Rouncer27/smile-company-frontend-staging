@@ -26,8 +26,6 @@ const MainDashboard = () => {
   const { confirmed, email } = user
   const userId = user.id
 
-  console.log("CLINIC PROFILE: ", profile)
-
   const handleGetProfileOnMount = async () => {
     if (!userId) return
     if (!confirmed) return

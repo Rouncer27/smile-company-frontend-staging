@@ -25,6 +25,7 @@ const initialState = {
   errMessage: "",
   alert: false,
   alertMessage: "",
+  notUser: false,
 }
 
 const reducer = (state, action) => {
@@ -89,6 +90,7 @@ const reducer = (state, action) => {
         errMessage: "",
         alert: false,
         alertMessage: "",
+        notUser: true,
       }
     case "USER_LOADING":
       return {
@@ -123,6 +125,7 @@ const reducer = (state, action) => {
         user: action.payload.user,
         profile: action.payload.profile ? action.payload.profile : {},
         loading: false,
+        notUser: false,
       }
     case "USER_RESET":
       return {

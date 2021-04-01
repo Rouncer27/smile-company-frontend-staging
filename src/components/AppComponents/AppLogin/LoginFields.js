@@ -1,7 +1,8 @@
 import { Link, navigate } from "gatsby"
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import axios from "axios"
+import { Magic } from "magic-sdk"
 import { UserContext } from "../../../context/UserContext"
 
 import {
@@ -12,13 +13,13 @@ import {
 } from "../../../styles/helpers"
 
 import Input from "../FormFields/Input"
+let magic
 
 const LoginFields = () => {
   const [state, dispatch] = useContext(UserContext)
 
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
   })
 
   const handleOnChange = event => {
@@ -31,16 +32,33 @@ const LoginFields = () => {
   const handleOnSubmit = async event => {
     event.preventDefault()
     dispatch({ type: "USER_LOADING" })
+
+    if (formData.email === "") {
+      return dispatch({
+        type: "USER_ERROR",
+        payload: {
+          message: "Your must provide an email address.",
+        },
+      })
+    }
+
     try {
-      const response = await axios.post(
-        `${process.env.GATSBY_API_URL}/auth/local`,
+      const token = await magic.auth.loginWithMagicLink({
+        email: formData.email,
+      })
+
+      const response = await axios.get(
+        `${process.env.GATSBY_API_URL}/users/me`,
         {
-          identifier: formData.email,
-          password: formData.password,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
 
-      const { user, jwt: token } = response.data
+      const user = response.data
+      console.log(user)
+
       if (user.role.type === "dental_clinics") {
         const profile = user.clinic_profile
         dispatch({ type: "USER_LOGIN", payload: { token, user, profile } })
@@ -49,6 +67,14 @@ const LoginFields = () => {
         const profile = user.professional_profile
         dispatch({ type: "USER_LOGIN", payload: { token, user, profile } })
         navigate("/app/professional-dashboard", { replace: true })
+      } else if (user.role.type === "authenticated") {
+        dispatch({
+          type: "USER_ERROR",
+          payload: {
+            message:
+              "No user found. You need to setup an account before logging in to the app. Pick either Denatl Professionals or Denatal Clinic account. Thank you.",
+          },
+        })
       } else {
         dispatch({
           type: "USER_ERROR",
@@ -56,16 +82,24 @@ const LoginFields = () => {
         })
       }
     } catch (err) {
-      console.log(err)
+      console.dir(err)
       const message =
         err.response.data &&
         err.response.data.message &&
-        err.response.data.message[0] &&
-        err.response.data.message[0].messages[0] &&
-        err.response.data.message[0].messages[0].message
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
       dispatch({ type: "USER_ERROR", payload: { message } })
     }
   }
+
+  useEffect(() => {
+    magic = new Magic(process.env.GATSBY_MAGIC_PK)
+  }, [])
 
   return (
     <LoginFieldsStyled>
@@ -77,17 +111,17 @@ const LoginFields = () => {
           <form onSubmit={event => handleOnSubmit(event)}>
             <fieldset>
               <Input
-                label="email / username"
+                label="email"
                 name="email"
                 type="text"
-                placeholder="email / username"
+                placeholder="email"
                 value={formData.email}
                 onChange={handleOnChange}
                 fieldvalid={true}
                 required={false}
                 size="full"
               />
-              <Input
+              {/* <Input
                 label="password"
                 name="password"
                 type="password"
@@ -97,15 +131,15 @@ const LoginFields = () => {
                 fieldvalid={true}
                 required={false}
                 size="full"
-              />
+              /> */}
               <div className="submitButton">
                 <button type="submit">Submit</button>
               </div>
             </fieldset>
           </form>
-          <div className="passForgot">
+          {/* <div className="passForgot">
             <Link to="/app/forgot">Forgot your password?</Link>
-          </div>
+          </div> */}
         </div>
         <div className="mainNav">
           <p>

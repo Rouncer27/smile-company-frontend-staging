@@ -1,21 +1,19 @@
 import { Link } from "gatsby"
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import axios from "axios"
+import { Magic } from "magic-sdk"
 import { UserContext } from "../../../context/UserContext"
 import { navigate } from "gatsby"
 import { B2CharcoalGrey, Btn1DarkPurple, colors } from "../../../styles/helpers"
 
 import Input from "../FormFields/Input"
 
+let magic
+
 const SignUpFields = () => {
   const [state, dispatch] = useContext(UserContext)
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  })
+  const [formData, setFormData] = useState({ email: "" })
 
   const handleOnChange = event => {
     setFormData({
@@ -26,15 +24,7 @@ const SignUpFields = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
-
-    if (formData.username === "") {
-      return dispatch({
-        type: "USER_ERROR",
-        payload: {
-          message: "Your must provide a username.",
-        },
-      })
-    }
+    dispatch({ type: "USER_LOADING" })
 
     if (formData.email === "") {
       return dispatch({
@@ -45,56 +35,49 @@ const SignUpFields = () => {
       })
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      return dispatch({
-        type: "USER_ERROR",
-        payload: {
-          message:
-            "Your password and confirm password does not match. Please correct.",
-        },
-      })
-    }
-
-    dispatch({ type: "USER_LOADING" })
     try {
+      const token = await magic.auth.loginWithMagicLink({
+        email: formData.email,
+      })
+
       const reponse = await axios.post(
-        `${process.env.GATSBY_API_URL}/auth/local/register/professional`,
+        `${process.env.GATSBY_API_URL}/professional-profiles`,
+        { role: "professional" },
         {
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
 
-      const { user, token } = reponse.data
+      const { user } = reponse.data
       dispatch({ type: "USER_LOGIN", payload: { token, user } })
       navigate("/app/professional-dashboard", { replace: true })
     } catch (err) {
+      console.dir(err)
       const message =
         err.response.data &&
         err.response.data.message &&
-        err.response.data.message[0] &&
-        err.response.data.message[0].messages[0] &&
-        err.response.data.message[0].messages[0].message
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
       dispatch({ type: "USER_ERROR", payload: { message } })
     }
   }
+
+  useEffect(() => {
+    magic = new Magic(process.env.GATSBY_MAGIC_PK)
+  }, [])
+
   return (
     <SignUpFieldsStyled>
       <div className="mainForm">
         <form onSubmit={event => handleOnSubmit(event)}>
           <fieldset>
-            <Input
-              label="account username"
-              name="username"
-              type="text"
-              placeholder="account username"
-              value={formData.username}
-              onChange={handleOnChange}
-              fieldvalid={true}
-              required={false}
-              size="full"
-            />
             <Input
               label="email"
               name="email"
@@ -105,28 +88,6 @@ const SignUpFields = () => {
               fieldvalid={true}
               required={false}
               size="full"
-            />
-            <Input
-              label="password"
-              name="password"
-              type="password"
-              placeholder="password"
-              value={formData.password}
-              onChange={handleOnChange}
-              fieldvalid={true}
-              required={false}
-              size="half"
-            />
-            <Input
-              label="confirm password"
-              name="confirmPassword"
-              type="password"
-              placeholder="confirm password"
-              value={formData.confirmPassword}
-              onChange={handleOnChange}
-              fieldvalid={true}
-              required={false}
-              size="half"
             />
             <div className="submitButton">
               <button type="submit">Submit</button>

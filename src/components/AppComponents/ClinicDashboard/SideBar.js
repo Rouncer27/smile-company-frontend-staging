@@ -1,11 +1,11 @@
 // NPM Packages
-import React, { useContext } from "react"
-import { Link } from "gatsby"
+import React, { useContext, useEffect } from "react"
+import { Link, navigate } from "gatsby"
+import { Magic } from "magic-sdk"
 import styled from "styled-components"
 // Context
 import { UserContext } from "../../../context/UserContext"
 // Actions
-import handleLogout from "./actions/handleLogout"
 // Common styles
 import mainSidebar from "./styles/mainSidebar"
 import { colors, Nav2Lavender } from "../../../styles/helpers"
@@ -16,7 +16,7 @@ import Cog from "../../Icons/AppIcons/Cog"
 import Dash from "../../Icons/AppIcons/Dash"
 import List from "../../Icons/AppIcons/List"
 import Man from "../../Icons/AppIcons/Man"
-
+let magic
 const SideBar = () => {
   const [state, dispatch] = useContext(UserContext)
   const userConfirmed = state.user.confirmed
@@ -42,6 +42,22 @@ const SideBar = () => {
   const bookings = state.profile.bookings ? state.profile.bookings : []
   const hasExpiredBookings = bookings.filter(book => book.is_expired).length > 0
   const accountHasFees = state.profile.has_short_fee
+
+  const handleLogout = async () => {
+    dispatch({ type: "USER_LOADING" })
+
+    try {
+      await magic.user.logout()
+    } catch (err) {
+      console.log(err)
+    }
+    dispatch({ type: "USER_LOGOUT" })
+    navigate("/app/login", { replace: true })
+  }
+
+  useEffect(() => {
+    magic = new Magic(process.env.GATSBY_MAGIC_PK)
+  }, [])
 
   return (
     <AppSidebarStyled>
@@ -167,7 +183,7 @@ const SideBar = () => {
             )}
           </li>
           <li>
-            <button onClick={() => handleLogout(dispatch)} type="button">
+            <button onClick={() => handleLogout()} type="button">
               <span className="icon">
                 <List />
               </span>{" "}

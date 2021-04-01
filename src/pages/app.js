@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/Layout"
 import { UserContext } from "../context/UserContext"
@@ -114,8 +114,8 @@ const App = ({ location }) => {
         )}
 
         <Login path="/app/login" />
-        <ForgotPassword path="/app/forgot" />
-        <ResetPassword path="/app/reset-password" location={location} />
+        {/* <ForgotPassword path="/app/forgot" />
+        <ResetPassword path="/app/reset-password" location={location} /> */}
         <NotFoundPage path="/app/*" />
       </Router>
     </Layout>
