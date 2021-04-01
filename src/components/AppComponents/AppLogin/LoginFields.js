@@ -68,6 +68,11 @@ const LoginFields = () => {
         dispatch({ type: "USER_LOGIN", payload: { token, user, profile } })
         navigate("/app/professional-dashboard", { replace: true })
       } else if (user.role.type === "authenticated") {
+        try {
+          await magic.user.logout()
+        } catch (err) {
+          console.log(err)
+        }
         dispatch({
           type: "USER_ERROR",
           payload: {
@@ -76,6 +81,11 @@ const LoginFields = () => {
           },
         })
       } else {
+        try {
+          await magic.user.logout()
+        } catch (err) {
+          console.log(err)
+        }
         dispatch({
           type: "USER_ERROR",
           payload: { message: "Something went wrong, please try again later." },

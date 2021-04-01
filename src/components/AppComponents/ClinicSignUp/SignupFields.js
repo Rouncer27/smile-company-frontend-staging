@@ -69,40 +69,8 @@ const SignUpFields = () => {
     }
   }
 
-  /**
-   * Retrieve Magic Issued Bearer Token
-   * This allows User to make authenticated requests
-   */
-  const getToken = async () => {
-    try {
-      const token = await magic.user.getIdToken()
-      return token
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  /**
-   * If user is logged in, get data and display it
-   */
-  const checkUserLoggedIn = async () => {
-    try {
-      const isLoggedIn = await magic.user.isLoggedIn()
-
-      if (isLoggedIn) {
-        const { email } = await magic.user.getMetadata()
-        //Add this just for test
-        const token = await getToken()
-        console.log("checkUserLoggedIn token", token)
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   useEffect(() => {
     magic = new Magic(process.env.GATSBY_MAGIC_PK)
-    checkUserLoggedIn()
   }, [])
 
   return (
