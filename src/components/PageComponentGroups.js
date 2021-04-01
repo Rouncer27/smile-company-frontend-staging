@@ -14,6 +14,7 @@ import OurValues from "./PageComponents/OurValues"
 import Affiliates from "./PageComponents/Affiliates"
 import FAQs from "./PageComponents/FAQs"
 import ContactForm from "./PageComponents/ContactForm"
+import ContactFormPayment from "./PageComponents/ContactFormPayment"
 import ContactBanner from "./PageComponents/ContactBanner"
 import NewsAndUpdates from "./PageComponents/NewsAndUpdates"
 import JobPostings from "./PageComponents/JobPostings"
@@ -55,6 +56,8 @@ const ComponentGroups = props => {
                 return <FAQs key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_ContactForm":
                 return <ContactForm key={index} data={component} />
+              case "page_Acfmaintemplatefields_PageComponents_ContactFormWithPayment":
+                return <ContactFormPayment key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_ContactBanner":
                 return <ContactBanner key={index} data={component} />
               case "page_Acfmaintemplatefields_PageComponents_NewsAndUpdates":

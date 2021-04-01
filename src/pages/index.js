@@ -317,6 +317,31 @@ export const homeQuery = graphql`
             mustReadTerms
           }
 
+          ... on WpPage_Acfmaintemplatefields_PageComponents_ContactFormWithPayment {
+            fieldGroupName
+            formMainTitle
+            formId
+            formFields {
+              id
+              label
+              placeholder
+              required
+              size
+              type
+              options {
+                label
+                id
+                required
+              }
+            }
+            sidebarButtonSlug
+            sidebarButtonText
+            sidebarContent
+            sidebarDispaly
+            sidebarTitle
+            mustReadTerms
+          }
+
           ... on WpPage_Acfmaintemplatefields_PageComponents_ContactBanner {
             email
             fieldGroupName
