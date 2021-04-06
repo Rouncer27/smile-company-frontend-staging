@@ -41,8 +41,6 @@ const DateTimePicker = ({
     setEndTime(date.toLocaleTimeString("it-IT"), `shift_end`)
   }
 
-  console.log("YOYOYOYOYOYOYOYOY: ", timesDontMakeSense)
-
   return (
     <DateTimePickerStyled>
       <div className="shiftPicker">
@@ -57,25 +55,6 @@ const DateTimePicker = ({
             />
           </div>
           <div className="shiftPicker__time">
-            {/* <div className="shiftPicker__time--startTime">
-              <p>Start of the Shift</p>
-              <TimePicker
-                onChange={event => setStartTime(event, `shift_start`)}
-                value={startTime}
-                disableClock={false}
-                required={true}
-              />
-            </div>
-            <div className="shiftPicker__time--endTime">
-              <p>End of the Shift</p>
-              <TimePicker
-                onChange={event => setEndTime(event, `shift_end`)}
-                value={endTime}
-                disableClock={true}
-                required={true}
-              />
-            </div> */}
-
             <div className="shiftPicker__time--startTime">
               <p>Start of the Shift</p>
               {timesDontMakeSense && (
