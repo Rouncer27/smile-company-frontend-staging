@@ -30,11 +30,14 @@ export default async (token, userId, dispatch) => {
     if (liveToken) {
       console.log("THERE WAS A TOKEN FROM MAGIC")
       try {
+        console.log("Try getting the user profile with new token")
         await getProfileFromServer(liveToken, userId, dispatch)
       } catch (err) {
+        console.log("STILL an error... log them out")
         displayErrorMessage(err, dispatch)
       }
     } else {
+      console.log("NO TOKEN FROM MAGIC... log them out")
       displayErrorMessage(err, dispatch)
     }
   }
