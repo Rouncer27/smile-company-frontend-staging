@@ -1,15 +1,31 @@
-import React, { useState, useEffect } from "react"
+import React, { useContext, useState } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import StripeCheckout from "react-stripe-checkout"
+import { colors, Nav1CharcoalGrey } from "../../../styles/helpers"
+// Context
+import { UserContext } from "../../../context/UserContext"
 
-const isBrowser = () => typeof window !== "undefined"
+const Stripe = ({ product, formData, setPaymentActive, sendEmailToServer }) => {
+  const [paymentSent, setPaymentSent] = useState(false)
+  const [, dispatch] = useContext(UserContext)
 
-const Checkout = () => {
-  const handleSubmit = async event => {
-    event.preventDefault()
+  async function handleToken(token, addresses) {
+    dispatch({ type: "USER_LOADING" })
+    setPaymentSent(true)
     try {
-      console.log("hello")
+      const response = await axios.post(
+        `${process.env.GATSBY_API_URL}/invoice-permanent-hirings`,
+        { token, packageId: "permanent-placement", addresses, formData }
+      )
+      const { status } = response.data
+      setPaymentActive(false)
+      dispatch({ type: "USER_LOADING_COMPLETE" })
+      if (status === "success") {
+        sendEmailToServer()
+      } else {
+        sendEmailToServer()
+      }
     } catch (err) {
       console.dir(err)
       const message =
@@ -22,61 +38,29 @@ const Checkout = () => {
           : typeof err.response.data.message === "string"
           ? err.response.data.message
           : "Something went wrong. Please try again later"
-    }
-  }
-
-  return <div>hello</div>
-}
-
-const Stripe = ({
-  productType,
-  formData,
-  setPaymentActive,
-  sendEmailToServer,
-}) => {
-  const [loaded, setLoaded] = useState(false)
-
-  useEffect(() => {
-    setLoaded(true)
-  }, [])
-
-  useEffect(() => {
-    if (isBrowser() && loaded) {
-      // getProductDataFromServer()
-    }
-  }, [loaded])
-
-  async function handleToken(token, addresses) {
-    console.log(token, addresses)
-
-    const response = await axios.post(
-      `${process.env.GATSBY_API_URL}/invoice-permanent-hirings`,
-      { token, packageId: "permanent-placement", addresses, formData }
-    )
-    const { status } = response.data
-    if (status === "success") {
-      console.log("response from server: ", response)
-      setPaymentActive(false)
-      sendEmailToServer()
-    } else {
-      // something went wrong
-      setPaymentActive(false)
-      sendEmailToServer()
+      dispatch({ type: "USER_ERROR", payload: { message } })
     }
   }
 
   return (
     <CheckoutStyled>
-      <StripeCheckout
-        stripeKey={process.env.GATSBY_STRIPE_PK}
-        token={handleToken}
-        currency="CAD"
-        amount={840 * 100}
-        panelLabel="Payment for Permanent Hiring Registration"
-        name="Permanent Hiring Registration Form"
-        billingAddress
-        email={formData.email}
-      />
+      {paymentSent ? (
+        <div className="paymentProcessed">
+          <p>Payment is being processed, thank you.</p>
+        </div>
+      ) : (
+        <StripeCheckout
+          stripeKey={process.env.GATSBY_STRIPE_PK}
+          token={handleToken}
+          currency="CAD"
+          amount={(product.price + product.price * product.tax_percent) * 100}
+          panelLabel={`Pay`}
+          name={product.name}
+          billingAddress
+          email={formData.email}
+          allowRememberMe={false}
+        />
+      )}
     </CheckoutStyled>
   )
 }
@@ -84,6 +68,17 @@ const Stripe = ({
 const CheckoutStyled = styled.div`
   width: 100%;
   text-align: center;
+
+  .paymentProcessed {
+    p {
+      ${Nav1CharcoalGrey};
+
+      &:hover {
+        color: ${colors.colorAlt};
+        cursor: inherit;
+      }
+    }
+  }
 `
 
 export default Stripe

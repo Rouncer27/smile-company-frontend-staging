@@ -17,6 +17,7 @@ import {
 import Input from "../FormParts/Input"
 import Textarea from "../FormParts/Textarea"
 import CheckBoxInput from "../FormParts/CheckBoxInput"
+import DropdownInput from "../FormParts/DropdownInput"
 
 import FormSuccess from "../UiElements/formModals/FormSuccess"
 import FormSubmit from "../UiElements/formModals/FormSubmit"
@@ -47,6 +48,13 @@ const ContactFormPayment = ({ data }) => {
     })
     setFormData({ ...formData, ...startingState })
   }, [])
+
+  const handleOnDropdownChange = event => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    })
+  }
 
   const handleOnCheckboxChange = event => {
     if (!formData[event.target.name]) {
@@ -151,7 +159,6 @@ const ContactFormPayment = ({ data }) => {
     setFormData({ ...resetFields })
   }
 
-  console.log("FORM FEILDS: ", formData)
   let allFieldsSet = false
   for (const field in formData) {
     if (formData[`${field}`] === "") {
@@ -228,6 +235,16 @@ const ContactFormPayment = ({ data }) => {
                     label={label}
                     options={options}
                     onChange={handleOnCheckboxChange}
+                    thisCheckValue={formData[id]}
+                  />
+                )
+              } else if (type === "dropdown") {
+                formField = (
+                  <DropdownInput
+                    name={id}
+                    label={label}
+                    options={options}
+                    onChange={handleOnDropdownChange}
                     thisCheckValue={formData[id]}
                   />
                 )

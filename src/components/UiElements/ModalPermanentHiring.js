@@ -1,6 +1,12 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import axios from "axios"
 import styled from "styled-components"
-import { B1CharcoalGrey, B1White, colors } from "../../styles/helpers"
+import {
+  B1CharcoalGrey,
+  B1White,
+  colors,
+  Nav1CharcoalGrey,
+} from "../../styles/helpers"
 
 import Stripe from "./stripeGateway/Stripe"
 
@@ -9,17 +15,59 @@ const ModalPermanentHiring = ({
   setPaymentActive,
   sendEmailToServer,
 }) => {
+  const [product, setProduct] = useState(null)
+
+  const getProductDataFromServer = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.GATSBY_API_URL}/permanent-hiring`
+      )
+      setProduct({
+        label: response.data.Label,
+        description: response.data.description,
+        id: response.data.id,
+        price: response.data.price,
+        tax_percent: response.data.tax_percent,
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    getProductDataFromServer()
+  }, [])
+
   return (
     <ModalPermanentHiringStyled>
       <div className="alertInner">
         <div className="alertInner__wrapper">
           <div className="message">
-            <p className="text">Stripe Payment Here</p>
-            <Stripe
-              formData={formData}
-              setPaymentActive={setPaymentActive}
-              sendEmailToServer={sendEmailToServer}
-            />
+            <div className="message__totals">
+              <p>{product && product.label}</p>
+              <p>Price: &#36;{product && product.price.toFixed(2)}</p>
+              <p>
+                Tax (5% GST): &#36;
+                {product && (product.price * product.tax_percent).toFixed(2)}
+              </p>
+              <p>
+                Total: &#36;
+                {product &&
+                  (product.price + product.price * product.tax_percent).toFixed(
+                    2
+                  )}
+              </p>
+            </div>
+            {product && (
+              <div className="message__stripe">
+                <Stripe
+                  product={product}
+                  formData={formData}
+                  setPaymentActive={setPaymentActive}
+                  sendEmailToServer={sendEmailToServer}
+                />
+              </div>
+            )}
           </div>
           <div className="alertBtn">
             <button type="button" onClick={() => setPaymentActive(false)}>
@@ -71,11 +119,23 @@ const ModalPermanentHiringStyled = styled.div`
 
     .message {
       width: 100%;
-      .text {
-        ${B1CharcoalGrey};
-        width: calc(100%);
-        margin: 0;
-        text-align: center;
+      text-align: center;
+
+      &__totals {
+        p {
+          ${Nav1CharcoalGrey};
+          margin-bottom: 0.5rem;
+
+          &:hover {
+            color: ${colors.colorAlt};
+            cursor: inherit;
+          }
+        }
+      }
+
+      &__stripe {
+        width: 100%;
+        margin-top: 2.5rem;
       }
     }
 

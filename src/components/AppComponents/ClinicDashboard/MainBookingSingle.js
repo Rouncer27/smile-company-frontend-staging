@@ -120,8 +120,6 @@ const MainBookingSingle = () => {
     await getBookingFromServer()
     await getProfile(token, userId, dispatch)
   }
-  console.log("STATE HERE: ", state)
-  console.log("TERVOR HERE: ", currentBooking)
 
   return (
     <MainBookingSingleStyled>
