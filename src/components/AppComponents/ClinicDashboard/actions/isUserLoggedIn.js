@@ -1,5 +1,6 @@
 import { Magic } from "magic-sdk"
 import axios from "axios"
+import { navigate } from "gatsby"
 
 let magic
 if (typeof window !== "undefined") {
@@ -38,10 +39,11 @@ export default async dispatch => {
       await getUserDataFromServer(token, dispatch)
     } else {
       dispatch({ type: "USER_LOGOUT" })
+      navigate("/app/login", { replace: true })
     }
   } catch (err) {
     console.log(err)
-    // setIsInitLoad(false)
     dispatch({ type: "USER_LOGOUT" })
+    navigate("/app/login", { replace: true })
   }
 }
