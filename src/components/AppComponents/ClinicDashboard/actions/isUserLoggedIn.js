@@ -1,7 +1,10 @@
 import { Magic } from "magic-sdk"
 import axios from "axios"
 
-const magic = new Magic(process.env.GATSBY_MAGIC_PK)
+let magic
+if (typeof window !== "undefined") {
+  magic = new Magic(process.env.GATSBY_MAGIC_PK)
+}
 
 const getUserDataFromServer = async (token, dispatch) => {
   try {
@@ -26,7 +29,7 @@ const getTokenFromMagic = async () => {
 }
 
 export default async dispatch => {
-  console.log("CALLED USER CHECK")
+  console.log("CALLED USER CHECK BECAUSE OF BAD TOKEN")
   dispatch({ type: "USER_LOADING" })
   try {
     const isLoggedIn = await magic.user.isLoggedIn()

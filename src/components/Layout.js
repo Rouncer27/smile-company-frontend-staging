@@ -16,9 +16,6 @@ let magic
 
 const Layout = props => {
   const children = props.children
-
-  const [isInitLoad, setIsInitLoad] = useState(true)
-  const [userType, setUserType] = useState(true)
   const [state, dispatch] = useContext(UserContext)
 
   const getUserDataFromServer = async token => {
@@ -64,19 +61,9 @@ const Layout = props => {
       }
     } catch (err) {
       console.log(err)
-      setIsInitLoad(false)
       dispatch({ type: "USER_LOGOUT" })
     }
   }
-  useEffect(() => {
-    if (state.user === undefined) return
-    if (state.user.role === undefined) return
-    setUserType(state.user.role.type)
-  }, [state.user])
-
-  useEffect(() => {
-    setIsInitLoad(false)
-  }, [userType])
 
   useEffect(() => {
     if (state.user && state.token) return
