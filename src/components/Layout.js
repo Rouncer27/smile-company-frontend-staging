@@ -22,13 +22,20 @@ const Layout = props => {
   const [state, dispatch] = useContext(UserContext)
 
   const getUserDataFromServer = async token => {
-    const response = await axios.get(`${process.env.GATSBY_API_URL}/users/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    dispatch({ type: "USER_LOGIN", payload: { token, user: response.data } })
-    return response.data
+    try {
+      const response = await axios.get(
+        `${process.env.GATSBY_API_URL}/users/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      dispatch({ type: "USER_LOGIN", payload: { token, user: response.data } })
+      // return response.data
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const getTokenFromMagic = async () => {
@@ -49,8 +56,9 @@ const Layout = props => {
       const isLoggedIn = await magic.user.isLoggedIn()
       if (isLoggedIn) {
         const token = await getTokenFromMagic()
-        const user = await getUserDataFromServer(token)
-        dispatch({ type: "USER_LOGIN", payload: { token, user } })
+        await getUserDataFromServer(token)
+        // const user = await getUserDataFromServer(token)
+        // dispatch({ type: "USER_LOGIN", payload: { token, user } })
       } else {
         dispatch({ type: "USER_LOGOUT" })
       }
@@ -71,11 +79,9 @@ const Layout = props => {
   }, [userType])
 
   useEffect(() => {
-    console.log(state)
     if (state.user && state.token) return
     if (state.notUser) return
     magic = new Magic(process.env.GATSBY_MAGIC_PK)
-
     checkUserLoggedIn()
   }, [])
 

@@ -1,7 +1,9 @@
 import axios from "axios"
+import isUserLoggedIn from "./isUserLoggedIn"
 
 export default async (token, userId, dispatch) => {
   dispatch({ type: "USER_LOADING" })
+
   try {
     const response = await axios.get(
       `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
@@ -30,6 +32,7 @@ export default async (token, userId, dispatch) => {
         : "Something went wrong. Please try again later"
     // Not sure if this is need, but if there is a user error, left clear the state and have them refresh their token from Magic.
     dispatch({ type: "USER_LOGOUT" })
+    await isUserLoggedIn(dispatch)
     dispatch({ type: "USER_ERROR", payload: { message } })
   }
 }
