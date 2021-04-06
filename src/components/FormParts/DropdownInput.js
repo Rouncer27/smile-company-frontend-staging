@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { colors, Nav1Lavender } from "../../styles/helpers"
+import { Nav1Lavender } from "../../styles/helpers"
 
 const DropdownInput = ({ name, label, options, onChange, value }) => {
   return (

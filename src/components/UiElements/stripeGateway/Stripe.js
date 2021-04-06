@@ -46,13 +46,18 @@ const StripeCheckout = ({
           `${process.env.GATSBY_API_URL}/invoice-permanent-hirings`,
           { id, packageId, formData }
         )
-        const { status } = response.data
+        const { status, err } = response.data
         setPaymentActive(false)
         dispatch({ type: "USER_LOADING_COMPLETE" })
         if (status === "succeeded") {
           sendEmailToServer()
         } else {
-          sendEmailToServer()
+          dispatch({
+            type: "USER_ERROR",
+            payload: {
+              message: err && err.raw.message,
+            },
+          })
         }
       } catch (err) {
         console.dir(err)

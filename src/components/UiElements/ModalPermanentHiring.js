@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import axios from "axios"
 import styled from "styled-components"
-import {
-  B1CharcoalGrey,
-  B1White,
-  colors,
-  Nav1CharcoalGrey,
-} from "../../styles/helpers"
+import { colors, Nav1CharcoalGrey } from "../../styles/helpers"
 
 import Stripe from "./stripeGateway/Stripe"
+// Context
+import { UserContext } from "../../context/UserContext"
 
 const ModalPermanentHiring = ({
   formData,
   setPaymentActive,
   sendEmailToServer,
 }) => {
+  const [, dispatch] = useContext(UserContext)
   const [product, setProduct] = useState(null)
 
   const getProductDataFromServer = async () => {
+    dispatch({ type: "USER_LOADING" })
     try {
       const response = await axios.get(
         `${process.env.GATSBY_API_URL}/permanent-hiring`
@@ -29,8 +28,20 @@ const ModalPermanentHiring = ({
         price: response.data.price,
         tax_percent: response.data.tax_percent,
       })
+      dispatch({ type: "USER_LOADING_COMPLETE" })
     } catch (err) {
-      console.log(err)
+      console.dir(err)
+      const message =
+        err.response.data &&
+        err.response.data.message &&
+        typeof err.response.data.message === "object"
+          ? err.response.data.message[0] &&
+            err.response.data.message[0].messages[0] &&
+            err.response.data.message[0].messages[0].message
+          : typeof err.response.data.message === "string"
+          ? err.response.data.message
+          : "Something went wrong. Please try again later"
+      dispatch({ type: "USER_ERROR", payload: { message } })
     }
   }
 
