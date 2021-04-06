@@ -1,6 +1,9 @@
 import axios from "axios"
 import isUserLoggedIn from "./isUserLoggedIn"
+import magicLogoutUser from "./magicLogoutUser"
 import displayErrorMessage from "./displayErrorMessage"
+
+import { navigate } from "gatsby"
 
 const getProfileFromServer = async (token, userId, dispatch) => {
   console.log("CALL TO THE SERVER FOR PROFILE")
@@ -35,10 +38,13 @@ export default async (token, userId, dispatch) => {
       } catch (err) {
         console.log("STILL an error... log them out")
         displayErrorMessage(err, dispatch)
+        magicLogoutUser(dispatch)
       }
     } else {
       console.log("NO TOKEN FROM MAGIC... log them out")
       displayErrorMessage(err, dispatch)
+      dispatch({ type: "USER_LOGOUT" })
+      navigate("/app/login", { replace: true })
     }
   }
 }
