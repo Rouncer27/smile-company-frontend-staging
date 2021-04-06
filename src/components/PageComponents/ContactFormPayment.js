@@ -245,7 +245,7 @@ const ContactFormPayment = ({ data }) => {
                     label={label}
                     options={options}
                     onChange={handleOnDropdownChange}
-                    thisCheckValue={formData[id]}
+                    value={formData[id]}
                   />
                 )
               }

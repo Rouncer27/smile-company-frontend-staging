@@ -87,7 +87,7 @@ const ModalPermanentHiringStyled = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(107, 81, 109, 0.4);
-  z-index: 99999999999;
+  z-index: 9999999;
   opacity: 1;
   visibility: "visible";
 

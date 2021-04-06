@@ -70,7 +70,7 @@ const Checkout = ({ token, productType, profile }) => {
   return (
     <CheckoutStyled onSubmit={handleSubmit}>
       <label>Card</label>
-      <div class="card-input" id="card-element">
+      <div className="card-input" id="card-element">
         <CardElement
           options={{
             iconStyle: "solid",

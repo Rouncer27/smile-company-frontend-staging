@@ -2,11 +2,11 @@ import React from "react"
 import styled from "styled-components"
 import { colors, Nav1Lavender } from "../../styles/helpers"
 
-const DropdownInput = ({ name, label, options, onChange }) => {
+const DropdownInput = ({ name, label, options, onChange, value }) => {
   return (
     <DropdownInputStyled>
       <label htmlFor={name}>{label}</label>
-      <select name={name} id={name} onChange={onChange}>
+      <select value={value} name={name} id={name} onChange={onChange}>
         <option value="">-- Please choose a hiring package --</option>
         {options.map(option => (
           <option key={option.id} value={option.id}>
