@@ -1,38 +1,41 @@
 import axios from "axios"
 import isUserLoggedIn from "./isUserLoggedIn"
+import displayErrorMessage from "./displayErrorMessage"
+
+const getProfileFromServer = async (token, userId, dispatch) => {
+  console.log("CALL TO THE SERVER FOR PROFILE")
+  const response = await axios.get(
+    `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+
+  dispatch({
+    type: "USER_GET_PROFILE",
+    payload: { profile: response.data },
+  })
+}
 
 export default async (token, userId, dispatch) => {
   dispatch({ type: "USER_LOADING" })
-
   try {
-    const response = await axios.get(
-      `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-
-    dispatch({
-      type: "USER_GET_PROFILE",
-      payload: { profile: response.data },
-    })
+    await getProfileFromServer(token, userId, dispatch)
   } catch (err) {
-    console.dir(err)
-    const message =
-      err.response.data &&
-      err.response.data.message &&
-      typeof err.response.data.message === "object"
-        ? err.response.data.message[0] &&
-          err.response.data.message[0].messages[0] &&
-          err.response.data.message[0].messages[0].message
-        : typeof err.response.data.message === "string"
-        ? err.response.data.message
-        : "Something went wrong. Please try again later"
-    // Not sure if this is need, but if there is a user error, left clear the state and have them refresh their token from Magic.
-    dispatch({ type: "USER_LOGOUT" })
-    await isUserLoggedIn(dispatch)
-    dispatch({ type: "USER_ERROR", payload: { message } })
+    console.log("HERE IS THE USER ERROR:", err.response.data)
+    const liveToken = await isUserLoggedIn()
+    console.log(liveToken)
+    if (liveToken) {
+      console.log("THERE WAS A TOKEN FROM MAGIC")
+      try {
+        await getProfileFromServer(liveToken, userId, dispatch)
+      } catch (err) {
+        displayErrorMessage(err, dispatch)
+      }
+    } else {
+      displayErrorMessage(err, dispatch)
+    }
   }
 }
