@@ -144,9 +144,6 @@ const ContactForm = ({ data }) => {
     setFormData({ ...resetFields })
   }
 
-  console.log("FORM FEILDS: ", formData)
-  console.log(mustReadTerms)
-
   return (
     <ContactFormStyled sidebar={displaySidebar}>
       <div className="wrapper">

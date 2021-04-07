@@ -47,7 +47,6 @@ const NewsAndUpdates = () => {
   })
 
   useEffect(() => {
-    console.log(postsData.posts.length)
     setPostsData({
       ...postsData,
       posts: [...posts],

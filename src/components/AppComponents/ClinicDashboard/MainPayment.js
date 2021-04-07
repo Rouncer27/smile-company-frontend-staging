@@ -107,7 +107,6 @@ const MainPayment = () => {
   }
 
   const setCancelFee = () => {
-    console.log("ADD TO CART")
     dispatch({
       type: "ADD_TO_CART",
       payload: {

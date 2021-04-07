@@ -5,7 +5,6 @@ import styled from "styled-components"
 import { Nav1CharcoalGrey, colors } from "../../../styles/helpers"
 
 const DatePicker = ({ label, value, onChange, id }) => {
-  console.log("RIGHT HERE: ", value)
   return (
     <DatePickerStyled>
       <p>{label}</p>

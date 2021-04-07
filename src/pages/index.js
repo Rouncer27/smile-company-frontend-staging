@@ -8,7 +8,6 @@ import ComponentGroups from "../components/PageComponentGroups"
 
 const IndexPage = props => {
   const { components, seo } = props.data
-  console.log("HERE IS THE SEO: ", seo)
   return (
     <Layout>
       <SEO title="Smile and Copmany" />

@@ -164,8 +164,6 @@ const Stripe = ({ productType }) => {
     }
   }, [loaded])
 
-  console.log("paymentDetails", paymentDetails)
-
   return (
     <Elements stripe={stripePromise}>
       <Checkout token={token} productType={productType} profile={profile} />

@@ -3,7 +3,6 @@ import { UserContext } from "../../context/UserContext"
 
 const ProfessionalDashboard = () => {
   const [state, dispatch] = useContext(UserContext)
-  console.log(state)
   return (
     <div>
       <div>

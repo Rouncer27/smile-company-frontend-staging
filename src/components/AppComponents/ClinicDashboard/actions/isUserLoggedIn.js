@@ -6,7 +6,6 @@ if (typeof window !== "undefined") {
 }
 
 export default async () => {
-  console.log("FETCH A MAGIC LINK TOKEN")
   try {
     const token = await magic.user.getIdToken()
     return token

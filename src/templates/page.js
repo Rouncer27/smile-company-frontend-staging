@@ -8,7 +8,6 @@ import ComponentGroups from "../components/PageComponentGroups"
 
 const page = props => {
   const { components, seo } = props.data
-  console.log("HERE IS THE SEO: ", seo)
   return (
     <Layout location={props?.location?.pathname}>
       <SEO

@@ -87,8 +87,6 @@ const MainExperience = () => {
       return navigate("/app/clinic-dashboard", { replace: true })
     handleGetProfileOnMount()
   }, [])
-
-  console.log(profile)
   return (
     <MainExperienceStyled>
       <div className="dashWrap">

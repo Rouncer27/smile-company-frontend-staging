@@ -57,7 +57,6 @@ const LoginFields = () => {
       )
 
       const user = response.data
-      console.log(user)
 
       if (user.role.type === "dental_clinics") {
         const profile = user.clinic_profile

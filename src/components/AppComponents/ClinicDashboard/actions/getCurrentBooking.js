@@ -16,7 +16,6 @@ export default async (token, userId, dispatch, bookingId) => {
     )
 
     dispatch({ type: "USER_LOADING_COMPLETE" })
-    console.log(response.data)
     return response.data
   } catch (err) {
     console.dir(err)

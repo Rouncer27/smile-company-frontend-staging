@@ -80,8 +80,6 @@ const MainGeneral = () => {
     handleGetProfileOnMount()
   }, [])
 
-  console.log(profile.profile_satisfied)
-
   return (
     <MainGeneralStyled>
       <div className="dashWrap">

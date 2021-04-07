@@ -8,7 +8,6 @@ if (typeof window !== "undefined") {
 
 export default async dispatch => {
   dispatch({ type: "USER_LOADING" })
-  console.log("HEY MAGIC, LOG THIS USER OUT")
   try {
     await magic.user.logout()
   } catch (err) {

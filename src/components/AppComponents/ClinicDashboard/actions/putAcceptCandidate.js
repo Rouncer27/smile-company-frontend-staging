@@ -4,7 +4,6 @@ export default async (token, userId, dispatch, bookingId, proId) => {
   if (!userId) return
 
   dispatch({ type: "USER_LOADING" })
-  console.log("HERE IS THE ID: ", bookingId)
 
   try {
     const response = await axios.put(
@@ -21,7 +20,6 @@ export default async (token, userId, dispatch, bookingId, proId) => {
     )
 
     dispatch({ type: "USER_LOADING_COMPLETE" })
-    console.log(response.data)
     return response.data
   } catch (err) {
     console.dir(err)
