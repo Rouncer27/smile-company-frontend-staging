@@ -185,11 +185,6 @@ const MainAvailability = () => {
                   name="locations_working"
                   label="I want to be notified of Temp job postings that are at these locations"
                   options={[
-                    // {
-                    //   id: "nwNeSwSeCalgary",
-                    //   label: "NW NE SW SW Calgary",
-                    //   checked: checkIfLocationChecked("nwNeSwSeCalgary"),
-                    // },
                     {
                       id: "nwCalgary",
                       label: "NW Calgary",

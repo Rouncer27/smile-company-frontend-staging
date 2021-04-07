@@ -21,19 +21,17 @@ const MainAvailable = () => {
   const { token, user, bookings } = state
   const userId = user.id
 
-  console.log("HERE ARE THE BOOKINGS: ", state)
-
   const handleGetProfileOnMount = async () => {
-    await getUserProfile(token, userId, state.user.confirmed, dispatch)
+    const freshToken = await getUserProfile(
+      token,
+      userId,
+      state.user.confirmed,
+      dispatch
+    )
+    await getBookings(freshToken, userId, state.user.confirmed, dispatch)
   }
-
-  const handleGetBookings = async () => {
-    await getBookings(token, userId, state.user.confirmed, dispatch)
-  }
-
   useEffect(() => {
     handleGetProfileOnMount()
-    handleGetBookings()
   }, [])
 
   useEffect(() => {

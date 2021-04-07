@@ -64,10 +64,16 @@ const MainBookingSingle = () => {
     if (currentBookingId) getBookingFromServer()
   }, [currentBookingId, profile])
 
+  // On page load get the user profile from server. //
+  const getUpToDateProfile = async () => {
+    await getProfile(token, userId, dispatch)
+  }
+
   useEffect(() => {
     const urlSplit = globalHistory.location.pathname.split("/")
     const bookingId = urlSplit[urlSplit.length - 1]
     setCurrentBookingId(bookingId)
+    getUpToDateProfile()
   }, [])
 
   useEffect(() => {

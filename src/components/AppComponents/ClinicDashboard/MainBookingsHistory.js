@@ -26,6 +26,7 @@ const MainBookingsHistory = () => {
   // On page load get the user profile from server. //
   const getUpToDateProfile = async () =>
     await getProfile(token, userId, dispatch)
+
   useEffect(() => {
     getUpToDateProfile()
     getExpiredBookings()

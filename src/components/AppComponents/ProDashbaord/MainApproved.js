@@ -21,8 +21,13 @@ const MainApproved = () => {
   const userId = user.id
 
   const handleGetProfileOnMount = async () => {
-    await getUserProfile(token, userId, state.user.confirmed, dispatch)
-    await getBookings(token, userId, state.user.confirmed, dispatch)
+    const freshToken = await getUserProfile(
+      token,
+      userId,
+      state.user.confirmed,
+      dispatch
+    )
+    await getBookings(freshToken, userId, state.user.confirmed, dispatch)
   }
 
   useEffect(() => {

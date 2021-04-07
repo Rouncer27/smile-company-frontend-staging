@@ -78,6 +78,7 @@ const MainExperience = () => {
 
   const handleGetProfileOnMount = async () => {
     await getUserProfile(token, userId, state.user.confirmed, dispatch)
+    updateFormFields()
   }
 
   useEffect(() => {
@@ -85,7 +86,6 @@ const MainExperience = () => {
     if (!state.user && !state.user.confirmed)
       return navigate("/app/clinic-dashboard", { replace: true })
     handleGetProfileOnMount()
-    updateFormFields()
   }, [])
 
   console.log(profile)

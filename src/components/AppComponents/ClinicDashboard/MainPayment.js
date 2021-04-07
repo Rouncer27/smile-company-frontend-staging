@@ -7,6 +7,7 @@ import { UserContext } from "../../../context/UserContext"
 import PaymentGateways from "./Payments/PaymentGateways"
 import CartTotals from "./Payments/CartTotals"
 import getTermsConditions from "./actions/getTermsConditions"
+import getProfile from "./actions/getProfile"
 import marked from "marked"
 import TermsModal from "../../UiElements/TermsModal"
 
@@ -37,6 +38,7 @@ const MainPayment = () => {
   const [state, dispatch] = useContext(UserContext)
   const token = state.token
   const cart = state.cart
+  const userId = state.user.id
 
   const setOneBooking = data => {
     dispatch({
@@ -157,16 +159,22 @@ const MainPayment = () => {
     }
   }
 
-  const getTerms = async () => {
-    const termsDoc = await getTermsConditions(token, dispatch)
+  const getTerms = async freshToken => {
+    const termsDoc = await getTermsConditions(freshToken, dispatch)
     const termsDocClean = marked(termsDoc)
     setTerms(termsDocClean)
   }
 
+  // On page load get the user profile from server. //
+  const getUpToDateProfile = async () => {
+    const freshToken = await getProfile(token, userId, dispatch)
+    getTerms(freshToken)
+  }
+
   useEffect(() => {
+    getUpToDateProfile()
     const queryData = queryString.parse(globalHistory.location.search)
     setProductType(queryData.product)
-    getTerms()
   }, [])
 
   useEffect(() => {
