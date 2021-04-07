@@ -157,6 +157,7 @@ const reducer = (state, action) => {
     case "USER_GET_PROFILE":
       return {
         ...state,
+        token: action.payload.token,
         profile: action.payload.profile ? action.payload.profile : {},
         loading: false,
       }

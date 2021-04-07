@@ -18,7 +18,7 @@ const getProfileFromServer = async (token, userId, dispatch) => {
 
   dispatch({
     type: "USER_GET_PROFILE",
-    payload: { profile: response.data },
+    payload: { token, profile: response.data },
   })
 }
 
