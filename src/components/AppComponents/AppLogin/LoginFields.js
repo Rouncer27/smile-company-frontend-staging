@@ -100,10 +100,10 @@ const LoginFields = () => {
         "User requests to edit the email address for authentication."
       ) {
         dispatch({
-          type: "USER_ERROR",
+          type: "USER_ALERT",
           payload: {
             message:
-              "You requested to edit the email address used to login. Go ahead and edit the email address you wish to you. Thank you.",
+              "You requested to edit the email you want to use for login. Please make edits and try again",
           },
         })
       } else if (
@@ -116,8 +116,16 @@ const LoginFields = () => {
               "Please wait a few miniutes before trying again. Thank you.",
           },
         })
+      } else if (err.rawMessage) {
+        dispatch({
+          type: "USER_ERROR",
+          payload: {
+            message: err.rawMessage,
+          },
+        })
       } else {
         const message =
+          err &&
           err.response !== undefined &&
           err.response.data &&
           err.response.data.message &&
