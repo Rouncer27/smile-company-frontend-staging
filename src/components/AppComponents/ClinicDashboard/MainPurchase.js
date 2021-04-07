@@ -59,10 +59,12 @@ const MainPurchase = () => {
 
     if (state.profile.has_short_fee)
       navigate("/app/clinic-dashboard", { replace: true })
+  }
 
+  useEffect(() => {
     // Get the booking details. //
     getTheBookingPackages()
-  }
+  }, [state.profile])
 
   useEffect(() => {
     handleGetProfileOnMount()
