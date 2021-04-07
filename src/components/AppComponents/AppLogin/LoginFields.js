@@ -103,11 +103,22 @@ const LoginFields = () => {
           type: "USER_ERROR",
           payload: {
             message:
-              "User requests to edit the email address for authentication.",
+              "You requested to edit the email address used to login. Go ahead and edit the email address you wish to you. Thank you.",
+          },
+        })
+      } else if (
+        err.rawMessage === "Internal error: User denied account access."
+      ) {
+        dispatch({
+          type: "USER_ERROR",
+          payload: {
+            message:
+              "Please wait a few miniutes before trying again. Thank you.",
           },
         })
       } else {
         const message =
+          err.response !== undefined &&
           err.response.data &&
           err.response.data.message &&
           typeof err.response.data.message === "object"
