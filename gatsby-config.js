@@ -27,7 +27,7 @@ module.exports = {
       options: {
         name: `smile-and-company`,
         short_name: `Smile and Co.`,
-        start_url: `/app/login`,
+        start_url: `/`,
         background_color: `#6b516d`,
         theme_color: `#ad89a6`,
         display: `standalone`,
