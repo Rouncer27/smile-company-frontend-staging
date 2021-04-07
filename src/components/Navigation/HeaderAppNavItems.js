@@ -34,6 +34,14 @@ const HeaderAppNavItems = () => {
     navigate("/login", { replace: true })
   }
 
+  const dashboard =
+    state &&
+    state.user &&
+    state.user.role &&
+    state.user.role.id === "6033ebea17271d7b03c3faf9"
+      ? "professional-dashboard"
+      : "clinic-dashboard"
+
   return (
     <>
       {!isLoggedIn ? (
@@ -56,7 +64,7 @@ const HeaderAppNavItems = () => {
       ) : (
         <>
           <AppItemThree>
-            <Link to="/app">My Dashboard</Link>
+            <Link to={`/app/${dashboard}`}>My Dashboard</Link>
           </AppItemThree>
           <AppItemThree>
             <button onClick={handleLogout} type="button">

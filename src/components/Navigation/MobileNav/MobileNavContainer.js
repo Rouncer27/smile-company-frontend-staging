@@ -43,6 +43,14 @@ const MobileNavContainer = ({ navitems, setIsOpen }) => {
     setIsOpen(false)
   }
 
+  const dashboard =
+    state &&
+    state.user &&
+    state.user.role &&
+    state.user.role.id === "6033ebea17271d7b03c3faf9"
+      ? "professional-dashboard"
+      : "clinic-dashboard"
+
   return (
     <MobileNavContainerStyled>
       <ul>
@@ -65,7 +73,7 @@ const MobileNavContainer = ({ navitems, setIsOpen }) => {
         ) : (
           <>
             <li className="logoutBtn">
-              <Link to="/app">My Dashboard</Link>
+              <Link to={`/app/${dashboard}`}>My Dashboard</Link>
             </li>
             <li className="logoutBtn">
               <button onClick={handleLogout} type="button">
