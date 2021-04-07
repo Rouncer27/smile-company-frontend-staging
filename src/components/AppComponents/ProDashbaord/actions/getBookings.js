@@ -17,6 +17,8 @@ export default async (token, userId, confirmed, dispatch) => {
       }
     )
 
+    console.log("BOOKING RESPONSE: ", response)
+
     dispatch({
       type: "USER_GET_BOOKINGS",
       payload: { bookings: response.data },

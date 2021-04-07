@@ -21,6 +21,8 @@ const MainAvailable = () => {
   const { token, user, bookings } = state
   const userId = user.id
 
+  console.log("HERE ARE THE BOOKINGS: ", state)
+
   const handleGetProfileOnMount = async () => {
     await getUserProfile(token, userId, state.user.confirmed, dispatch)
   }
