@@ -39,7 +39,7 @@ const MobileNavContainer = ({ navitems, setIsOpen }) => {
       console.log(err)
     }
     dispatch({ type: "USER_LOGOUT" })
-    navigate("/app/login", { replace: true })
+    navigate("/login", { replace: true })
     setIsOpen(false)
   }
 
@@ -60,7 +60,7 @@ const MobileNavContainer = ({ navitems, setIsOpen }) => {
                 url: "/dental-professionals-signup",
               }}
             />
-            <MobileNavItem item={{ label: "login", url: "/app/login" }} />
+            <MobileNavItem item={{ label: "login", url: "/login" }} />
           </>
         ) : (
           <>

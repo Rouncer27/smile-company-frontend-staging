@@ -84,7 +84,7 @@ const ForgotFields = () => {
             </fieldset>
           </form>
           <div className="passForgot">
-            <Link to="/app/login">Login Page</Link>
+            <Link to="/login">Login Page</Link>
           </div>
         </div>
         <div className="mainNav">

@@ -14,5 +14,5 @@ export default async dispatch => {
     console.log(err)
   }
   dispatch({ type: "USER_LOGOUT" })
-  navigate("/app/login", { replace: true })
+  navigate("/login", { replace: true })
 }

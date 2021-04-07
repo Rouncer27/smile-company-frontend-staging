@@ -113,7 +113,7 @@ const App = ({ location }) => {
           </>
         )}
 
-        <Login path="/app/login" />
+        {/* <Login path="/app/login" /> */}
         {/* <ForgotPassword path="/app/forgot" />
         <ResetPassword path="/app/reset-password" location={location} /> */}
         <NotFoundPage path="/app/*" />

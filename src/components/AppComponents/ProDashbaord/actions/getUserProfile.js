@@ -44,7 +44,7 @@ export default async (token, userId, confirmed, dispatch) => {
     } else {
       displayErrorMessage(err, dispatch)
       dispatch({ type: "USER_LOGOUT" })
-      navigate("/app/login", { replace: true })
+      navigate("/login", { replace: true })
     }
   }
 }

@@ -1,8 +1,8 @@
 /blog    /news
 /jobs    /permanent-hiring/job-board
 /contact-us    /contact
-/signin    /app/login
-/booking-login    /app/login
+/signin    /login
+/booking-login    /login
 
 
 

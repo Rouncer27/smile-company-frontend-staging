@@ -31,7 +31,7 @@ const HeaderAppNavItems = () => {
       console.log(err)
     }
     dispatch({ type: "USER_LOGOUT" })
-    navigate("/app/login", { replace: true })
+    navigate("/login", { replace: true })
   }
 
   return (
@@ -45,7 +45,7 @@ const HeaderAppNavItems = () => {
             <Link to="/dental-professionals-signup">Dental Professionals</Link>
           </AppItemOne>
           <AppItemTwo>
-            <Link to="/app/login">
+            <Link to="/login">
               <span>
                 <DefaultUser />
               </span>
