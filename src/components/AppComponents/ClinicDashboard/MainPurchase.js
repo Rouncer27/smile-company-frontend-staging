@@ -22,7 +22,6 @@ import {
 } from "../../../styles/helpers"
 
 const MainPurchase = () => {
-  const [profileConfirmed, setProfileConfirmed] = useState(false)
   const [bookingDetails, setBookingDetails] = useState({
     booking_one_description: "",
     booking_one_includes_details: "",
@@ -56,7 +55,7 @@ const MainPurchase = () => {
     // If this person is not filled out the profile, send them back to the main dashboard. //
     if (!state.profile.profile_satisfied)
       return navigate("/app/clinic-dashboard", { replace: true })
-
+    // If the account has an fees that need to be paid for first. //
     if (state.profile.has_short_fee)
       navigate("/app/clinic-dashboard", { replace: true })
     // Get the booking details. //
