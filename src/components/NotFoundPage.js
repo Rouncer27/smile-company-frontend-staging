@@ -1,16 +1,14 @@
 import React, { useEffect } from "react"
 import { navigate } from "gatsby"
 
+import NotFound from "./PageComponents/NotFound"
+
 const NotFoundPage = () => {
   useEffect(() => {
     navigate(`/login`)
   })
 
-  return (
-    <div>
-      <h2>Page not found</h2>
-    </div>
-  )
+  return <NotFound />
 }
 
 export default NotFoundPage
