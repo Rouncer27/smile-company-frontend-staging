@@ -47,6 +47,8 @@ const LoginFields = () => {
         email: formData.email,
       })
 
+      console.log("HERE HERE")
+
       const response = await axios.get(
         `${process.env.GATSBY_API_URL}/users/me`,
         {
@@ -92,17 +94,31 @@ const LoginFields = () => {
       }
     } catch (err) {
       console.dir(err)
-      const message =
-        err.response.data &&
-        err.response.data.message &&
-        typeof err.response.data.message === "object"
-          ? err.response.data.message[0] &&
-            err.response.data.message[0].messages[0] &&
-            err.response.data.message[0].messages[0].message
-          : typeof err.response.data.message === "string"
-          ? err.response.data.message
-          : "Something went wrong. Please try again later"
-      dispatch({ type: "USER_ERROR", payload: { message } })
+
+      if (
+        err.rawMessage ===
+        "User requests to edit the email address for authentication."
+      ) {
+        dispatch({
+          type: "USER_ERROR",
+          payload: {
+            message:
+              "User requests to edit the email address for authentication.",
+          },
+        })
+      } else {
+        const message =
+          err.response.data &&
+          err.response.data.message &&
+          typeof err.response.data.message === "object"
+            ? err.response.data.message[0] &&
+              err.response.data.message[0].messages[0] &&
+              err.response.data.message[0].messages[0].message
+            : typeof err.response.data.message === "string"
+            ? err.response.data.message
+            : "Something went wrong. Please try again later"
+        dispatch({ type: "USER_ERROR", payload: { message } })
+      }
     }
   }
 
