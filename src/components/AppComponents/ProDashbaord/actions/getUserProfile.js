@@ -7,6 +7,7 @@ import isUserLoggedIn from "../../ClinicDashboard/actions/isUserLoggedIn"
 import { navigate } from "gatsby"
 
 const getProfileFromServer = async (token, userId, dispatch) => {
+  console.log("THIS IS THE TOKEN CHECK:", token)
   const response = await axios.get(
     `${process.env.GATSBY_API_URL}/professional-profiles/my-profile/${userId}`,
     {
@@ -32,6 +33,8 @@ export default async (token, userId, confirmed, dispatch) => {
     await getProfileFromServer(token, userId, dispatch)
   } catch (err) {
     const liveToken = await isUserLoggedIn()
+    console.log("THIS IS THE isUserLoggedIn responce: ", liveToken)
+
     if (liveToken) {
       try {
         await getProfileFromServer(liveToken, userId, dispatch)

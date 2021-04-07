@@ -41,16 +41,15 @@ const MainPurchase = () => {
   const { token, user } = state
   const { confirmed } = user
   const userId = user.id
-  console.log("THIS STATE", state)
-  const getTheBookingPackages = async () => {
-    console.log("STATE IN THE BOOKING CALL", token)
-    await getBookingPackages(token, dispatch, setBookingDetails)
+
+  const getTheBookingPackages = async freshToken => {
+    await getBookingPackages(freshToken, dispatch, setBookingDetails)
   }
 
   const handleGetProfileOnMount = async () => {
     if (!userId) return
     if (!confirmed) return
-    await getProfile(token, userId, dispatch)
+    const freshToken = await getProfile(token, userId, dispatch)
     // If this person is not confirmed yet, send them back to the main dashboard. //
     if (!state.user.confirmed)
       return navigate("/app/clinic-dashboard", { replace: true })
@@ -60,14 +59,9 @@ const MainPurchase = () => {
 
     if (state.profile.has_short_fee)
       navigate("/app/clinic-dashboard", { replace: true })
-
-    setProfileConfirmed(true)
-  }
-
-  useEffect(() => {
     // Get the booking details. //
-    getTheBookingPackages()
-  }, [profileConfirmed])
+    getTheBookingPackages(freshToken)
+  }
 
   useEffect(() => {
     handleGetProfileOnMount()

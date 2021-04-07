@@ -26,22 +26,18 @@ export default async (token, userId, dispatch) => {
   dispatch({ type: "USER_LOADING" })
   try {
     await getProfileFromServer(token, userId, dispatch)
+    return token
   } catch (err) {
-    console.log("HERE IS THE USER ERROR:", err.response.data)
     const liveToken = await isUserLoggedIn()
-    console.log(liveToken)
     if (liveToken) {
-      console.log("THERE WAS A TOKEN FROM MAGIC")
       try {
-        console.log("Try getting the user profile with new token")
         await getProfileFromServer(liveToken, userId, dispatch)
+        return liveToken
       } catch (err) {
-        console.log("STILL an error... log them out")
         displayErrorMessage(err, dispatch)
         magicLogoutUser(dispatch)
       }
     } else {
-      console.log("NO TOKEN FROM MAGIC... log them out")
       displayErrorMessage(err, dispatch)
       dispatch({ type: "USER_LOGOUT" })
       navigate("/app/login", { replace: true })
