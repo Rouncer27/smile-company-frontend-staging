@@ -7,7 +7,7 @@ import HeaderNav from "./Navigation/HeaderNav"
 import MobileNav from "./Navigation/MobileNav/MobileNav"
 import { colors, BigWrapper } from "../styles/helpers"
 
-const Header = () => {
+const Header = ({ isapp }) => {
   return (
     <HeaderStyled>
       <div className="headWrap">
@@ -17,7 +17,7 @@ const Header = () => {
           </Link>
         </div>
         <HeaderNav />
-        <MobileNav />
+        <MobileNav isapp={isapp} />
       </div>
     </HeaderStyled>
   )

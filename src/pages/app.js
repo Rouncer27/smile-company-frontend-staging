@@ -28,8 +28,9 @@ import History from "../components/AppRoutes/pro-dashboard/History"
 const App = ({ location }) => {
   const [state] = useContext(UserContext)
   const { type } = state.user && state.user.role ? state.user.role : false
+
   return (
-    <Layout>
+    <Layout isapp={true}>
       <Router>
         {type === "dental_clinics" && (
           <>

@@ -1,5 +1,5 @@
 // NPM Packages
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Link, navigate } from "gatsby"
 import { Magic } from "magic-sdk"
 import styled from "styled-components"
@@ -18,6 +18,7 @@ import List from "../../Icons/AppIcons/List"
 import Man from "../../Icons/AppIcons/Man"
 let magic
 const SideBar = () => {
+  const [isOpen, setIsOpen] = useState(false)
   const [state, dispatch] = useContext(UserContext)
   const userConfirmed = state.user.confirmed
   const profileSatisfied =
@@ -60,144 +61,243 @@ const SideBar = () => {
   }, [])
 
   return (
-    <AppSidebarStyled>
-      <nav className="sidebarNav">
-        <ul>
-          <li>
-            <Link to="/app/clinic-dashboard">
-              <span className="icon">
-                <Cog />
-              </span>{" "}
-              <span className="text">Main Dashbaord</span>
-            </Link>
-          </li>
-          <li>
-            {userConfirmed ? (
-              <Link to="/app/clinic-dashboard/profile-settings">
-                <span className="icon">
-                  <Man />
-                </span>{" "}
-                <span className="text">Clinic Details</span>
-              </Link>
-            ) : (
-              <button type="button" disabled={true}>
-                <span className="icon">
-                  <Man />
-                </span>{" "}
-                <span className="text">Clinic Details</span>
-              </button>
-            )}
-          </li>
-          <li>
-            {userConfirmed &&
-            profileSatisfied &&
-            !accountHasFees &&
-            !isActiveMembership ? (
-              <Link to="/app/clinic-dashboard/booking-packages">
-                <span className="icon">
-                  <Dash />
-                </span>{" "}
-                <span className="text">Purchase Booking Package</span>
-              </Link>
-            ) : (
-              <button type="button" disabled={true}>
-                <span className="icon">
-                  <Dash />
-                </span>{" "}
-                <span className="text">Purchase Booking Package</span>
-              </button>
-            )}
-          </li>
-          <li>
-            {userConfirmed &&
-            profileSatisfied &&
-            accountHasCredits &&
-            !accountHasFees ? (
-              <Link to="/app/clinic-dashboard/create-booking">
-                <span className="icon">
-                  <Calendar />
-                </span>{" "}
-                <span className="text">Create a Booking</span>
-              </Link>
-            ) : (
-              <button type="button" disabled={true}>
-                <span className="icon">
-                  <Calendar />
-                </span>{" "}
-                <span className="text">Create a Booking</span>
-              </button>
-            )}
-          </li>
-          <li>
-            {userConfirmed && profileSatisfied && accountHasBookings ? (
-              <Link to="/app/clinic-dashboard/bookings">
-                <span className="icon">
-                  <Checked />
-                </span>{" "}
-                <span className="text">Review Bookings</span>
-              </Link>
-            ) : (
-              <button type="button" disabled={true}>
-                <span className="icon">
-                  <Checked />
-                </span>{" "}
-                <span className="text">Review Bookings</span>
-              </button>
-            )}
-          </li>
-          <li>
-            {userConfirmed &&
-            profileSatisfied &&
-            accountHasBookings &&
-            hasExpiredBookings ? (
-              <Link to="/app/clinic-dashboard/bookings-history">
-                <span className="icon">
-                  <Checked />
-                </span>{" "}
-                <span className="text">Booking History</span>
-              </Link>
-            ) : (
-              <button type="button" disabled={true}>
-                <span className="icon">
-                  <Checked />
-                </span>{" "}
-                <span className="text">Booking History</span>
-              </button>
-            )}
-          </li>
-          <li>
-            {userConfirmed && profileSatisfied && accountHasInvoices ? (
-              <Link to="/app/clinic-dashboard/invoices">
+    <>
+      <AppSidebarStyled open={isOpen}>
+        <nav className="sidebarNav">
+          <ul>
+            <li className="websiteHome">
+              <Link to="/">
                 <span className="icon">
                   <List />
                 </span>{" "}
-                <span className="text">Invoice Records</span>
+                <span className="text">Back To Website</span>
               </Link>
-            ) : (
-              <button type="button" disabled={true}>
+            </li>
+            <li>
+              <Link to="/app/clinic-dashboard">
+                <span className="icon">
+                  <Cog />
+                </span>{" "}
+                <span className="text">Main Dashbaord</span>
+              </Link>
+            </li>
+            <li>
+              {userConfirmed ? (
+                <Link to="/app/clinic-dashboard/profile-settings">
+                  <span className="icon">
+                    <Man />
+                  </span>{" "}
+                  <span className="text">Clinic Details</span>
+                </Link>
+              ) : (
+                <button type="button" disabled={true}>
+                  <span className="icon">
+                    <Man />
+                  </span>{" "}
+                  <span className="text">Clinic Details</span>
+                </button>
+              )}
+            </li>
+            <li>
+              {userConfirmed &&
+              profileSatisfied &&
+              !accountHasFees &&
+              !isActiveMembership ? (
+                <Link to="/app/clinic-dashboard/booking-packages">
+                  <span className="icon">
+                    <Dash />
+                  </span>{" "}
+                  <span className="text">Purchase Booking Package</span>
+                </Link>
+              ) : (
+                <button type="button" disabled={true}>
+                  <span className="icon">
+                    <Dash />
+                  </span>{" "}
+                  <span className="text">Purchase Booking Package</span>
+                </button>
+              )}
+            </li>
+            <li>
+              {userConfirmed &&
+              profileSatisfied &&
+              accountHasCredits &&
+              !accountHasFees ? (
+                <Link to="/app/clinic-dashboard/create-booking">
+                  <span className="icon">
+                    <Calendar />
+                  </span>{" "}
+                  <span className="text">Create a Booking</span>
+                </Link>
+              ) : (
+                <button type="button" disabled={true}>
+                  <span className="icon">
+                    <Calendar />
+                  </span>{" "}
+                  <span className="text">Create a Booking</span>
+                </button>
+              )}
+            </li>
+            <li>
+              {userConfirmed && profileSatisfied && accountHasBookings ? (
+                <Link to="/app/clinic-dashboard/bookings">
+                  <span className="icon">
+                    <Checked />
+                  </span>{" "}
+                  <span className="text">Review Bookings</span>
+                </Link>
+              ) : (
+                <button type="button" disabled={true}>
+                  <span className="icon">
+                    <Checked />
+                  </span>{" "}
+                  <span className="text">Review Bookings</span>
+                </button>
+              )}
+            </li>
+            <li>
+              {userConfirmed &&
+              profileSatisfied &&
+              accountHasBookings &&
+              hasExpiredBookings ? (
+                <Link to="/app/clinic-dashboard/bookings-history">
+                  <span className="icon">
+                    <Checked />
+                  </span>{" "}
+                  <span className="text">Booking History</span>
+                </Link>
+              ) : (
+                <button type="button" disabled={true}>
+                  <span className="icon">
+                    <Checked />
+                  </span>{" "}
+                  <span className="text">Booking History</span>
+                </button>
+              )}
+            </li>
+            <li>
+              {userConfirmed && profileSatisfied && accountHasInvoices ? (
+                <Link to="/app/clinic-dashboard/invoices">
+                  <span className="icon">
+                    <List />
+                  </span>{" "}
+                  <span className="text">Invoice Records</span>
+                </Link>
+              ) : (
+                <button type="button" disabled={true}>
+                  <span className="icon">
+                    <List />
+                  </span>{" "}
+                  <span className="text">Invoice Records</span>
+                </button>
+              )}
+            </li>
+            <li>
+              <button onClick={() => handleLogout()} type="button">
                 <span className="icon">
                   <List />
                 </span>{" "}
-                <span className="text">Invoice Records</span>
+                <span className="text">Log Out</span>
               </button>
-            )}
-          </li>
-          <li>
-            <button onClick={() => handleLogout()} type="button">
-              <span className="icon">
-                <List />
-              </span>{" "}
-              <span className="text">Log Out</span>
-            </button>
-          </li>
-        </ul>
-      </nav>
-    </AppSidebarStyled>
+            </li>
+          </ul>
+        </nav>
+      </AppSidebarStyled>
+      <MobileNavButton isOpen={isOpen}>
+        <button onClick={() => setIsOpen(!isOpen)}>Menu</button>
+      </MobileNavButton>
+    </>
   )
 }
 
+const MobileNavButton = styled.div`
+  button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0.25rem;
+    left: 0.25rem;
+    width: 5.5rem;
+    height: 5.5rem;
+    margin: 0 auto;
+    padding: 0;
+    background: ${props => props.theme.colorTertiary};
+    border: 0.1rem solid ${props => props.theme.white};
+    box-shadow: 0.25rem 0.25rem 0.5rem 0rem rgba(0, 0, 0, 0.5);
+    color: ${props =>
+      props.isOpen ? props.theme.colorTertiary : props.theme.white};
+    text-align: center;
+    z-index: 99999999;
+
+    @media (min-width: 768px) {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+
+    &::before,
+    &::after {
+      display: block;
+      position: absolute;
+      right: 0;
+      left: 0;
+      width: 80%;
+      height: 0.2rem;
+      margin: 0 auto;
+      transform: rotate(0);
+      transform-origin: center center;
+      transition: all 0.2s ease;
+      background-color: ${props => props.theme.white};
+      content: "";
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &::before {
+      top: ${props => (props.isOpen ? "50%" : "1rem")};
+      transform: rotate(${props => (props.isOpen ? "135deg" : "0deg")});
+    }
+
+    &::after {
+      bottom: ${props => (props.isOpen ? "50%" : "1rem")};
+      transform: rotate(${props => (props.isOpen ? "-135deg" : "0deg")});
+    }
+
+    &:hover {
+      cursor: pointer;
+      &::before {
+        top: ${props => (props.isOpen ? "50%" : "0.5rem")};
+      }
+
+      &::after {
+        bottom: ${props => (props.isOpen ? "50%" : "0.5rem")};
+      }
+    }
+  }
+`
+
 const AppSidebarStyled = styled.div`
   ${mainSidebar};
+
+  @media (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease-out;
+    transform: ${props =>
+      props.open ? "translateX(0%)" : "translateX(-110%)"};
+    z-index: 9999999;
+  }
 
   .sidebarNav {
     position: relative;
@@ -259,6 +359,14 @@ const AppSidebarStyled = styled.div`
     a[aria-current="page"] {
       color: ${colors.white};
       cursor: inherit;
+    }
+
+    li.websiteHome {
+      display: block;
+
+      @media (min-width: 768px) {
+        display: none;
+      }
     }
   }
 `

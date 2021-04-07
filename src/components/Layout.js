@@ -72,6 +72,8 @@ const Layout = props => {
     checkUserLoggedIn()
   }, [])
 
+  console.log("HERE: ", props)
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -79,7 +81,7 @@ const Layout = props => {
         <ModalLoading />
         <ModalAlert />
         <ModalError />
-        <Header />
+        <Header isapp={props.isapp} />
         <main>{children}</main>
         <Footer location={props.location} />
       </ThemeProvider>
