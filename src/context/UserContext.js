@@ -29,6 +29,8 @@ const initialState = {
 }
 
 const reducer = (state, action) => {
+  console.log("REDUCER ACTION: ", action.type)
+
   switch (action.type) {
     case "ADD_TO_CART":
       return {
