@@ -40,8 +40,9 @@ const MainPurchase = () => {
   const { token, user } = state
   const { confirmed } = user
   const userId = user.id
-
+  console.log("THIS STATE", state)
   const getTheBookingPackages = async () => {
+    console.log("THIS IS THE TOKEN IN STATE", token)
     await getBookingPackages(token, dispatch, setBookingDetails)
   }
 
