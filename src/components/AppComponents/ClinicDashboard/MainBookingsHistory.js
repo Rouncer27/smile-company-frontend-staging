@@ -129,7 +129,10 @@ const MainBookingsHistoryStyled = styled.div`
         position: relative;
         width: 100%;
         margin-bottom: 2rem;
+        padding: 1rem;
         padding-left: 15rem;
+        border: 0.1rem solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0.1rem 0.1rem 0.5rem 0.1rem rgba(0, 0, 0, 0.25);
 
         a {
           ${Nav1CharcoalGrey};
@@ -142,8 +145,8 @@ const MainBookingsHistoryStyled = styled.div`
 
         span.bookingStatus {
           position: absolute;
-          left: 0;
-          top: 0.25rem;
+          left: 0.5rem;
+          top: 1rem;
           display: inline-block;
           padding: 0.5rem 1rem;
           border-radius: 0.5rem;

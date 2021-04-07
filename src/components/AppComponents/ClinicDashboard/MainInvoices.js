@@ -78,6 +78,9 @@ const MainInvoicesStyled = styled.div`
       li {
         width: 100%;
         margin-bottom: 1rem;
+        padding: 1rem;
+        border: 0.1rem solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0.1rem 0.1rem 0.5rem 0.1rem rgba(0, 0, 0, 0.25);
 
         a {
           ${Nav1CharcoalGrey};
