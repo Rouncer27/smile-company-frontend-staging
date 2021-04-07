@@ -22,6 +22,7 @@ import {
 } from "../../../styles/helpers"
 
 const MainPurchase = () => {
+  const [profileConfirmed, setProfileConfirmed] = useState(false)
   const [bookingDetails, setBookingDetails] = useState({
     booking_one_description: "",
     booking_one_includes_details: "",
@@ -59,12 +60,14 @@ const MainPurchase = () => {
 
     if (state.profile.has_short_fee)
       navigate("/app/clinic-dashboard", { replace: true })
+
+    setProfileConfirmed(true)
   }
 
   useEffect(() => {
     // Get the booking details. //
     getTheBookingPackages()
-  }, [state.profile])
+  }, [profileConfirmed])
 
   useEffect(() => {
     handleGetProfileOnMount()
