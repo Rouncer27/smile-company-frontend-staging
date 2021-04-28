@@ -63,6 +63,24 @@ module.exports = {
         singleTypes: [],
       },
     },
-    `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        precachePages: [
+          `/`,
+          `/how-it-works`,
+          `/about`,
+          `/news`,
+          `/news/*`,
+          `/permanent-hiring`,
+          `/permanent-hiring/job-board`,
+          `/job-posting/*`,
+          `/permanent-hiring/permanent-hiring-registration`,
+          `/faq`,
+          `/contact`,
+          `/login`,
+        ],
+      },
+    },
   ],
 }
