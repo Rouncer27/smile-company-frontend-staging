@@ -165,9 +165,6 @@ const MainDashboard = () => {
               <p>
                 Dentists Names: <span>{state.profile.dentists_names}</span>
               </p>
-              <p>
-                Office Hours: <span>{state.profile.office_hours}</span>
-              </p>
             </div>
           </>
         )}

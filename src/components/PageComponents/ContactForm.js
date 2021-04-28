@@ -217,7 +217,10 @@ const ContactForm = ({ data }) => {
                 <p>
                   You must read and agree to our terms and conditions. Here are
                   our{" "}
-                  <a target="_blank" href="/terms-and-conditions">
+                  <a
+                    target="_blank"
+                    href="/terms-and-conditions-permanent-hiring"
+                  >
                     Terms and Conditions
                   </a>
                 </p>

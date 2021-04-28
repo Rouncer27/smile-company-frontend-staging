@@ -33,7 +33,6 @@ const MainSettings = () => {
     additionalClinics: "",
     dentistsCount: "",
     dentistsNames: "",
-    officeHours: "",
   })
 
   const updateFormFields = () => {
@@ -63,7 +62,6 @@ const MainSettings = () => {
       dentistsNames: state.profile.dentists_names
         ? state.profile.dentists_names
         : "",
-      officeHours: state.profile.office_hours ? state.profile.office_hours : "",
     })
   }
 
@@ -114,9 +112,6 @@ const MainSettings = () => {
     if (formData.dentistsNames.trim() === "") {
       return { goToSend: false, message: "Dentist Names" }
     }
-    if (formData.officeHours.trim() === "") {
-      return { goToSend: false, message: "Office Hours" }
-    }
 
     return { goToSend: true, message: "" }
   }
@@ -157,7 +152,6 @@ const MainSettings = () => {
           additional_clinics: formData.additionalClinics,
           dentists_count: formData.dentistsCount,
           dentists_names: formData.dentistsNames,
-          office_hours: formData.officeHours,
         },
         {
           headers: {
@@ -314,17 +308,6 @@ const MainSettings = () => {
                 type="text"
                 placeholder="names"
                 value={formData.dentistsNames}
-                onChange={handleOnChange}
-                fieldvalid={true}
-                required={true}
-                size="full"
-              />
-              <Input
-                label="What are your office hours?"
-                name="officeHours"
-                type="text"
-                placeholder="office hours"
-                value={formData.officeHours}
                 onChange={handleOnChange}
                 fieldvalid={true}
                 required={true}

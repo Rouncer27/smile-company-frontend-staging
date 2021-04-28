@@ -31,7 +31,15 @@ module.exports = {
         background_color: `#6b516d`,
         theme_color: `#ad89a6`,
         display: `standalone`,
-        icon: `src/images/favicon.png`, // This path is relative to the root of the site.
+        icons: [
+          {
+            src: "src/images/favicon.png",
+            sizes: "196x196",
+            type: "image/png",
+            purpose: "any maskable",
+          },
+        ],
+        // icon: `src/images/favicon.png`,
       },
     },
     {

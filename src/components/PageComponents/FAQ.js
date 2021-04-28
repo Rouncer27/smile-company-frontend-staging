@@ -77,8 +77,13 @@ const FAQStyled = styled.div`
       top: 7rem;
     }
 
-    p {
+    p,
+    a {
       ${B1CharcoalGrey};
+    }
+
+    a:hover {
+      color: ${colors.colorSecondary};
     }
   }
 
