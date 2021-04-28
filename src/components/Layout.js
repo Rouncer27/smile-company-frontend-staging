@@ -13,6 +13,7 @@ import ModalAlert from "./UiElements/ModalAlert"
 import ModalError from "./UiElements/ModalError"
 
 let magic
+const isBrowser = () => typeof window !== "undefined"
 
 const Layout = props => {
   const children = props.children
@@ -72,7 +73,17 @@ const Layout = props => {
     checkUserLoggedIn()
   }, [])
 
-  console.log("HERE: ", props)
+  useEffect(() => {
+    if (!isBrowser()) return
+    console.log("WINDOW")
+    window.addEventListener("beforeinstallprompt", event => {
+      console.log("👍", "beforeinstallprompt", event)
+      // Stash the event so it can be triggered later.
+      window.deferredPrompt = event
+      // Remove the 'hidden' class from the install button container
+      // divInstall.classList.toggle("hidden", false)
+    })
+  }, [])
 
   return (
     <>
