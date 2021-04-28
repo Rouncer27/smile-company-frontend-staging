@@ -2,9 +2,9 @@ import React from "react"
 import styled from "styled-components"
 import { B1CharcoalGrey, B1White, Btn1DarkPurple } from "../../styles/helpers"
 
-const ModalAddToHome = () => {
+const ModalAddToHome = ({ setInstallAppWarn }) => {
   const handleDismiss = () => {
-    console.log("remove install warning")
+    setInstallAppWarn(false)
   }
 
   return (
