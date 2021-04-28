@@ -72,7 +72,7 @@ const JobPostingsStyled = styled.div`
     width: calc(100%);
     padding: 4rem;
     margin-bottom: 1.5rem;
-    background-color: ${colors.colorTertiary};
+    background-color: ${colors.greyMed};
 
     @media (min-width: 768px) {
       width: calc(33.33% - 1rem);

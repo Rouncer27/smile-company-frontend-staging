@@ -161,7 +161,8 @@ const MainBookingsHistoryStyled = styled.div`
             background-color: ${colors.open};
           }
 
-          &__fulfilled {
+          &__fulfilled,
+          &__confirmed {
             background-color: ${colors.fulfilled};
           }
 

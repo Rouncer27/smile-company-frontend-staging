@@ -14,7 +14,7 @@ const CandidateAccepted = ({ proSelected }) => {
       <div className="title">
         <h3>Candidate Accepted</h3>
         <p className="statusAlert">
-          <span>FULFILLED</span>
+          <span>CONFIRMED</span>
         </p>
       </div>
       <div className="bookingCandidates__wrapper">

@@ -14,7 +14,7 @@ export default booking => {
       ? "CANCELLED"
       : // A Candidate was selected.
       is_selected
-      ? "FULFILLED"
+      ? "CONFIRMED"
       : // This Post is active and has not expired yet and still needs to select a candiate
       is_active && !is_expired
       ? "OPEN"
@@ -36,7 +36,7 @@ export default booking => {
       : is_selected
       ? "closed and a candidate has been selected and posting is filled."
       : is_active && !is_expired
-      ? "open and waiting for replies from protental candidates or for you to choose on of the potental candidates."
+      ? "open and waiting for replies from potential candidates or for you to choose one of the potential candidates."
       : !is_active && is_expired
       ? "closed and no candidates have been selected, this post has not been filled."
       : "There has been an error. If required please contact Smile and Company for assitance."

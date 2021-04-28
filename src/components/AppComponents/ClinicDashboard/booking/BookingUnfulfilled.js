@@ -12,7 +12,7 @@ const BookingUnfulfilled = () => {
       <div className="title">
         <h3>Booking Unfulfilled</h3>
         <p className="statusAlert">
-          <span>FULFILLED</span>
+          <span>UNFULFILLED</span>
         </p>
         <p>This booking has expired and was not filled</p>
       </div>

@@ -60,7 +60,7 @@ const ThreeBlocks = ({ data }) => {
               <BgImage
                 tag="div"
                 fluid={
-                  data.leftBlockBackgroundImage.localFile.childImageSharp.fluid
+                  data.rightTopBackgroundImage.localFile.childImageSharp.fluid
                 }
               />
             </div>

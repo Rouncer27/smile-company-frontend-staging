@@ -25,13 +25,11 @@ const ModalAlert = ({
               <span>&#9888;</span>
             </p>
             <p className="text">
-              This is a short notice cancellation, and there will be a $50.00
-              fee appiled to your account. You will not be able to create a new
-              request for booking until this fee has been paid.
+              This is a short notice cancellation. There will be a $50 fee
+              applied to your account. You will not be able to create a new
+              booking request until the cancellation fee is paid.
             </p>
-            <p className="text">
-              Are you sure you wish to contiune with this short cancel?
-            </p>
+            <p className="text">Are you sure you want to cancel?</p>
             <div className="alertBtn">
               <button type="button" onClick={handleYes}>
                 YES

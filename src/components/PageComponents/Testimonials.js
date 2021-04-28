@@ -169,7 +169,7 @@ const Testimonials = () => {
               className="sliderNav__button sliderNav__next"
               type="button"
             >
-              Next
+              Prev
             </button>
             <button
               disabled={disableNav}
@@ -179,7 +179,7 @@ const Testimonials = () => {
               className="sliderNav__button sliderNav__prev"
               type="button"
             >
-              Prev
+              Next
             </button>
           </div>
         </div>

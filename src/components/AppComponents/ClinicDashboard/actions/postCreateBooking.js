@@ -13,7 +13,7 @@ export default async (token, dispatch, formData) => {
     dispatch({
       type: "USER_ALERT",
       payload: {
-        message: `Congratulations! You have created a booking. You can always review your bookings history from your dashboard under Review Bookings in the left side menu.`,
+        message: `Congratulations! You have created a booking. You can always review your bookings history from your dashboard under Review Booking in the left side menu.`,
       },
     })
     return navigate("/app/clinic-dashboard", { replace: true })

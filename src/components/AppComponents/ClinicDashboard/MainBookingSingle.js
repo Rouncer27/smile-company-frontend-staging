@@ -222,7 +222,7 @@ const MainBookingSingle = () => {
                 />
               ) : bookingStatusTitle === "ERROR" ? (
                 <BookingError />
-              ) : bookingStatusTitle === "FULFILLED" ? (
+              ) : bookingStatusTitle === "CONFIRMED" ? (
                 <CandidateAccepted
                   proSelected={currentBooking.professional_selected}
                 />
@@ -307,7 +307,8 @@ const MainBookingSingleStyled = styled.div`
         background-color: ${colors.open};
       }
 
-      &__fulfilled {
+      &__fulfilled,
+      &__confirmed {
         background-color: ${colors.fulfilled};
       }
 
