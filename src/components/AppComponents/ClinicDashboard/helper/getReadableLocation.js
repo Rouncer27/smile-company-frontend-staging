@@ -1,5 +1,5 @@
 export default location => {
-  const positionDisplay =
+  const locationDisplay =
     location === "nwCalgary"
       ? "NW Calgary"
       : location === "neCalgary"
@@ -24,7 +24,9 @@ export default location => {
       ? "Canmore"
       : location === "banff"
       ? "Banff"
+      : location === "siksikaMorley"
+      ? "Siksika / Morley"
       : ""
 
-  return positionDisplay
+  return locationDisplay
 }

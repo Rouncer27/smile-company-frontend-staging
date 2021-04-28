@@ -20,6 +20,7 @@ import {
 } from "../../../styles/helpers"
 // Helpers
 import getReadablePosition from "./helper/getReadablePosition"
+import getReadableLocation from "./helper/getReadableLocation"
 import getReadableExperience from "./helper/getReadableExperience"
 
 const MainHome = () => {
@@ -227,12 +228,17 @@ const MainHome = () => {
                 ))}
               </p>
               <p>
-                Locations of temp job posting I want to be notified about:{" "}
-                {state.profile.locations_working.map(location => (
-                  <span className="daysOfTheWeek" key={location}>
-                    {capitalize(location)}
-                  </span>
-                ))}
+                Locations of temp job posting I want to be notified about
+                (Please note: travel time paid for Siksika / Morley, Banff and
+                Canmore.):
+                {state.profile.locations_working.map(location => {
+                  const displayName = getReadableLocation(location)
+                  return (
+                    <span className="daysOfTheWeek" key={location}>
+                      {capitalize(displayName)}
+                    </span>
+                  )
+                })}
               </p>
             </div>
           )}

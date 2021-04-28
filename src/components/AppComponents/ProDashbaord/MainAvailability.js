@@ -183,7 +183,7 @@ const MainAvailability = () => {
 
                 <CheckBoxInput
                   name="locations_working"
-                  label="I want to be notified of Temp job postings that are at these locations"
+                  label="I want to be notified of Temp job postings that are at these locations. Please note: travel time paid for Siksika / Morley, Banff and Canmore."
                   options={[
                     {
                       id: "nwCalgary",
@@ -237,13 +237,18 @@ const MainAvailability = () => {
                     },
                     {
                       id: "canmore",
-                      label: "Canmore",
+                      label: "Canmore (travel time paid)",
                       checked: checkIfLocationChecked("canmore"),
                     },
                     {
                       id: "banff",
-                      label: "Banff",
+                      label: "Banff (travel time paid)",
                       checked: checkIfLocationChecked("banff"),
+                    },
+                    {
+                      id: "siksikaMorley",
+                      label: "Siksika / Morley (travel time paid)",
+                      checked: checkIfLocationChecked("siksikaMorley"),
                     },
                   ]}
                   onChange={handleOnLocationCheck}

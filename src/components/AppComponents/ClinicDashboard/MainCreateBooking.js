@@ -153,7 +153,7 @@ const MainCreateBooking = () => {
 
               <RadioInput
                 name="position"
-                label="What profession are you hiring for?"
+                label="What profession are you booking for?"
                 handleOnRadioChange={handleOnChange}
                 value={formData.position}
                 options={[
@@ -198,16 +198,20 @@ const MainCreateBooking = () => {
                   { id: "cochrane", label: "Cochrane" },
                   { id: "okotoks", label: "Okotoks" },
                   { id: "crossfield", label: "Crossfield" },
-                  { id: "canmore", label: "Canmore" },
-                  { id: "banff", label: "Banff" },
+                  { id: "canmore", label: "Canmore (travel time paid)" },
+                  { id: "banff", label: "Banff (travel time paid)" },
+                  {
+                    id: "siksikaMorley",
+                    label: "Siksika / Morley (travel time paid)",
+                  },
                 ]}
               />
 
               <Input
-                label="Clinic Name / clinic street address / location"
+                label="Clinic Name / street address / parking information"
                 name="address"
                 type="text"
-                placeholder="Clinic Name / clinic street address / location"
+                placeholder="Clinic Name / street address / parking information"
                 value={formData.address}
                 onChange={handleOnChange}
                 fieldvalid={true}

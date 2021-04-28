@@ -46,7 +46,7 @@ const DateTimePicker = ({
       <div className="shiftPicker">
         <div className="shiftPicker__wrapper">
           <div className="shiftPicker__calendar">
-            <p>What day are you hiring for?</p>
+            <p>What day are you booking for?</p>
             <Calendar
               onChange={event => setDay(event, "day")}
               value={day}
