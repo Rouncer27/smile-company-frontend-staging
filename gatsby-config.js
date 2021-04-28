@@ -31,6 +31,7 @@ module.exports = {
         background_color: `#6b516d`,
         theme_color: `#ad89a6`,
         display: `standalone`,
+        icon: `src/images/favicon.png`,
         icons: [
           {
             src: "src/images/favicon.png",
@@ -45,7 +46,6 @@ module.exports = {
             purpose: "any maskable",
           },
         ],
-        // icon: `src/images/favicon.png`,
       },
     },
     {
