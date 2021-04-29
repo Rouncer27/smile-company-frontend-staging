@@ -22,8 +22,9 @@ import {
   H4Lavender,
   Btn1DarkPurple,
 } from "../../../styles/helpers"
-
+const isBrowser = () => typeof window !== "undefined"
 const MainGeneral = () => {
+  const [needToSave, setNeedToSave] = useState(false)
   const [state, dispatch] = useContext(UserContext)
   const { token, user, profile } = state
   const userId = user._id
@@ -38,6 +39,27 @@ const MainGeneral = () => {
     school: "",
     wage: "",
   })
+
+  useEffect(() => {
+    const shouldSave =
+      formData.first_name !== profile.first_name
+        ? true
+        : formData.last_name !== profile.last_name
+        ? true
+        : formData.mobile_phone !== profile.mobile_phone
+        ? true
+        : formData.home_phone !== profile.home_phone
+        ? true
+        : formData.year_graduated !== profile.year_graduated
+        ? true
+        : formData.school !== profile.school
+        ? true
+        : formData.wage !== profile.wage
+        ? true
+        : false
+
+    setNeedToSave(shouldSave)
+  }, [formData])
 
   const handleOnChange = event => {
     setFormData({
@@ -154,6 +176,10 @@ const MainGeneral = () => {
                         id: "sterilizationAssistant",
                         label: "Sterilization Assistant",
                       },
+                      {
+                        id: "orthoRda",
+                        label: "Ortho RDA",
+                      },
                     ]}
                   />
                 )}
@@ -191,7 +217,11 @@ const MainGeneral = () => {
                   size="full"
                 />
                 <div className="submitButton">
-                  <button type="submit">Submit Information</button>
+                  <button disabled={!needToSave} type="submit">
+                    {profile.general_satisfied
+                      ? "Save Updated Information"
+                      : "Submit Information"}
+                  </button>
                 </div>
               </fieldset>
             </form>

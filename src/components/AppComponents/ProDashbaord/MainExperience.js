@@ -24,6 +24,7 @@ import {
 } from "../../../styles/helpers"
 
 const MainExperience = () => {
+  const [needToSave, setNeedToSave] = useState(false)
   const [state, dispatch] = useContext(UserContext)
   const { token, user, profile } = state
   const userId = user.id
@@ -37,6 +38,29 @@ const MainExperience = () => {
     clinics_worked_at: "",
     dental_software: "",
   })
+
+  useEffect(() => {
+    const shouldSave =
+      formData.experience !== profile.experience
+        ? true
+        : formData.associated_registration_number !==
+          profile.associated_registration_number
+        ? true
+        : formData.name_registered_with !== profile.name_registered_with
+        ? true
+        : formData.additional_qualifications !==
+          profile.additional_qualifications
+        ? true
+        : formData.greatest_strengths !== profile.greatest_strengths
+        ? true
+        : formData.clinics_worked_at !== profile.clinics_worked_at
+        ? true
+        : formData.dental_software !== profile.dental_software
+        ? true
+        : false
+
+    setNeedToSave(shouldSave)
+  }, [formData])
 
   const handleOnChange = event => {
     setFormData({
@@ -191,7 +215,11 @@ const MainExperience = () => {
                   size="full"
                 />
                 <div className="submitButton">
-                  <button type="submit">Submit Information</button>
+                  <button disabled={!needToSave} type="submit">
+                    {profile.experience_satisfied
+                      ? "Save Updated Experience"
+                      : "Submit Experience"}
+                  </button>
                 </div>
               </fieldset>
             </form>

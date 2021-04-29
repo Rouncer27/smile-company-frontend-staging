@@ -2,6 +2,7 @@
 import React, { useState, useContext, useEffect } from "react"
 import styled from "styled-components"
 import { navigate } from "gatsby"
+import _ from "lodash"
 // Context
 import { UserContext } from "../../../context/UserContext"
 // Actions
@@ -22,6 +23,7 @@ import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
 import CheckBoxInput from "../FormFields/CheckBoxInput"
 
 const MainAvailability = () => {
+  const [needToSave, setNeedToSave] = useState(false)
   const [state, dispatch] = useContext(UserContext)
   const { token, user, profile } = state
   const userId = user.id
@@ -31,6 +33,19 @@ const MainAvailability = () => {
     days_working: [],
     locations_working: [],
   })
+
+  useEffect(() => {
+    const daysEqual = _.isEqual(
+      formData.days_working.sort(),
+      profile.days_working.sort()
+    )
+    const locationsEqual = _.isEqual(
+      formData.locations_working.sort(),
+      profile.locations_working.sort()
+    )
+    const shouldSave = !daysEqual ? true : !locationsEqual ? true : false
+    setNeedToSave(shouldSave)
+  }, [formData])
 
   const handleOnChange = event => {
     setFormData({
@@ -254,7 +269,11 @@ const MainAvailability = () => {
                   onChange={handleOnLocationCheck}
                 />
                 <div className="submitButton">
-                  <button type="submit">Submit Information</button>
+                  <button disabled={!needToSave} type="submit">
+                    {profile.experience_satisfied
+                      ? "Save Updated Availability"
+                      : "Submit Availability"}
+                  </button>
                 </div>
               </fieldset>
             </form>

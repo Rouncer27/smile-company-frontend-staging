@@ -167,6 +167,10 @@ const MainCreateBooking = () => {
                     id: "sterilizationAssistant",
                     label: "Sterilization Assistant",
                   },
+                  {
+                    id: "orthoRda",
+                    label: "Ortho RDA",
+                  },
                 ]}
               />
 
