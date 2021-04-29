@@ -34,14 +34,19 @@ const MainAvailability = () => {
     locations_working: [],
   })
 
+  const onServerDays =
+    profile.days_working !== undefined ? profile.days_working : []
+  const onServerLocation =
+    profile.locations_working !== undefined ? profile.locations_working : []
+
   useEffect(() => {
     const daysEqual = _.isEqual(
       formData.days_working.sort(),
-      profile.days_working.sort()
+      onServerDays.sort()
     )
     const locationsEqual = _.isEqual(
       formData.locations_working.sort(),
-      profile.locations_working.sort()
+      onServerLocation.sort()
     )
     const shouldSave = !daysEqual ? true : !locationsEqual ? true : false
     setNeedToSave(shouldSave)
