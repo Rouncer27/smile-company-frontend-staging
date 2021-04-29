@@ -14,10 +14,8 @@ import ModalError from "./UiElements/ModalError"
 import ModalAddToHome from "./UiElements/ModalAddToHome"
 
 let magic
-const isBrowser = () => typeof window !== "undefined"
 
 const Layout = props => {
-  const [installAppWarn, setInstallAppWarn] = useState(false)
   const children = props.children
   const [state, dispatch] = useContext(UserContext)
 
@@ -75,28 +73,11 @@ const Layout = props => {
     checkUserLoggedIn()
   }, [])
 
-  useEffect(() => {
-    if (!isBrowser()) return
-    console.log("WINDOW")
-    window.addEventListener("beforeinstallprompt", event => {
-      console.log("👍", "beforeinstallprompt", event)
-      console.log(`beforeinstallprompt' event was fired.`)
-      setInstallAppWarn(true)
-      console.log(`setInstallAppWarn`)
-      // Stash the event so it can be triggered later.
-      // window.deferredPrompt = event
-      // Remove the 'hidden' class from the install button container
-      // divInstall.classList.toggle("hidden", false)
-    })
-  }, [])
-
   return (
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        {installAppWarn && (
-          <ModalAddToHome setInstallAppWarn={setInstallAppWarn} />
-        )}
+        <ModalAddToHome />
         <ModalLoading />
         <ModalAlert />
         <ModalError />

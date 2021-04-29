@@ -1,55 +1,107 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { B1CharcoalGrey, B1White, Btn1DarkPurple } from "../../styles/helpers"
+import {
+  B1CharcoalGrey,
+  Btn1DarkPurple,
+  H3CharcoalGrey,
+} from "../../styles/helpers"
 
-const ModalAddToHome = ({ setInstallAppWarn }) => {
-  const handleDismiss = () => {
-    setInstallAppWarn(false)
-  }
+import Download from "../Icons/AppIcons/Download"
+
+const ModalAddToHome = () => {
+  const [isActive, toggleActive] = useState(false)
+
+  useEffect(() => {
+    const alreadyClickClose = localStorage.getItem("popupWarn")
+    if (alreadyClickClose) return
+    setTimeout(() => {
+      toggleActive(true)
+    }, 1000)
+  }, [])
 
   return (
-    <ModalAddToHomeStyled>
-      <div className="innerWrap">
-        <p>Install Smile and Company</p>
-        <p>
-          Install this application on your home screen for quick and easy access
-          when you're on the go.
-        </p>
-        <p>
-          Just tap <span>ICON</span> then 'Add to home Screen'
-        </p>
-        <button onClick={handleDismiss}>Dismiss</button>
+    <ModalAddToHomeStyled isActive={isActive} id="popupWarning">
+      <div className="container">
+        <div>
+          <h2>Install Smile and Company PWA App</h2>
+          <div className="container__content">
+            <p>
+              Install this application on your home screen for quick and easy
+              access when you're on the go.
+            </p>
+            <p>
+              Just tap{" "}
+              <span>
+                <Download />
+              </span>{" "}
+              then 'Add to home Screen'
+            </p>
+          </div>
+          <div className="container__button">
+            <button
+              onClick={() => {
+                toggleActive(false)
+                localStorage.setItem("popupWarn", true)
+              }}
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
       </div>
     </ModalAddToHomeStyled>
   )
 }
 
-const ModalAddToHomeStyled = styled.div`
-  display: block;
+const ModalAddToHomeStyled = styled.section`
   position: fixed;
-  bottom: 0%;
-  left: 0%;
-  width: 100%;
-  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.85);
+  z-index: 999999999;
+  transition: all 0.3 ease;
+  opacity: ${props => (props.isActive ? 1 : 0)};
+  visibility: ${props => (props.isActive ? "visable" : "hidden")};
 
-  .innerWrap {
-    width: 100%;
-    max-width: 45rem;
-    margin: 4rem auto;
-    padding: 2.5rem;
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70rem;
+    padding: 4rem;
+    margin: auto;
     background-color: rgba(255, 255, 255, 1);
-    border-radius: 0.5rem;
-    border: solid 0.1rem #000;
-    box-shadow: 0.25rem 0.25rem 0.5rem 0 #000;
-    text-align: center;
-  }
+    border: 1.5rem solid #6b516d;
+    transform: translate(-50%, -50%);
 
-  p {
-    ${B1CharcoalGrey};
-  }
+    h2 {
+      ${H3CharcoalGrey};
+      text-align: center;
+    }
 
-  button {
-    ${Btn1DarkPurple};
+    &__content {
+      text-align: center;
+
+      p {
+        ${B1CharcoalGrey};
+
+        span {
+          display: inline-block;
+          width: 5rem;
+          transform: translateY(1.25rem);
+        }
+      }
+    }
+
+    &__button {
+      text-align: center;
+
+      button {
+        ${Btn1DarkPurple};
+      }
+    }
   }
 `
 
