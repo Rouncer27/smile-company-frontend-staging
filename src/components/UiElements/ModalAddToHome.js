@@ -7,6 +7,7 @@ import {
 } from "../../styles/helpers"
 
 import Download from "../Icons/AppIcons/Download"
+import MainLogo from "../Logo/MainLogo"
 
 const ModalAddToHome = () => {
   const [isActive, toggleActive] = useState(false)
@@ -23,7 +24,11 @@ const ModalAddToHome = () => {
     <ModalAddToHomeStyled isActive={isActive} id="popupWarning">
       <div className="container">
         <div>
+          <div className="mainPopupLogo">
+            <MainLogo />
+          </div>
           <h2>Install Smile and Company PWA App</h2>
+
           <div className="container__content">
             <p>
               Install this application on your home screen for quick and easy
@@ -69,12 +74,18 @@ const ModalAddToHomeStyled = styled.section`
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 70rem;
+    width: 100%;
+    max-width: 70rem;
     padding: 4rem;
     margin: auto;
     background-color: rgba(255, 255, 255, 1);
     border: 1.5rem solid #6b516d;
     transform: translate(-50%, -50%);
+
+    .mainPopupLogo {
+      max-width: 30rem;
+      margin: 0 auto 2rem;
+    }
 
     h2 {
       ${H3CharcoalGrey};
