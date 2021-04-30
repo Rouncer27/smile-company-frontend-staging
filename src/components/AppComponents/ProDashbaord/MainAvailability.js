@@ -29,7 +29,6 @@ const MainAvailability = () => {
   const userId = user.id
   const profileId = profile && profile.id
   const [formData, setFormData] = useState({
-    email: "",
     days_working: [],
     locations_working: [],
   })
@@ -52,13 +51,6 @@ const MainAvailability = () => {
     setNeedToSave(shouldSave)
   }, [formData])
 
-  const handleOnChange = event => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    })
-  }
-
   const handleOnSubmit = async event => {
     event.preventDefault()
     await putContactInformation(token, profileId, dispatch, formData)
@@ -66,7 +58,6 @@ const MainAvailability = () => {
 
   const updateFormFields = () => {
     setFormData({
-      email: state.profile.email ? state.profile.email : "",
       days_working: state.profile.days_working
         ? state.profile.days_working
         : [],
