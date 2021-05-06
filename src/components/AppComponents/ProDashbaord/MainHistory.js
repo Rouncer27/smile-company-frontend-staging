@@ -58,7 +58,7 @@ const MainHistory = () => {
 
       // Check the Day
       const bookDay = parseInt(booking.day.split("-")[2])
-      const dayHistory = day > bookDay
+      const dayHistory = day > bookDay + 1
       if (dayHistory) return true
 
       return false
