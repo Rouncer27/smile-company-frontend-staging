@@ -55,7 +55,7 @@ const MainApproved = () => {
               <div className="dashApproved">
                 {myApprovedBookings.map(item => {
                   console.log("HERE IS THE ITEM: ", item)
-                  if (item.is_expired) return null
+                  if (item.follow_up_email) return null
                   return <ApprovedItem key={item.id} item={item} />
                 })}
               </div>
