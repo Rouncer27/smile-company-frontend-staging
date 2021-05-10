@@ -50,53 +50,59 @@ const MainBookings = () => {
         </div>
         <div className="dashContent">
           <ul>
-            {validBookings.map(booking => {
-              const positionDisplay = getReadablePosition(booking.position)
+            {validBookings.length > 0 ? (
+              validBookings.map(booking => {
+                const positionDisplay = getReadablePosition(booking.position)
 
-              const year = booking.day.split("-")[0]
-              const monthName = getMothName(booking.day)
-              const dayNumber = booking.day.split("-")[2]
+                const year = booking.day.split("-")[0]
+                const monthName = getMothName(booking.day)
+                const dayNumber = booking.day.split("-")[2]
 
-              const dayOfTheWeek =
-                booking.booking_day_off_the_week.charAt(0).toUpperCase() +
-                booking.booking_day_off_the_week.slice(1)
+                const dayOfTheWeek =
+                  booking.booking_day_off_the_week.charAt(0).toUpperCase() +
+                  booking.booking_day_off_the_week.slice(1)
 
-              const {
-                hour: startHour,
-                minutes: startMinutes,
-                meridiem: startMeridiem,
-              } = timeFormat(booking.shift_start)
+                const {
+                  hour: startHour,
+                  minutes: startMinutes,
+                  meridiem: startMeridiem,
+                } = timeFormat(booking.shift_start)
 
-              const {
-                hour: endHour,
-                minutes: endMinutes,
-                meridiem: endMeridiem,
-              } = timeFormat(booking.shift_end)
+                const {
+                  hour: endHour,
+                  minutes: endMinutes,
+                  meridiem: endMeridiem,
+                } = timeFormat(booking.shift_end)
 
-              const statusInfo = getBookingStatus(booking)
-              const status = statusInfo.bookingStatusTitle
+                const statusInfo = getBookingStatus(booking)
+                const status = statusInfo.bookingStatusTitle
 
-              return (
-                <li key={booking.id}>
-                  <Link to={`/app/clinic-dashboard/bookings/${booking.id}`}>
-                    <span
-                      className={`bookingStatus bookingStatus__${status.toLowerCase()}`}
-                    >
-                      {status}
-                    </span>
-                    <span>
-                      {dayOfTheWeek}, {monthName} {`${dayNumber}`}, {year}
-                    </span>{" "}
-                    &#124;{" "}
-                    <span>
-                      Shift: {`${startHour}:${startMinutes} ${startMeridiem}`}{" "}
-                      to {`${endHour}:${endMinutes} ${endMeridiem}`}
-                    </span>
-                    &#124; <span>{positionDisplay}</span>
-                  </Link>
-                </li>
-              )
-            })}
+                return (
+                  <li key={booking.id}>
+                    <Link to={`/app/clinic-dashboard/bookings/${booking.id}`}>
+                      <span
+                        className={`bookingStatus bookingStatus__${status.toLowerCase()}`}
+                      >
+                        {status}
+                      </span>
+                      <span>
+                        {dayOfTheWeek}, {monthName} {`${dayNumber}`}, {year}
+                      </span>{" "}
+                      &#124;{" "}
+                      <span>
+                        Shift: {`${startHour}:${startMinutes} ${startMeridiem}`}{" "}
+                        to {`${endHour}:${endMinutes} ${endMeridiem}`}
+                      </span>
+                      &#124; <span>{positionDisplay}</span>
+                    </Link>
+                  </li>
+                )
+              })
+            ) : (
+              <li>
+                <span>You have no upcoming bookings to review</span>
+              </li>
+            )}
           </ul>
         </div>
       </div>
