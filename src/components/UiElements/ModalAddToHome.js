@@ -27,12 +27,12 @@ const ModalAddToHome = () => {
           <div className="mainPopupLogo">
             <MainLogo />
           </div>
-          <h2>Install Smile and Company PWA App</h2>
+          <h2>Smile and Company PWA App</h2>
 
           <div className="container__content">
             <p>
-              Install this application on your home screen for quick and easy
-              access when you're on the go.
+              Install this Progressive Web Application to your home screen for
+              quick and easy access when you’re on the go.
             </p>
             <p>
               Just tap{" "}
