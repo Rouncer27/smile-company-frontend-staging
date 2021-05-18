@@ -118,8 +118,8 @@ const MainCreateBooking = () => {
           <h2>Create a Booking Request</h2>
           <p className="dashTitle__subcontent">
             Please fill in the booking details you are looking for so that we
-            can match you with the right personnel. Repeat this process every
-            time you need additional help.
+            can match you with the right personnel. Repeat this step for each
+            day that you require a booking.
           </p>
           <p className="dashTitle__disclaimer">
             If your booking can't be filled we will not charge you for this

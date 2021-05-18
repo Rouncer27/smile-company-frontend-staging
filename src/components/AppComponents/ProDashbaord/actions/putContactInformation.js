@@ -19,7 +19,7 @@ export default async (token, profileId, dispatch, formData) => {
       type: "USER_UPDATE_PROFILE",
       payload: {
         profile: response,
-        message: `Congratulations! You have successfully updated your profile's contact information.`,
+        message: `Congratulations! You have successfully updated your profile.`,
       },
     })
     return navigate("/app/professional-dashboard", { replace: true })

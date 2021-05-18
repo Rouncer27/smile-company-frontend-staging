@@ -117,7 +117,7 @@ const MainHome = () => {
             <div className="dashWarn">
               <p>
                 Finish the setup of your profile by filling out your
-                Availability information
+                availability information
               </p>
               <Link to="/app/professional-dashboard/availability">
                 Fill Out Availability

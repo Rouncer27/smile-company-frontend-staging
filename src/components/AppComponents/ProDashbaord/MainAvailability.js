@@ -151,7 +151,7 @@ const MainAvailability = () => {
               <fieldset>
                 <CheckBoxInput
                   name="days_working"
-                  label="I want to be notified of Temp job postings that fall on these days of the week"
+                  label="I want to be notified of temporary job postings that fall on these days of the week"
                   options={[
                     {
                       id: "monday",
