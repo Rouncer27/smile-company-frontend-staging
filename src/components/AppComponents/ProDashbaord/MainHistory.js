@@ -24,12 +24,16 @@ const MainHistory = () => {
   const [pastBookings, setPastBookings] = useState([])
 
   const handleGetProfileOnMount = async () => {
-    const freshToken = await getUserProfile(
+    const profileResonse = await getUserProfile(
       token,
       userId,
       state.user.confirmed,
       dispatch
     )
+    const freshToken = profileResonse.token
+    const userApproved = profileResonse.userApproved
+    if (!userApproved) return
+
     await getBookings(freshToken, userId, state.user.confirmed, dispatch)
     getPastBooking()
   }

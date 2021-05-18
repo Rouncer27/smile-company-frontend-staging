@@ -44,6 +44,9 @@ const SideBar = () => {
       ? state.profile.contact_satisfied
       : false
 
+  const underReview =
+    state.profile.profile_satisfied && !state.profile.user_approved
+
   return (
     <>
       <AppSidebarStyled open={isOpen}>
@@ -119,7 +122,7 @@ const SideBar = () => {
               )}
             </li>
             <li>
-              {userConfirmed && profileSatisfied ? (
+              {userConfirmed && profileSatisfied && !underReview ? (
                 <Link to="/app/professional-dashboard/booking-requests">
                   <span className="icon">
                     <Checked />
@@ -136,7 +139,7 @@ const SideBar = () => {
               )}
             </li>
             <li>
-              {userConfirmed && profileSatisfied ? (
+              {userConfirmed && profileSatisfied && !underReview ? (
                 <Link to="/app/professional-dashboard/booking-approved">
                   <span className="icon">
                     <Calendar />
@@ -153,7 +156,7 @@ const SideBar = () => {
               )}
             </li>
             <li>
-              {userConfirmed && profileSatisfied ? (
+              {userConfirmed && profileSatisfied && !underReview ? (
                 <Link to="/app/professional-dashboard/bookings-history">
                   <span className="icon">
                     <List />

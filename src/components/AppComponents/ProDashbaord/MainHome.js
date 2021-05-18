@@ -11,6 +11,7 @@ import getConfirmedEmail from "./actions/getConfirmedEmail"
 import mainSection from "./style/mainSection"
 import dashWrap from "./style/dashWrap"
 import dashTitle from "./style/dashTitle"
+import dashAlert from "./style/dashAlert"
 import {
   B1CharcoalGrey,
   Btn1DarkPurple,
@@ -42,6 +43,9 @@ const MainHome = () => {
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
+  const underReview =
+    state.profile.profile_satisfied && !state.profile.user_approved
+
   return (
     <MainHomeStyled>
       <div className="dashWrap">
@@ -53,6 +57,12 @@ const MainHome = () => {
           )}
           <h2>Welcome to my Dashboard</h2>
         </div>
+        {underReview && (
+          <div className="dashAlert">
+            <span className="alertIndicator">Alert</span>
+            <p>Your Account is currently under review.</p>
+          </div>
+        )}
         {!confirmed && (
           <div className="pleaseConfirm">
             <p>
@@ -252,6 +262,10 @@ const MainHomeStyled = styled.div`
 
   .dashWrap {
     ${dashWrap};
+  }
+
+  .dashAlert {
+    ${dashAlert};
   }
 
   .dashTitle {

@@ -4,6 +4,7 @@ import styled from "styled-components"
 // Context
 import { UserContext } from "../../../context/UserContext"
 // Actions
+// TODO:  FIX
 import getUserProfile from "./actions/getUserProfile"
 import getBookings from "./actions/getBookings"
 // Common styles
@@ -21,12 +22,17 @@ const MainApproved = () => {
   const userId = user.id
 
   const handleGetProfileOnMount = async () => {
-    const freshToken = await getUserProfile(
+    const profileResonse = await getUserProfile(
       token,
       userId,
       state.user.confirmed,
       dispatch
     )
+
+    const freshToken = profileResonse.token
+    const userApproved = profileResonse.userApproved
+    if (!userApproved) return
+
     await getBookings(freshToken, userId, state.user.confirmed, dispatch)
   }
 
