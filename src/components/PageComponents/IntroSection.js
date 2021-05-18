@@ -41,7 +41,7 @@ const IntroSectionStyled = styled.section`
     ${standardWrapper};
 
     @media (min-width: 768px) {
-      max-width: 70rem;
+      max-width: 75rem;
     }
   }
 

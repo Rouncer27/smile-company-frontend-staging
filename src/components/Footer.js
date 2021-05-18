@@ -128,8 +128,10 @@ const Footer = () => {
 }
 
 const FooterStyled = styled.footer`
+  position: relative;
   width: 100%;
   background-color: ${colors.colorAlt};
+  z-index: 5;
 
   .footCredWrap {
     ${standardWrapper};
