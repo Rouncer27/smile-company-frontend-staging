@@ -33,6 +33,7 @@ const Layout = props => {
       // return response.data
     } catch (err) {
       console.log(err)
+      dispatch({ type: "USER_LOGOUT" })
     }
   }
 

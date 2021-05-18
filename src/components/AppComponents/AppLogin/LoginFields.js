@@ -78,7 +78,7 @@ const LoginFields = () => {
           type: "USER_ERROR",
           payload: {
             message:
-              "No user found. You need to setup an account before logging in to the app. Pick either Denatl Professionals or Denatal Clinic account. Thank you.",
+              "No user found. You need to setup an account before logging in to the app. Pick either Dental Professionals or Dental Clinic account. Thank you.",
           },
         })
       } else {
