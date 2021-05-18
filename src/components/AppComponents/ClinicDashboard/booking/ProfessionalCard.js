@@ -13,6 +13,7 @@ import {
 import putAcceptCandidate from "../actions/putAcceptCandidate"
 import getProfile from "../actions/getProfile"
 import { UserContext } from "../../../../context/UserContext"
+import positionDisplay from "../helper/getReadablePosition"
 
 const ProfessionalCard = ({ pro, bookingId, accepted }) => {
   const [state, dispatch] = useContext(UserContext)
@@ -44,7 +45,7 @@ const ProfessionalCard = ({ pro, bookingId, accepted }) => {
           <h3 id="title">
             <span>{pro.first_name}</span> <span>{pro.last_name}</span>
           </h3>
-          <p>Position: {pro.position}</p>
+          <p>Position: {positionDisplay(pro.position)}</p>
           <p>Wage expectations: {pro.wage}</p>
         </div>
         <div className="cardExperience">
