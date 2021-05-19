@@ -36,9 +36,10 @@ const MainCreateBooking = () => {
     day: tomorrow,
     shift_start: "",
     shift_end: "",
-    location: "",
-    address: "",
     position: "",
+    location: "",
+    bookingClinic: "",
+    address: "",
     notifyAgree: false,
     hiringFees: false,
     shortNotice: false,
@@ -102,6 +103,7 @@ const MainCreateBooking = () => {
     formData.shift_start !== "" &&
     formData.shift_end !== "" &&
     formData.address !== "" &&
+    formData.bookingClinic !== "" &&
     formData.location !== "" &&
     formData.position !== "" &&
     !timesDontMakeSense
@@ -212,10 +214,22 @@ const MainCreateBooking = () => {
               />
 
               <Input
-                label="Clinic Name / street address / parking information"
+                label="Booking Clinic Name"
+                name="bookingClinic"
+                type="text"
+                placeholder="Clinic Name"
+                value={formData.bookingClinic}
+                onChange={handleOnChange}
+                fieldvalid={true}
+                required={true}
+                size="full"
+              />
+
+              <Input
+                label="street address / parking information"
                 name="address"
                 type="text"
-                placeholder="Clinic Name / street address / parking information"
+                placeholder="street address / parking information"
                 value={formData.address}
                 onChange={handleOnChange}
                 fieldvalid={true}

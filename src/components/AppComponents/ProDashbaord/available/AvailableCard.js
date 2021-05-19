@@ -86,7 +86,7 @@ const AvailableCard = ({ booking }) => {
     <AvailableCardStyled key={booking.id}>
       <div className="detailsTitle">
         <p>
-          Clinic Name: <span>{booking.clinic_name}</span>
+          Clinic Name: <span>{booking.bookingClinic}</span>
         </p>
         <p>
           Position: <span>{getReadablePosition(booking.position)}</span>
