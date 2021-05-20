@@ -51,12 +51,24 @@ const AvailableCard = ({ booking }) => {
 
   const handleApplyForBooking = async () => {
     await getBookingApply(token, dispatch, booking.id)
-    await getBookings(token, userId, state.user.confirmed, dispatch)
+    await getBookings(
+      token,
+      userId,
+      state.user.confirmed,
+      dispatch,
+      state.profile.user_approved
+    )
   }
 
   const handleIgnorePost = async () => {
     await putBookingIgnore(token, booking.id, dispatch)
-    await getBookings(token, userId, state.user.confirmed, dispatch)
+    await getBookings(
+      token,
+      userId,
+      state.user.confirmed,
+      dispatch,
+      state.profile.user_approved
+    )
   }
   const havApplied = booking.user_applied
   const isCancelled = booking.was_cancelled

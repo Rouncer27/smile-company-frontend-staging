@@ -33,7 +33,13 @@ const MainApproved = () => {
     const userApproved = profileResonse.userApproved
     if (!userApproved) return
 
-    await getBookings(freshToken, userId, state.user.confirmed, dispatch)
+    await getBookings(
+      freshToken,
+      userId,
+      state.user.confirmed,
+      dispatch,
+      userApproved
+    )
   }
 
   useEffect(() => {
@@ -60,7 +66,6 @@ const MainApproved = () => {
             {myApprovedBookings && myApprovedBookings.length > 0 ? (
               <div className="dashApproved">
                 {myApprovedBookings.map(item => {
-                  console.log("HERE IS THE ITEM: ", item)
                   if (item.follow_up_email) return null
                   return <ApprovedItem key={item.id} item={item} />
                 })}

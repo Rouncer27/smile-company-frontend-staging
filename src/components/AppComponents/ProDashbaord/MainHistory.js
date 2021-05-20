@@ -33,8 +33,13 @@ const MainHistory = () => {
     const freshToken = profileResonse.token
     const userApproved = profileResonse.userApproved
     if (!userApproved) return
-
-    await getBookings(freshToken, userId, state.user.confirmed, dispatch)
+    await getBookings(
+      freshToken,
+      userId,
+      state.user.confirmed,
+      dispatch,
+      userApproved
+    )
     getPastBooking()
   }
 
