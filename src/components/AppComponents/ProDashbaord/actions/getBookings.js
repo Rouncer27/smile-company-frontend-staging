@@ -2,7 +2,6 @@ import axios from "axios"
 import displayErrorMessage from "./displayErrorMessage"
 
 export default async (token, userId, confirmed, dispatch, approved) => {
-  console.log("HERE IS THE APPROVED: ", approved)
   if (!userId) return
   if (!confirmed) return
   if (!approved) return

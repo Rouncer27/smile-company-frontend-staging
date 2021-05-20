@@ -28,7 +28,6 @@ export default async (token, userId, confirmed, dispatch) => {
   if (!userId) return
   if (!confirmed) return
   dispatch({ type: "USER_LOADING" })
-  console.log("HEY TREVOR WE NEED TO GET THE PROFILE.....")
   try {
     const userApproved = await getProfileFromServer(token, userId, dispatch)
 
@@ -43,7 +42,7 @@ export default async (token, userId, confirmed, dispatch) => {
           dispatch
         )
 
-        return { liveToken, userApproved }
+        return { token: liveToken, userApproved }
       } catch (err) {
         displayErrorMessage(err, dispatch)
         magicLogoutUser(dispatch)
