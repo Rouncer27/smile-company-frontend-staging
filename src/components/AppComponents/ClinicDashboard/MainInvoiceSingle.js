@@ -16,6 +16,7 @@ import {
   H4DarkPurple,
   H2Lavender,
 } from "../../../styles/helpers"
+import getDate from "./helper/getDate"
 
 const MainInvoiceSingle = () => {
   const [currentInvoiceId, setCurrentInvoiceId] = useState("")
@@ -67,7 +68,7 @@ const MainInvoiceSingle = () => {
                 <p>{currentInvoice.clinic_name}</p>
                 <p>Invoice was emailed to: {user.email}</p>
                 <p>Invoice Number: {currentInvoice.id}</p>
-                <p>Date Purchased: {currentInvoice.payment_date}</p>
+                <p>Date Purchased: {getDate(currentInvoice.createdAt)}</p>
                 <p>Payment Method: {currentInvoice.payment_method}</p>
                 <p>Order Status: {currentInvoice.payment_status}</p>
                 {currentInvoice.order_month_subscription ? (

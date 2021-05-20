@@ -11,6 +11,7 @@ import mainSection from "./styles/mainSection"
 import dashWrap from "./styles/dashWrap"
 import dashTitle from "./styles/dashTitle"
 import { Nav1CharcoalGrey } from "../../../styles/helpers"
+import getDate from "./helper/getDate"
 
 const MainInvoices = () => {
   const [state, dispatch] = useContext(UserContext)
@@ -40,10 +41,11 @@ const MainInvoices = () => {
         <div className="dashContent">
           <ul>
             {invoices.map(invoice => {
+              const readableDate = getDate(invoice.createdAt)
               return (
                 <li key={invoice.id}>
                   <Link to={`/app/clinic-dashboard/invoices/${invoice.id}`}>
-                    <span>{invoice.payment_date}</span> &#124;{" "}
+                    <span>{readableDate}</span> &#124;{" "}
                     <span>{invoice.order_name}</span> &#124;{" "}
                     <span>{invoice.id}</span>
                   </Link>

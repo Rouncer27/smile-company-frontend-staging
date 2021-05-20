@@ -185,6 +185,7 @@ const MainBookingSingle = () => {
             <div className="bookingLocation">
               <h3>Booking Location</h3>
               <p>Location Reqested: {locationDisplay}</p>
+              <p>Location Clinic Name: {currentBooking.bookingClinic}</p>
               <p>Location Address: {currentBooking.address}</p>
             </div>
             {!isCancelled && !is_expired && (
