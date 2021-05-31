@@ -69,7 +69,7 @@ const MainDashboard = () => {
           <div className="setupProfile">
             <div>
               <p>
-                Before you can contiune, you are required to setup your clinics
+                Before you can continue, you are required to setup your clinics
                 profile.
               </p>
               <Link to="/app/clinic-dashboard/profile-settings">

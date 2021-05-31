@@ -197,7 +197,7 @@ const AvailableCard = ({ booking }) => {
               Posting Status -- <span>APPROVED</span>
             </p>
             <p>
-              Contragulations! You have been selected for this temp job. Please
+              Congratulations! You have been selected for this temp job. Please
               check Approved Bookings in your dashboard side navigation.
             </p>
           </div>

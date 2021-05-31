@@ -60,7 +60,10 @@ const MainHome = () => {
         {underReview && (
           <div className="dashAlert">
             <span className="alertIndicator">Alert</span>
-            <p>Your Account is currently under review.</p>
+            <p>
+              We are reviewing your application and will be in touch with you
+              shortly.
+            </p>
           </div>
         )}
         {!confirmed && (

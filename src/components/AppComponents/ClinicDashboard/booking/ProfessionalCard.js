@@ -54,7 +54,7 @@ const ProfessionalCard = ({ pro, bookingId, accepted }) => {
             Years of experience: <span>{yearsDisplay}</span>
           </p>
           <p>
-            Dental Sofeware experience: <span>{pro.dental_software}</span>
+            Dental software experience: <span>{pro.dental_software}</span>
           </p>
           <p>
             Additional Qualifications:{" "}
