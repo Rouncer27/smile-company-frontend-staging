@@ -15,14 +15,13 @@ const ModalPermanentHiring = ({
   const [, dispatch] = useContext(UserContext)
   const [product, setProduct] = useState(null)
 
-  const packageUrl =
-    formData.package === "permanent-placement"
-      ? "permanent-hiring"
-      : formData.package === "permanent-dentist"
-      ? "permanent-dentists"
-      : "/"
-
   const getProductDataFromServer = async () => {
+    const packageUrl =
+      formData.package === "permanent-placement"
+        ? "permanent-hiring"
+        : formData.package === "permanent-dentist"
+        ? "permanent-dentists"
+        : "/"
     dispatch({ type: "USER_LOADING" })
     try {
       const response = await axios.get(

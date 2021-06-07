@@ -41,9 +41,19 @@ const StripeCheckout = ({
     if (!error) {
       const { id } = paymentMethod
       const packageId = formData.package
+
+      const invoiceUrl =
+        packageId === "permanent-placement"
+          ? "invoice-permanent-hirings"
+          : packageId === "permanent-dentist"
+          ? "invoice-permanent-hirings-dentists"
+          : ""
+
+      console.log("THIS IS THE ID", packageId)
+
       try {
         const response = await axios.post(
-          `${process.env.GATSBY_API_URL}/invoice-permanent-hirings`,
+          `${process.env.GATSBY_API_URL}/${invoiceUrl}`,
           { id, packageId, formData }
         )
         const { status, err } = response.data
