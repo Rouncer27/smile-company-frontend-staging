@@ -8,9 +8,16 @@ import HeaderSubMenu from "./HeaderSubMenu"
 const HeaderNavItem = ({ item }) => {
   const slug = item.url
     .split("/")
-    .filter(item => item !== "")
+    .filter(
+      item =>
+        item !== "" &&
+        item !== "https:" &&
+        item !== "webdata.smile-and-company.com"
+    )
     .join("/")
   const [subActive, setSubActive] = useState(false)
+
+  console.log()
 
   const handleIsActiveOn = () => {
     setSubActive(true)

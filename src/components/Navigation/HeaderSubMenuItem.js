@@ -6,7 +6,12 @@ import { colors, Nav1White } from "../../styles/helpers"
 const HeaderSubMenuItem = ({ item }) => {
   const slug = item.url
     .split("/")
-    .filter(item => item !== "")
+    .filter(
+      item =>
+        item !== "" &&
+        item !== "https:" &&
+        item !== "webdata.smile-and-company.com"
+    )
     .join("/")
   return (
     <HeaderSubMenuItemStyled>

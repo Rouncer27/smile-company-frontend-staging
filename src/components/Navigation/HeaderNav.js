@@ -36,6 +36,7 @@ const HeaderNav = () => {
     item.subItems = itemWithSubs
     return item
   })
+
   const headerNavigation = navItems ? (
     navItemsWithSubs.length > 0 ? (
       <HeaderNavStyled>

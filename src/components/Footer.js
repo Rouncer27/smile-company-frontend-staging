@@ -80,7 +80,12 @@ const Footer = () => {
             {footerMenu.map(item => {
               const slug = item.url
                 .split("/")
-                .filter(item => item !== "")
+                .filter(
+                  item =>
+                    item !== "" &&
+                    item !== "https:" &&
+                    item !== "webdata.smile-and-company.com"
+                )
                 .join("/")
               return (
                 <li key={item.id}>

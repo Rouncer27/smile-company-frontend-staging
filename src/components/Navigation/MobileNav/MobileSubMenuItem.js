@@ -5,7 +5,12 @@ import styled from "styled-components"
 const MobileSubMenuItem = ({ item }) => {
   const slug = item.url
     .split("/")
-    .filter(item => item !== "")
+    .filter(
+      item =>
+        item !== "" &&
+        item !== "https:" &&
+        item !== "webdata.smile-and-company.com"
+    )
     .join("/")
   return (
     <MobileSubMenuItemStyled>
