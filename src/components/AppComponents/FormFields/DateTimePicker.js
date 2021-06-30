@@ -21,6 +21,7 @@ const DateTimePicker = ({
 }) => {
   var tomorrow = new Date()
   tomorrow.setDate(new Date().getDate() + 1)
+  var today = new Date()
 
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
@@ -50,7 +51,7 @@ const DateTimePicker = ({
             <Calendar
               onChange={event => setDay(event, "day")}
               value={day}
-              minDate={tomorrow}
+              minDate={today}
               required={true}
             />
           </div>

@@ -31,9 +31,10 @@ const MainCreateBooking = () => {
 
   var tomorrow = new Date()
   tomorrow.setDate(new Date().getDate() + 1)
+  var today = new Date()
 
   const [formData, setFormData] = useState({
-    day: tomorrow,
+    day: today,
     shift_start: "",
     shift_end: "",
     position: "",
