@@ -63,6 +63,29 @@ module.exports = {
         singleTypes: [],
       },
     },
+
+    `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: ["G-BM8YBCRB5Z"],
+      },
+    },
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: "https://smile-and-company.com/",
+        sitemap: "https://smile-and-company.com/sitemap.xml",
+        policy: [{ userAgent: "*", allow: "/" }],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://smile-and-company.com`,
+      },
+    },
+
     `gatsby-plugin-offline`,
   ],
 }
