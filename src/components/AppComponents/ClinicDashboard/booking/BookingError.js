@@ -16,7 +16,7 @@ const BookingError = () => {
         </p>
         <p>
           There has been an error with this booking. Please contact Smile and
-          Compnay for assitance.
+          Compnay for assistance.
         </p>
       </div>
     </BookingErrorStyled>

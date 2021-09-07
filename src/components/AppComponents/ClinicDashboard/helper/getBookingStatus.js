@@ -39,7 +39,7 @@ export default booking => {
       ? "open and waiting for replies from potential candidates or for you to choose one of the potential candidates."
       : !is_active && is_expired
       ? "closed and no candidates have been selected, this post has not been filled."
-      : "There has been an error. If required please contact Smile and Company for assitance."
+      : "There has been an error. If required please contact Smile and Company for assistance."
 
   const isActive =
     is_cancelled && is_cancelled_short
