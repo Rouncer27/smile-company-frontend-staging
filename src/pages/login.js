@@ -7,7 +7,7 @@ import Login from "../components/AppRoutes/Login"
 const login = () => {
   return (
     <Layout>
-      <SEO title="Smile and Copmany - Login to your dashboard." />
+      <SEO title="Smile and Company - Login to your dashboard." />
       <Login />
     </Layout>
   )

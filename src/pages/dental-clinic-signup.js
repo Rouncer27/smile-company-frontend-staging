@@ -8,7 +8,7 @@ import MainClinic from "../components/AppComponents/ClinicSignUp/MainClinic"
 const DentalClinicSignup = () => {
   return (
     <Layout>
-      <SEO title="Smile and Copmany" />
+      <SEO title="Smile and Company" />
       <MainClinic />
     </Layout>
   )
