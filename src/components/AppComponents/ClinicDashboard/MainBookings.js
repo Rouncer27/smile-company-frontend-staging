@@ -85,6 +85,7 @@ const MainBookings = () => {
                       >
                         {status}
                       </span>
+                      <span>{booking.bookingClinic}</span> &#124;
                       <span>
                         {dayOfTheWeek}, {monthName} {`${dayNumber}`}, {year}
                       </span>{" "}
