@@ -12,7 +12,7 @@ const JobPost = props => {
     <Layout>
       <SEO
         title={jobPost.title}
-        description={jobPost.jobPostingData.content}
+        description={jobPost.jobPostingData.dentalClinicName}
         location={props.location.pathname}
       />
       <JobPostContent data={jobPost} />
