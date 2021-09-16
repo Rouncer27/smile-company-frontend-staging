@@ -10,7 +10,11 @@ const JobPost = props => {
   const { jobPost } = props.data
   return (
     <Layout>
-      <SEO title="Page Template" />
+      <SEO
+        title={jobPost.title}
+        description={jobPost.jobPostingData.content}
+        location={props.location.pathname}
+      />
       <JobPostContent data={jobPost} />
     </Layout>
   )
