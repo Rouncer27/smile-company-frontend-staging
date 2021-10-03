@@ -1,9 +1,9 @@
 export default booking => {
-  const is_active = booking.booking_active
-  const is_selected = booking.candidate_selected
-  const is_expired = booking.is_expired
-  const is_cancelled = booking.was_cancelled
-  const is_cancelled_short = booking.was_cancelled_with_short_notice
+  const is_active = booking?.booking_active
+  const is_selected = booking?.candidate_selected
+  const is_expired = booking?.is_expired
+  const is_cancelled = booking?.was_cancelled
+  const is_cancelled_short = booking?.was_cancelled_with_short_notice
 
   const bookingStatusTitle =
     // Booking Was Cancelled with short notice.
