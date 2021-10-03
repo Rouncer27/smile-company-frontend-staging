@@ -33,15 +33,14 @@ const MainBookings = () => {
     setValidBookings(
       bookings
         .filter(book => {
-          console.log(
-            "HEY TREVOR RIGHT HERE IS THE BOOKING IS EXPIRED: ",
-            book.is_expired
-          )
+          console.log("HEY TREVOR RIGHT HERE IS THE BOOKING IS EXPIRED: ", book)
           return !book.is_expired
         })
         .sort((a, b) => new Date(a.day) - new Date(b.day))
     )
   }
+
+  console.log("HERE IS THE VALID BOOKINGS: ", validBookings)
 
   return (
     <MainBookingsStyled>
