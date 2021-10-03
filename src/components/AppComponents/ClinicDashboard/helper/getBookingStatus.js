@@ -1,4 +1,5 @@
 export default booking => {
+  console.log("HERE TREVOR booking: ", booking)
   const is_active = booking?.booking_active
   const is_selected = booking?.candidate_selected
   const is_expired = booking?.is_expired
@@ -23,10 +24,10 @@ export default booking => {
       ? "UNFULFILLED"
       : "ERROR"
 
-  const isShortNotice = booking.is_short_notice
-  const isCandidateSelected = booking.candidate_selected
-  const isCancelled = booking.was_cancelled
-  const isExpired = booking.is_expired
+  const isShortNotice = booking?.is_short_notice
+  const isCandidateSelected = booking?.candidate_selected
+  const isCancelled = booking?.was_cancelled
+  const isExpired = booking?.is_expired
 
   const bookingStatus =
     is_cancelled && is_cancelled_short

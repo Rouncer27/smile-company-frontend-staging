@@ -105,6 +105,7 @@ const MainBookingSingle = () => {
   let locationDisplay
 
   if (currentBooking !== null) {
+    console.log("HERE TREVOR currentBooking: ", currentBooking)
     const statusInfo = getBookingStatus(currentBooking)
     bookingStatusTitle = statusInfo.bookingStatusTitle
     is_short_notice = statusInfo.isShortNotice
