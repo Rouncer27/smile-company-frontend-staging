@@ -32,7 +32,13 @@ const MainBookings = () => {
   const getValidBookings = () => {
     setValidBookings(
       bookings
-        .filter(book => !book.is_expired)
+        .filter(book => {
+          console.log(
+            "HEY TREVOR RIGHT HERE IS THE BOOKING IS EXPIRED: ",
+            book.is_expired
+          )
+          return !book.is_expired
+        })
         .sort((a, b) => new Date(a.day) - new Date(b.day))
     )
   }
