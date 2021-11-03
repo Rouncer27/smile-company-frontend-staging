@@ -128,7 +128,9 @@ const MainCreateBooking = () => {
             If your booking can't be filled we will not charge you for this
             booking. Your booking credit will be refunded. 
             <br />
-            Cancellations with less than 24 hours are subjected to a $50 fee 
+            Cancellation of a confirmed booking are subject to a $25
+            administrative fee. Cancellations with less than 24 hours are
+            subject to a $300 fee
           </p>
         </div>
         {!hasCredits && (
@@ -255,7 +257,7 @@ const MainCreateBooking = () => {
                     {
                       id: "shortNotice",
                       label:
-                        "I understand that a $50 fee will be applied for short notice cancellations (less than 24 hours) for any reason.",
+                        "I understand that a $300 fee will be applied for short notice cancellations (less than 24 hours) for any reason.  Cancellation of any confirmed booking is subject to a $25 administrative fee.",
                     },
                   ]}
                   onChange={handleOnCheckBoxChange}
