@@ -22,9 +22,6 @@ const Layout = props => {
         `${process.env.GATSBY_API_URL}/users/me`,
         {
           withCredentials: true,
-          headers: {
-            "content-type": "application/x-www-form-urlencoded",
-          },
         }
       )
       dispatch({ type: "USER_LOGIN", payload: { user: response.data } })
