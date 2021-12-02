@@ -64,6 +64,7 @@ const LoginFields = () => {
       )
 
       const user = responseOne.data ? responseOne.data.user : {}
+      console.log("HERE TREVOR", responseOne)
 
       if (user.role.type === "dental_clinics") {
         const profile = user.clinic_profile
