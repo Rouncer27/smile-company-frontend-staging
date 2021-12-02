@@ -5,7 +5,7 @@ import { UserContext } from "../context/UserContext"
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
   const [state] = useContext(UserContext)
-  if (state.token === "") {
+  if (Object.keys(state.user).length === 0) {
     navigate(`/login`)
     return null
   }

@@ -24,7 +24,7 @@ const ResetFields = props => {
   })
 
   useEffect(() => {
-    const queryData = queryString.parse(props.location.search)
+    const queryData = queryString.parse(props.location)
     setCode(queryData.code)
   }, [])
 
@@ -38,18 +38,46 @@ const ResetFields = props => {
   const handleOnSubmit = async event => {
     event.preventDefault()
     dispatch({ type: "USER_LOADING" })
+
+    // * Validate Password length * //
+    if (
+      formData.password.trim().length <= 5 ||
+      formData.password.trim().length >= 31
+    ) {
+      return dispatch({
+        type: "USER_ERROR",
+        payload: {
+          message:
+            "Your must provide an password of 6 or more characters and no more than 30 characters.",
+        },
+      })
+    }
+
+    // * Validate Password match * //
+    if (formData.password.trim() !== formData.password2.trim()) {
+      return dispatch({
+        type: "USER_ERROR",
+        payload: {
+          message: "Your passwords do not match!",
+        },
+      })
+    }
+
     try {
       const response = await axios.post(
         `${process.env.GATSBY_API_URL}/auth/reset-password`,
         {
           code: code,
-          password: formData.password,
-          passwordConfirmation: formData.password2,
+          password: formData.password.trim(),
+          passwordConfirmation: formData.password2.trim(),
+        },
+        {
+          withCredentials: true,
         }
       )
 
-      const { user, token } = response.data
-      dispatch({ type: "USER_LOGIN", payload: { token, user } })
+      const { user } = response.data
+      dispatch({ type: "USER_LOGIN", payload: { user } })
 
       if (user.role.type === "dental_clinics") {
         navigate("/app/clinic-dashboard", { replace: true })
@@ -85,7 +113,7 @@ const ResetFields = props => {
                 value={formData.password}
                 onChange={handleOnChange}
                 fieldvalid={true}
-                required={false}
+                required={true}
                 size="full"
               />
               <Input
@@ -96,7 +124,7 @@ const ResetFields = props => {
                 value={formData.password2}
                 onChange={handleOnChange}
                 fieldvalid={true}
-                required={false}
+                required={true}
                 size="full"
               />
               <div className="submitButton">
@@ -105,7 +133,7 @@ const ResetFields = props => {
             </fieldset>
           </form>
           <div className="passForgot">
-            <Link to="/login">Login Page</Link>
+            <Link to="/login">Back To Login Page</Link>
           </div>
         </div>
         <div className="mainNav">

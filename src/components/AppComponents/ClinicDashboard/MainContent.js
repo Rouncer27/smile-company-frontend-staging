@@ -21,7 +21,7 @@ import {
 
 const MainDashboard = () => {
   const [state, dispatch] = useContext(UserContext)
-  const { token, user, profile } = state
+  const { user, profile } = state
   const { bookings } = profile
   const { confirmed, email } = user
   const userId = user.id
@@ -29,7 +29,7 @@ const MainDashboard = () => {
   const handleGetProfileOnMount = async () => {
     if (!userId) return
     if (!confirmed) return
-    await getProfile(token, userId, dispatch)
+    await getProfile(userId, dispatch)
   }
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const MainDashboard = () => {
   }, [])
 
   const handleConfirmedEmail = async () => {
-    await getConfirmEmail(token, dispatch)
+    await getConfirmEmail(dispatch)
   }
 
   return (

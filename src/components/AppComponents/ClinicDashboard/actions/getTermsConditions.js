@@ -1,15 +1,13 @@
 import axios from "axios"
 
-export default async (token, dispatch) => {
+export default async dispatch => {
   dispatch({ type: "USER_LOADING" })
 
   try {
     const response = await axios.get(
       `${process.env.GATSBY_API_URL}/terms-and-conditions`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        withCredentials: true,
       }
     )
     dispatch({ type: "USER_LOADING_COMPLETE" })

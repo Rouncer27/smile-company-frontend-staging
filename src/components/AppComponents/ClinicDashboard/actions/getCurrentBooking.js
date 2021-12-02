@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export default async (token, userId, dispatch, bookingId) => {
+export default async (userId, dispatch, bookingId) => {
   if (!userId) return
 
   dispatch({ type: "USER_LOADING" })
@@ -9,9 +9,7 @@ export default async (token, userId, dispatch, bookingId) => {
     const response = await axios.get(
       `${process.env.GATSBY_API_URL}/bookings/${bookingId}`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        withCredentials: true,
       }
     )
 

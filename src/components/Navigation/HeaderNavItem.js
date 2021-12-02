@@ -17,8 +17,6 @@ const HeaderNavItem = ({ item }) => {
     .join("/")
   const [subActive, setSubActive] = useState(false)
 
-  console.log()
-
   const handleIsActiveOn = () => {
     setSubActive(true)
   }

@@ -1,36 +1,41 @@
 import React, { useContext, useState, useEffect } from "react"
+import axios from "axios"
 import { Link, navigate } from "gatsby"
-import { Magic } from "magic-sdk"
 import styled from "styled-components"
 import { UserContext } from "../../context/UserContext"
 import { colors, Nav1White } from "../../styles/helpers"
 
 import DefaultUser from "../Icons/DefaultUser"
 
-let magic
 const HeaderAppNavItems = () => {
   const [state, dispatch] = useContext(UserContext)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    if (!isLoggedIn) return
-    magic = new Magic(process.env.GATSBY_MAGIC_PK)
-  }, [isLoggedIn])
-
-  useEffect(() => {
-    if (state.token !== "") return setIsLoggedIn(true)
+    if (state.user.id) return setIsLoggedIn(true)
     return setIsLoggedIn(false)
-  }, [state.token])
+  }, [state.user.id])
 
   const handleLogout = async () => {
     dispatch({ type: "USER_LOADING" })
-
     try {
-      await magic.user.logout()
+      await axios.post(
+        `${process.env.GATSBY_API_URL}/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+
+      dispatch({ type: "USER_LOGOUT" })
+      dispatch({
+        type: "USER_ALERT",
+        payload: { messgae: "You have been logged out of your account." },
+      })
     } catch (err) {
-      console.log(err)
+      console.dir(err)
     }
-    dispatch({ type: "USER_LOGOUT" })
+
     navigate("/login", { replace: true })
   }
 
@@ -38,9 +43,14 @@ const HeaderAppNavItems = () => {
     state &&
     state.user &&
     state.user.role &&
-    state.user.role.id === "6033ebea17271d7b03c3faf9"
+    state.user.role.id === process.env.GATSBY_PROFESSIONAL_ID
       ? "professional-dashboard"
-      : "clinic-dashboard"
+      : state &&
+        state.user &&
+        state.user.role &&
+        state.user.role.id === process.env.GATSBY_CLINIC_ID
+      ? "clinic-dashboard"
+      : "login"
 
   return (
     <>

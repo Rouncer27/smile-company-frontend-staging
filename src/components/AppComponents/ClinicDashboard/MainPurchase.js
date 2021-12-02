@@ -37,18 +37,19 @@ const MainPurchase = () => {
     smile_member_purchase_terms: "",
   })
   const [state, dispatch] = useContext(UserContext)
-  const { token, user } = state
+  const { user } = state
   const { confirmed } = user
   const userId = user.id
 
-  const getTheBookingPackages = async freshToken => {
-    await getBookingPackages(freshToken, dispatch, setBookingDetails)
+  const getTheBookingPackages = async () => {
+    await getBookingPackages(dispatch, setBookingDetails)
   }
 
   const handleGetProfileOnMount = async () => {
+    await getProfile(userId, dispatch)
+    console.log("hello")
     if (!userId) return
     if (!confirmed) return
-    const freshToken = await getProfile(token, userId, dispatch)
     // If this person is not confirmed yet, send them back to the main dashboard. //
     if (!state.user.confirmed)
       return navigate("/app/clinic-dashboard", { replace: true })
@@ -59,7 +60,7 @@ const MainPurchase = () => {
     if (state.profile.has_short_fee)
       navigate("/app/clinic-dashboard", { replace: true })
     // Get the booking details. //
-    getTheBookingPackages(freshToken)
+    getTheBookingPackages()
   }
 
   useEffect(() => {

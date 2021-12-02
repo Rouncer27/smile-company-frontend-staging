@@ -4,7 +4,7 @@ import { navigate } from "gatsby"
 
 import ForgotPass from "../AppComponents/AppLogin/ForgotPass"
 
-const ForgotPassword = () => {
+const Forgot = () => {
   const [state] = useContext(UserContext)
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const ForgotPassword = () => {
   return <ForgotPass />
 }
 
-export default ForgotPassword
+export default Forgot

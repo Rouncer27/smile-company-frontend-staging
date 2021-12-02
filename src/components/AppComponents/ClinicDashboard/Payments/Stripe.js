@@ -22,7 +22,7 @@ import displayErrorMessage from "../actions/displayErrorMessage"
 const isBrowser = () => typeof window !== "undefined"
 const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PK)
 
-const Checkout = ({ token, productType, profile }) => {
+const Checkout = ({ productType, profile }) => {
   const [state, dispatch] = useContext(UserContext)
   const stripe = useStripe()
   const elements = useElements()
@@ -46,7 +46,7 @@ const Checkout = ({ token, productType, profile }) => {
         // If everything worked with Stripe then we can send the request to the server. //
         if (!error) {
           const { id } = paymentMethod
-          postStripeMembership(token, id, profile, cart, user, dispatch)
+          postStripeMembership(id, profile, cart, user, dispatch)
         } else {
           dispatch({ type: "USER_ERROR", payload: { message: error.message } })
         }
@@ -58,7 +58,7 @@ const Checkout = ({ token, productType, profile }) => {
 
         if (!error) {
           const { id } = paymentMethod
-          postStripePayment(token, id, productType, cart, user, dispatch)
+          postStripePayment(id, productType, cart, user, dispatch)
         } else {
           dispatch({ type: "USER_ERROR", payload: { message: error.message } })
         }
@@ -140,13 +140,11 @@ const Stripe = ({ productType }) => {
     terms: "",
     active: false,
   })
-  const token = state.token
   const userId = state.user._id
   const profile = state.profile
 
   const getProductDataFromServer = async () => {
     await getProductData(
-      token,
       productType,
       dispatch,
       state.profile.number_of_short_fees,
@@ -166,7 +164,7 @@ const Stripe = ({ productType }) => {
 
   return (
     <Elements stripe={stripePromise}>
-      <Checkout token={token} productType={productType} profile={profile} />
+      <Checkout productType={productType} profile={profile} />
     </Elements>
   )
 }

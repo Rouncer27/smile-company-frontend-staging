@@ -17,7 +17,6 @@ import Input from "../FormFields/Input"
 
 const MainSettings = () => {
   const [state, dispatch] = useContext(UserContext)
-  const token = state.token
   const userId = state.user._id
   const profileId = state.profile && state.profile.id
 
@@ -66,15 +65,14 @@ const MainSettings = () => {
   }
 
   const handleGetProfileOnMount = async () => {
-    await getProfile(token, userId, dispatch)
+    await getProfile(userId, dispatch)
+    // If this person is not confirmed yet, send them back to the main dashboard. //
+    if (!state.user.confirmed)
+      return navigate("/app/clinic-dashboard", { replace: true })
     updateFormFields()
   }
 
   useEffect(() => {
-    // If this person is not confirmed yet, send them back to the main dashboard. //
-    if (!state.user.confirmed)
-      return navigate("/app/clinic-dashboard", { replace: true })
-
     handleGetProfileOnMount()
   }, [])
 
@@ -154,9 +152,7 @@ const MainSettings = () => {
           dentists_names: formData.dentistsNames,
         },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       )
       dispatch({

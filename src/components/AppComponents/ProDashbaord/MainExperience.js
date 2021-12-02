@@ -26,7 +26,7 @@ import {
 const MainExperience = () => {
   const [needToSave, setNeedToSave] = useState(false)
   const [state, dispatch] = useContext(UserContext)
-  const { token, user, profile } = state
+  const { user, profile } = state
   const userId = user.id
   const profileId = profile && profile.id
   const [formData, setFormData] = useState({
@@ -71,7 +71,7 @@ const MainExperience = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
-    await putExperience(token, profileId, dispatch, formData)
+    await putExperience(profileId, dispatch, formData)
   }
 
   const updateFormFields = () => {
@@ -101,14 +101,11 @@ const MainExperience = () => {
   }
 
   const handleGetProfileOnMount = async () => {
-    await getUserProfile(token, userId, state.user.confirmed, dispatch)
+    await getUserProfile(userId, state.user.confirmed, dispatch)
     updateFormFields()
   }
 
   useEffect(() => {
-    // If this person is not confirmed yet, send them back to the main dashboard. //
-    if (!state.user && !state.user.confirmed)
-      return navigate("/app/clinic-dashboard", { replace: true })
     handleGetProfileOnMount()
   }, [])
   return (

@@ -1,5 +1,6 @@
 import { Link } from "gatsby"
 import React, { useState, useContext } from "react"
+import { navigate } from "gatsby"
 import styled from "styled-components"
 import axios from "axios"
 import { UserContext } from "../../../context/UserContext"
@@ -36,6 +37,15 @@ const ForgotFields = () => {
   const handleOnSubmit = async event => {
     event.preventDefault()
     dispatch({ type: "USER_LOADING" })
+    // * Validate Email * //
+    if (formData.email === "") {
+      return dispatch({
+        type: "USER_ERROR",
+        payload: {
+          message: "Your must provide an email address.",
+        },
+      })
+    }
     try {
       const response = await axios.post(
         `${process.env.GATSBY_API_URL}/auth/forgot-password`,
@@ -45,9 +55,11 @@ const ForgotFields = () => {
       if (response.data.ok) {
         dispatch({ type: "USER_RESET" })
         resetFormData()
+        navigate("/login", { replace: true })
       }
     } catch (err) {
       console.log(err)
+      console.dir(err)
       const message =
         err.response.data &&
         err.response.data.message &&
@@ -63,6 +75,7 @@ const ForgotFields = () => {
       <div>
         <div className="mainTitle">
           <h2>Forgot Your Password</h2>
+          <p>Please enter your account email to recieve password reset.</p>
         </div>
         <div className="mainForm">
           <form onSubmit={event => handleOnSubmit(event)}>
@@ -75,7 +88,7 @@ const ForgotFields = () => {
                 value={formData.email}
                 onChange={handleOnChange}
                 fieldvalid={true}
-                required={false}
+                required={true}
                 size="full"
               />
               <div className="submitButton">
@@ -106,6 +119,10 @@ const ForgotFieldsStyled = styled.div`
   .mainTitle {
     h2 {
       ${H4Lavender};
+    }
+
+    p {
+      ${B2CharcoalGrey};
     }
   }
 

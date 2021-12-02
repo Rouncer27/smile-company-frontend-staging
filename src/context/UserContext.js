@@ -3,7 +3,6 @@ import React, { createContext, useReducer } from "react"
 export const UserContext = createContext()
 
 const initialState = {
-  token: "",
   user: {},
   profile: {},
   bookings: [],
@@ -25,10 +24,11 @@ const initialState = {
   errMessage: "",
   alert: false,
   alertMessage: "",
-  notUser: false,
+  mountCheck: false,
 }
 
 const reducer = (state, action) => {
+  console.log("ACTIONS: ", action.type)
   switch (action.type) {
     case "ADD_TO_CART":
       return {
@@ -67,9 +67,14 @@ const reducer = (state, action) => {
         },
       }
 
+    case "MOUNTED_USER_CHECKED":
+      return {
+        ...state,
+        mountCheck: true,
+      }
+
     case "USER_LOGOUT":
       return {
-        token: "",
         user: {},
         profile: {},
         bookings: [],
@@ -90,7 +95,7 @@ const reducer = (state, action) => {
         errMessage: "",
         alert: false,
         alertMessage: "",
-        notUser: true,
+        mountCheck: false,
       }
     case "USER_LOADING":
       return {
@@ -121,11 +126,9 @@ const reducer = (state, action) => {
     case "USER_LOGIN":
       return {
         ...state,
-        token: action.payload.token,
         user: action.payload.user,
         profile: action.payload.profile ? action.payload.profile : {},
         loading: false,
-        notUser: false,
       }
     case "USER_RESET":
       return {
@@ -150,14 +153,12 @@ const reducer = (state, action) => {
     case "USER_UPDATE":
       return {
         ...state,
-        token: action.payload.token,
         user: action.payload.user,
         loading: false,
       }
     case "USER_GET_PROFILE":
       return {
         ...state,
-        token: action.payload.token,
         profile: action.payload.profile ? action.payload.profile : {},
         loading: false,
       }

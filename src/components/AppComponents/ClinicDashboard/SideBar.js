@@ -1,7 +1,7 @@
 // NPM Packages
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
+import axios from "axios"
 import { Link, navigate } from "gatsby"
-import { Magic } from "magic-sdk"
 import styled from "styled-components"
 // Context
 import { UserContext } from "../../../context/UserContext"
@@ -16,7 +16,7 @@ import Cog from "../../Icons/AppIcons/Cog"
 import Dash from "../../Icons/AppIcons/Dash"
 import List from "../../Icons/AppIcons/List"
 import Man from "../../Icons/AppIcons/Man"
-let magic
+
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [state, dispatch] = useContext(UserContext)
@@ -46,19 +46,26 @@ const SideBar = () => {
 
   const handleLogout = async () => {
     dispatch({ type: "USER_LOADING" })
-
     try {
-      await magic.user.logout()
+      await axios.post(
+        `${process.env.GATSBY_API_URL}/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+
+      dispatch({ type: "USER_LOGOUT" })
+      dispatch({
+        type: "USER_ALERT",
+        payload: { messgae: "You have been logged out of your account." },
+      })
     } catch (err) {
-      console.log(err)
+      console.dir(err)
     }
-    dispatch({ type: "USER_LOGOUT" })
+
     navigate("/login", { replace: true })
   }
-
-  useEffect(() => {
-    magic = new Magic(process.env.GATSBY_MAGIC_PK)
-  }, [])
 
   return (
     <>

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export default async (token, userId, dispatch, bookingId, proId) => {
+export default async (userId, dispatch, bookingId, proId) => {
   if (!userId) return
 
   dispatch({ type: "USER_LOADING" })
@@ -13,9 +13,7 @@ export default async (token, userId, dispatch, bookingId, proId) => {
         proSelected: proId,
       },
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        withCredentials: true,
       }
     )
 

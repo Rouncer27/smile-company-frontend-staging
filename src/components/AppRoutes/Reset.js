@@ -4,7 +4,7 @@ import { navigate } from "gatsby"
 
 import ResetPass from "../AppComponents/AppLogin/ResetPass"
 
-const ResetPassword = ({ location }) => {
+const Reset = ({ location }) => {
   const [state] = useContext(UserContext)
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const ResetPassword = ({ location }) => {
   return <ResetPass location={location} />
 }
 
-export default ResetPassword
+export default Reset

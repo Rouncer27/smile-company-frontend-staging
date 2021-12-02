@@ -18,28 +18,20 @@ import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
 
 const MainApproved = () => {
   const [state, dispatch] = useContext(UserContext)
-  const { token, user, profile, bookings } = state
+  const { user, profile, bookings } = state
   const userId = user.id
 
   const handleGetProfileOnMount = async () => {
     const profileResonse = await getUserProfile(
-      token,
       userId,
       state.user.confirmed,
       dispatch
     )
 
-    const freshToken = profileResonse.token
     const userApproved = profileResonse.userApproved
     if (!userApproved) return
 
-    await getBookings(
-      freshToken,
-      userId,
-      state.user.confirmed,
-      dispatch,
-      userApproved
-    )
+    await getBookings(userId, state.user.confirmed, dispatch, userApproved)
   }
 
   useEffect(() => {

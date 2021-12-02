@@ -1,19 +1,28 @@
 import { Link } from "gatsby"
-import React, { useState, useContext, useEffect } from "react"
+import React, { useState, useContext } from "react"
 import styled from "styled-components"
 import axios from "axios"
-import { Magic } from "magic-sdk"
 import { UserContext } from "../../../context/UserContext"
 import { navigate } from "gatsby"
 import { B2CharcoalGrey, Btn1DarkPurple, colors } from "../../../styles/helpers"
 
 import Input from "../FormFields/Input"
 
-let magic
-
 const SignUpFields = () => {
   const [state, dispatch] = useContext(UserContext)
-  const [formData, setFormData] = useState({ email: "" })
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    password2: "",
+  })
+
+  const resetFormData = () => {
+    setFormData({
+      email: "",
+      password: "",
+      password2: "",
+    })
+  }
 
   const handleOnChange = event => {
     setFormData({
@@ -26,6 +35,7 @@ const SignUpFields = () => {
     event.preventDefault()
     dispatch({ type: "USER_LOADING" })
 
+    // * Validate Email * //
     if (formData.email === "") {
       return dispatch({
         type: "USER_ERROR",
@@ -35,23 +45,58 @@ const SignUpFields = () => {
       })
     }
 
-    try {
-      const token = await magic.auth.loginWithMagicLink({
-        email: formData.email,
+    // * Validate Password length * //
+    if (
+      formData.password.trim().length <= 5 ||
+      formData.password.trim().length >= 31
+    ) {
+      return dispatch({
+        type: "USER_ERROR",
+        payload: {
+          message:
+            "Your must provide an password of 6 or more characters and no more than 30 characters.",
+        },
       })
+    }
+
+    // * Validate Password match * //
+    if (formData.password.trim() !== formData.password2.trim()) {
+      return dispatch({
+        type: "USER_ERROR",
+        payload: {
+          message: "Your passwords do not match!",
+        },
+      })
+    }
+
+    try {
+      const response = await axios.post(
+        `${process.env.GATSBY_API_URL}/auth/local/register`,
+        {
+          email: formData.email,
+          username: formData.email,
+          password: formData.password.trim(),
+        },
+        {
+          withCredentials: true,
+        }
+      )
+
+      // TODO: Something went wrong here.
+      if (response.data.ok) {
+        resetFormData()
+      }
 
       const reponse = await axios.post(
         `${process.env.GATSBY_API_URL}/clinic-profiles`,
         { role: "clinic" },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         }
       )
 
       const { user } = reponse.data
-      dispatch({ type: "USER_LOGIN", payload: { token, user } })
+      dispatch({ type: "USER_LOGIN", payload: { user } })
       navigate("/app/clinic-dashboard", { replace: true })
     } catch (err) {
       console.dir(err)
@@ -69,10 +114,6 @@ const SignUpFields = () => {
     }
   }
 
-  useEffect(() => {
-    magic = new Magic(process.env.GATSBY_MAGIC_PK)
-  }, [])
-
   return (
     <SignUpFieldsStyled>
       <div className="mainForm">
@@ -86,7 +127,29 @@ const SignUpFields = () => {
               value={formData.email}
               onChange={handleOnChange}
               fieldvalid={true}
-              required={false}
+              required={true}
+              size="full"
+            />
+            <Input
+              label="password"
+              name="password"
+              type="password"
+              placeholder="password"
+              value={formData.password}
+              onChange={handleOnChange}
+              fieldvalid={true}
+              required={true}
+              size="full"
+            />
+            <Input
+              label="confirm password"
+              name="password2"
+              type="password"
+              placeholder="confirm password"
+              value={formData.password2}
+              onChange={handleOnChange}
+              fieldvalid={true}
+              required={true}
               size="full"
             />
             <div className="submitButton">

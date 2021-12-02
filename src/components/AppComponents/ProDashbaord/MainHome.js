@@ -26,12 +26,12 @@ import getReadableExperience from "./helper/getReadableExperience"
 
 const MainHome = () => {
   const [state, dispatch] = useContext(UserContext)
-  const { token, user } = state
+  const { user } = state
   const { confirmed, email } = user
   const userId = user.id
 
   const handleGetProfileOnMount = async () => {
-    await getUserProfile(token, userId, state.user.confirmed, dispatch)
+    await getUserProfile(userId, state.user.confirmed, dispatch)
   }
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const MainHome = () => {
               confirmed, setup your profile.
             </p>
 
-            <button onClick={() => getConfirmedEmail(token, dispatch)}>
+            <button onClick={() => getConfirmedEmail(dispatch)}>
               setup profile
             </button>
           </div>

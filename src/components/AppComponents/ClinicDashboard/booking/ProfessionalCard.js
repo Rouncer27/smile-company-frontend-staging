@@ -17,13 +17,13 @@ import positionDisplay from "../helper/getReadablePosition"
 
 const ProfessionalCard = ({ pro, bookingId, accepted }) => {
   const [state, dispatch] = useContext(UserContext)
-  const { token, user, profile, bookings } = state
+  const { user, profile, bookings } = state
   const userId = user.id
 
   const handleOnAccept = async () => {
     if (!accepted && bookingId !== null) {
-      await putAcceptCandidate(token, userId, dispatch, bookingId, pro.id)
-      await getProfile(token, userId, dispatch)
+      await putAcceptCandidate(userId, dispatch, bookingId, pro.id)
+      await getProfile(userId, dispatch)
     }
   }
 

@@ -1,18 +1,26 @@
-import { Magic } from "magic-sdk"
+import axios from "axios"
 import { navigate } from "gatsby"
-
-let magic
-if (typeof window !== "undefined") {
-  magic = new Magic(process.env.GATSBY_MAGIC_PK)
-}
+import displayErrorMessage from "./displayErrorMessage"
 
 export default async dispatch => {
   dispatch({ type: "USER_LOADING" })
+
   try {
-    await magic.user.logout()
+    await axios.post(
+      `${process.env.GATSBY_API_URL}/logout`,
+      {},
+      {
+        withCredentials: true,
+      }
+    )
+
+    dispatch({ type: "USER_LOGOUT" })
+    navigate("/login", { replace: true })
+    dispatch({
+      type: "USER_ALERT",
+      payload: { messgae: "You have been logged out of your account." },
+    })
   } catch (err) {
-    console.log(err)
+    displayErrorMessage(err, dispatch)
   }
-  dispatch({ type: "USER_LOGOUT" })
-  navigate("/login", { replace: true })
 }

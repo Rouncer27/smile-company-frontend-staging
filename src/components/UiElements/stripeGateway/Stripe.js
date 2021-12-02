@@ -49,8 +49,6 @@ const StripeCheckout = ({
           ? "invoice-permanent-hirings-dentists"
           : ""
 
-      console.log("THIS IS THE ID", packageId)
-
       try {
         const response = await axios.post(
           `${process.env.GATSBY_API_URL}/${invoiceUrl}`,

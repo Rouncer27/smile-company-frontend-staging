@@ -19,27 +19,19 @@ import getReadableLocation from "./helper/getReadableLocation"
 
 const MainHistory = () => {
   const [state, dispatch] = useContext(UserContext)
-  const { token, user, bookings } = state
+  const { user, bookings } = state
   const userId = user.id
   const [pastBookings, setPastBookings] = useState([])
 
   const handleGetProfileOnMount = async () => {
     const profileResonse = await getUserProfile(
-      token,
       userId,
       state.user.confirmed,
       dispatch
     )
-    const freshToken = profileResonse.token
     const userApproved = profileResonse.userApproved
     if (!userApproved) return
-    await getBookings(
-      freshToken,
-      userId,
-      state.user.confirmed,
-      dispatch,
-      userApproved
-    )
+    await getBookings(userId, state.user.confirmed, dispatch, userApproved)
     getPastBooking()
   }
 
