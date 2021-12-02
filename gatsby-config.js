@@ -93,6 +93,7 @@ module.exports = {
         mergeSecurityHeaders: false,
         headers: {
           "/*": [
+            "Access-Control-Allow-Origin: *",
             "cache-control: public,max-age=60",
             "X-Frame-Options: sameorigin",
             "X-XSS-Protection: 1; mode=block",
