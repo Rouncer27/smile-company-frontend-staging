@@ -27,11 +27,16 @@ const Layout = props => {
 
       dispatch({
         type: "USER_LOGIN",
-        payload: { token: response.data.token, user: response.data.user },
+        payload: {
+          token: response.data.token ? response.data.token : null,
+          user: response.data.user ? response.data.user : {},
+        },
       })
       dispatch({
         type: "USER_GET_PROFILE",
-        payload: { profile: response.data.profile },
+        payload: {
+          profile: response.data.profile ? response.data.profile : {},
+        },
       })
     } catch (err) {
       console.dir(err)
