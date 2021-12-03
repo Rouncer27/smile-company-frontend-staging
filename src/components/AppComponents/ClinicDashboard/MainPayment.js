@@ -38,6 +38,7 @@ const MainPayment = () => {
   const [state, dispatch] = useContext(UserContext)
   const cart = state.cart
   const userId = state.user.id
+  const token = state.token
 
   const setOneBooking = data => {
     dispatch({
@@ -132,7 +133,9 @@ const MainPayment = () => {
       const reponse = await axios.get(
         `${process.env.GATSBY_API_URL}/booking-packages`,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
       if (productType === "onebooking") return setOneBooking(reponse.data)
@@ -156,14 +159,14 @@ const MainPayment = () => {
   }
 
   const getTerms = async () => {
-    const termsDoc = await getTermsConditions(dispatch)
+    const termsDoc = await getTermsConditions(token, dispatch)
     const termsDocClean = marked(termsDoc)
     setTerms(termsDocClean)
   }
 
   // On page load get the user profile from server. //
   const getUpToDateProfile = async () => {
-    await getProfile(userId, dispatch)
+    await getProfile(token, userId, dispatch)
     getTerms()
   }
 

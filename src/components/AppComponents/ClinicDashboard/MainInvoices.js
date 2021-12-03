@@ -15,12 +15,12 @@ import getDate from "./helper/getDate"
 
 const MainInvoices = () => {
   const [state, dispatch] = useContext(UserContext)
-  const { user, profile } = state
+  const { user, profile, token } = state
   const { invoices = [] } = profile
   const userId = user.id
 
   const getUpToDateProfile = async () => {
-    await getProfile(userId, dispatch)
+    await getProfile(token, userId, dispatch)
   }
 
   useEffect(() => {

@@ -18,12 +18,13 @@ import getReadablePosition from "./helper/getReadablePosition"
 
 const MainBookings = () => {
   const [state, dispatch] = useContext(UserContext)
-  const { user, profile } = state
+  const { user, profile, token } = state
   const { bookings = [] } = profile
   const [validBookings, setValidBookings] = useState([])
   const userId = user.id
   // On page load get the user profile from server. //
-  const getUpToDateProfile = async () => await getProfile(userId, dispatch)
+  const getUpToDateProfile = async () =>
+    await getProfile(token, userId, dispatch)
   useEffect(() => {
     getUpToDateProfile()
     getValidBookings()

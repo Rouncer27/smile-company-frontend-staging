@@ -1,7 +1,7 @@
 import axios from "axios"
 import displayErrorMessage from "./displayErrorMessage"
 
-export default async (userId, confirmed, dispatch, approved) => {
+export default async (token, userId, confirmed, dispatch, approved) => {
   if (!userId) return
   if (!confirmed) return
   if (!approved) return
@@ -12,7 +12,9 @@ export default async (userId, confirmed, dispatch, approved) => {
     const response = await axios.get(
       `${process.env.GATSBY_API_URL}/bookings/professionals/${userId}`,
       {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
     dispatch({

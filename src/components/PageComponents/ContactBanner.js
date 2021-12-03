@@ -30,10 +30,6 @@ const ContactBanner = ({ data }) => {
   const phoneNumber =
     siteContent.siteWideData.siteWideSettings.acfSiteWideSettings
       .contactPhoneNumber
-  console.log(
-    siteContent.siteWideData.siteWideSettings.acfSiteWideSettings
-      .contactEmailAddress
-  )
 
   const socialMediaLinks =
     siteContent.siteWideData.siteWideSettings.acfSiteWideSettings

@@ -64,15 +64,15 @@ const LoginFields = () => {
       )
 
       const user = responseOne.data ? responseOne.data.user : {}
-      console.log("HERE TREVOR", responseOne)
+      const token = responseOne.data ? responseOne.data.token : {}
 
       if (user.role.type === "dental_clinics") {
         const profile = user.clinic_profile
-        dispatch({ type: "USER_LOGIN", payload: { user, profile } })
+        dispatch({ type: "USER_LOGIN", payload: { token, user, profile } })
         navigate("/app/clinic-dashboard", { replace: true })
       } else if (user.role.type === "dental_professionals") {
         const profile = user.professional_profile
-        dispatch({ type: "USER_LOGIN", payload: { user, profile } })
+        dispatch({ type: "USER_LOGIN", payload: { token, user, profile } })
         navigate("/app/professional-dashboard", { replace: true })
       } else if (user.role.type === "authenticated") {
         try {

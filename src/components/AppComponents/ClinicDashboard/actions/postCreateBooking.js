@@ -1,11 +1,13 @@
 import axios from "axios"
 import { navigate } from "gatsby"
 
-export default async (dispatch, formData) => {
+export default async (token, dispatch, formData) => {
   dispatch({ type: "USER_LOADING" })
   try {
     await axios.post(`${process.env.GATSBY_API_URL}/bookings`, formData, {
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
 
     dispatch({

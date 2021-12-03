@@ -26,7 +26,7 @@ const isBrowser = () => typeof window !== "undefined"
 const MainGeneral = () => {
   const [needToSave, setNeedToSave] = useState(false)
   const [state, dispatch] = useContext(UserContext)
-  const { user, profile } = state
+  const { user, profile, token } = state
   const userId = user._id
   const profileId = profile && profile.id
   const [formData, setFormData] = useState({
@@ -70,7 +70,7 @@ const MainGeneral = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
-    await putGeneralInfo(profileId, dispatch, formData)
+    await putGeneralInfo(token, profileId, dispatch, formData)
   }
 
   const updateFormFields = () => {
@@ -91,7 +91,7 @@ const MainGeneral = () => {
   }
 
   const handleGetProfileOnMount = async () => {
-    await getUserProfile(userId, state.user.confirmed, dispatch)
+    await getUserProfile(token, userId, state.user.confirmed, dispatch)
     updateFormFields()
   }
 

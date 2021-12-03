@@ -49,12 +49,20 @@ const setCancelFee = (numFees, setPaymentDetails) => {
   })
 }
 
-export default async (productType, dispatch, numFees, setPaymentDetails) => {
+export default async (
+  token,
+  productType,
+  dispatch,
+  numFees,
+  setPaymentDetails
+) => {
   try {
     const reponse = await axios.get(
       `${process.env.GATSBY_API_URL}/booking-packages`,
       {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
 

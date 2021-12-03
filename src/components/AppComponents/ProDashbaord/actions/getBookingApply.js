@@ -1,14 +1,16 @@
 import axios from "axios"
 import displayErrorMessage from "./displayErrorMessage"
 
-export default async (dispatch, id) => {
+export default async (token, dispatch, id) => {
   dispatch({ type: "USER_LOADING" })
   try {
     const response = await axios.put(
       `${process.env.GATSBY_API_URL}/bookings/professionals-apply/${id}`,
       {},
       {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
 

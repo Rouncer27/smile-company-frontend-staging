@@ -24,10 +24,14 @@ const Layout = props => {
           withCredentials: true,
         }
       )
-      dispatch({ type: "USER_LOGIN", payload: { user: response.data } })
+
+      dispatch({
+        type: "USER_LOGIN",
+        payload: { token: response.data.token, user: response.data.user },
+      })
       dispatch({
         type: "USER_GET_PROFILE",
-        payload: { profile: response.data.mountedProfile },
+        payload: { profile: response.data.profile },
       })
     } catch (err) {
       console.dir(err)
@@ -47,12 +51,13 @@ const Layout = props => {
   }
 
   useEffect(() => {
-    console.log("state.mountCheck", state.mountCheck)
     //* Only check once for user account. Then user needs to login to check again */
     if (state.mountCheck) return
     checkUserLoggedIn()
     dispatch({ type: "MOUNTED_USER_CHECKED" })
   }, [])
+
+  console.log("LOOK AT THE LOCAL STATE: ", state)
 
   return (
     <>

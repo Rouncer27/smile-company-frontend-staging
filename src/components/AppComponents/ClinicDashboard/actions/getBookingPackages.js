@@ -1,11 +1,13 @@
 import axios from "axios"
 
-export default async (dispatch, setBookingDetails) => {
+export default async (token, dispatch, setBookingDetails) => {
   try {
     const reponse = await axios.get(
       `${process.env.GATSBY_API_URL}/booking-packages`,
       {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
 

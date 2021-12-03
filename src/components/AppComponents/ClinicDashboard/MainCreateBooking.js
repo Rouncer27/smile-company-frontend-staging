@@ -26,7 +26,7 @@ import Input from "../FormFields/Input"
 const MainCreateBooking = () => {
   const [state, dispatch] = useContext(UserContext)
   const [hasCredits, setHasCredits] = useState(false)
-  const { user, profile } = state
+  const { user, profile, token } = state
   const userId = user.id
 
   var tomorrow = new Date()
@@ -69,12 +69,12 @@ const MainCreateBooking = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
-    await postCreateBooking(dispatch, formData)
+    await postCreateBooking(token, dispatch, formData)
   }
 
   const handleGetProfileOnMount = async () => {
     if (!userId) return
-    await getProfile(userId, dispatch)
+    await getProfile(token, userId, dispatch)
     // If this person is not confirmed yet, send them back to the main dashboard. //
     if (!state.user.confirmed)
       return navigate("/app/clinic-dashboard", { replace: true })

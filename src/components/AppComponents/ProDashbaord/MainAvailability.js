@@ -25,7 +25,7 @@ import CheckBoxInput from "../FormFields/CheckBoxInput"
 const MainAvailability = () => {
   const [needToSave, setNeedToSave] = useState(false)
   const [state, dispatch] = useContext(UserContext)
-  const { user, profile } = state
+  const { user, profile, token } = state
   const userId = user.id
   const profileId = profile && profile.id
   const [formData, setFormData] = useState({
@@ -53,7 +53,7 @@ const MainAvailability = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
-    await putContactInformation(profileId, dispatch, formData)
+    await putContactInformation(token, profileId, dispatch, formData)
   }
 
   const updateFormFields = () => {
@@ -68,7 +68,7 @@ const MainAvailability = () => {
   }
 
   const handleGetProfileOnMount = async () => {
-    await getUserProfile(userId, state.user.confirmed, dispatch)
+    await getUserProfile(token, userId, state.user.confirmed, dispatch)
     updateFormFields()
   }
 

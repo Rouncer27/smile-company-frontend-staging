@@ -3,23 +3,25 @@ import displayErrorMessage from "./displayErrorMessage"
 
 import { navigate } from "gatsby"
 
-const getProfileFromServer = async (userId, dispatch) => {
+const getProfileFromServer = async (token, userId, dispatch) => {
   const response = await axios.get(
     `${process.env.GATSBY_API_URL}/professional-profiles/my-profile/${userId}`,
     {
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   )
 
   dispatch({
     type: "USER_GET_PROFILE",
-    payload: { profile: response.data },
+    payload: { token, profile: response.data },
   })
 
   return response.data.user_approved
 }
 
-export default async (userId, confirmed, dispatch) => {
+export default async (token, userId, confirmed, dispatch) => {
   if (!userId) {
     navigate("/login", { replace: true })
     return
@@ -30,8 +32,8 @@ export default async (userId, confirmed, dispatch) => {
   }
   dispatch({ type: "USER_LOADING" })
   try {
-    const userApproved = await getProfileFromServer(userId, dispatch)
-    return { userApproved }
+    const userApproved = await getProfileFromServer(token, userId, dispatch)
+    return { token, userApproved }
   } catch (err) {
     displayErrorMessage(err, dispatch)
     dispatch({ type: "USER_LOGOUT" })

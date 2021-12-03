@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export default async (dispatch, profile, currentBooking) => {
+export default async (token, dispatch, profile, currentBooking) => {
   dispatch({ type: "USER_LOADING" })
 
   try {
@@ -8,7 +8,9 @@ export default async (dispatch, profile, currentBooking) => {
       `${process.env.GATSBY_API_URL}/bookings/cancel/${currentBooking.id}`,
       { id: profile.id },
       {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
 

@@ -87,16 +87,23 @@ const SignUpFields = () => {
         resetFormData()
       }
 
+      const token = response.data.token
+
       const reponse = await axios.post(
         `${process.env.GATSBY_API_URL}/clinic-profiles`,
         { role: "clinic" },
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
 
       const { user } = reponse.data
-      dispatch({ type: "USER_LOGIN", payload: { user } })
+      dispatch({
+        type: "USER_LOGIN",
+        payload: { token, user },
+      })
       navigate("/app/clinic-dashboard", { replace: true })
     } catch (err) {
       console.dir(err)

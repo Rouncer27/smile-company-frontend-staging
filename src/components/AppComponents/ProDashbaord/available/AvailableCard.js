@@ -21,7 +21,7 @@ import getReadableLocation from "../helper/getReadableLocation"
 
 const AvailableCard = ({ booking }) => {
   const [state, dispatch] = useContext(UserContext)
-  const { user, profile } = state
+  const { user, profile, token } = state
   const userId = user.id
 
   const [currentBookingTime, setCurrentBookingTime] = useState({
@@ -50,8 +50,9 @@ const AvailableCard = ({ booking }) => {
   }, [])
 
   const handleApplyForBooking = async () => {
-    await getBookingApply(dispatch, booking.id)
+    await getBookingApply(token, dispatch, booking.id)
     await getBookings(
+      token,
       userId,
       state.user.confirmed,
       dispatch,
@@ -60,8 +61,9 @@ const AvailableCard = ({ booking }) => {
   }
 
   const handleIgnorePost = async () => {
-    await putBookingIgnore(booking.id, dispatch)
+    await putBookingIgnore(token, booking.id, dispatch)
     await getBookings(
+      token,
       userId,
       state.user.confirmed,
       dispatch,

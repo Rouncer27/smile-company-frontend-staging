@@ -2,24 +2,27 @@ import axios from "axios"
 import displayErrorMessage from "./displayErrorMessage"
 import { navigate } from "gatsby"
 
-const getProfileFromServer = async (userId, dispatch) => {
+const getProfileFromServer = async (token, userId, dispatch) => {
   const response = await axios.get(
     `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
     {
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   )
 
   dispatch({
     type: "USER_GET_PROFILE",
-    payload: { profile: response.data },
+    payload: { token, profile: response.data },
   })
 }
 
-export default async (userId, dispatch) => {
+export default async (token, userId, dispatch) => {
   dispatch({ type: "USER_LOADING" })
   try {
-    await getProfileFromServer(userId, dispatch)
+    await getProfileFromServer(token, userId, dispatch)
+    return token
   } catch (err) {
     console.log(err)
     displayErrorMessage(err, dispatch)

@@ -3,6 +3,7 @@ import React, { createContext, useReducer } from "react"
 export const UserContext = createContext()
 
 const initialState = {
+  token: null,
   user: {},
   profile: {},
   bookings: [],
@@ -28,7 +29,6 @@ const initialState = {
 }
 
 const reducer = (state, action) => {
-  console.log("ACTIONS: ", action.type)
   switch (action.type) {
     case "ADD_TO_CART":
       return {
@@ -75,6 +75,7 @@ const reducer = (state, action) => {
 
     case "USER_LOGOUT":
       return {
+        token: null,
         user: {},
         profile: {},
         bookings: [],
@@ -126,6 +127,7 @@ const reducer = (state, action) => {
     case "USER_LOGIN":
       return {
         ...state,
+        token: action.payload.token,
         user: action.payload.user,
         profile: action.payload.profile ? action.payload.profile : {},
         loading: false,

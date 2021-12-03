@@ -18,11 +18,12 @@ import LoadingSkeleton from "./UiComponents/LoadingSkeleton"
 const MainAvailable = () => {
   const [state, dispatch] = useContext(UserContext)
   const [bookingsNotIgnored, setBookingNotIgnored] = useState([])
-  const { user, bookings } = state
+  const { user, bookings, token } = state
   const userId = user.id
 
   const handleGetProfileOnMount = async () => {
     const profileResonse = await getUserProfile(
+      token,
       userId,
       state.user.confirmed,
       dispatch
@@ -30,6 +31,7 @@ const MainAvailable = () => {
     const userApproved = profileResonse.userApproved
     if (!userApproved) return
     await getBookings(
+      token,
       userId,
       state.user.confirmed,
       dispatch,

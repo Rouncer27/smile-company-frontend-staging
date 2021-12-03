@@ -22,7 +22,7 @@ const MainInvoiceSingle = () => {
   const [currentInvoiceId, setCurrentInvoiceId] = useState("")
   const [currentInvoice, setCurrentInvoice] = useState(null)
   const [state, dispatch] = useContext(UserContext)
-  const { user, profile } = state
+  const { user, profile, token } = state
   const userId = user.id
 
   const getInvoiceId = () => {
@@ -40,7 +40,7 @@ const MainInvoiceSingle = () => {
 
   const handleGetProfileOnMount = async () => {
     if (!userId) return
-    await getProfile(userId, dispatch)
+    await getProfile(token, userId, dispatch)
     getInvoiceId()
   }
 

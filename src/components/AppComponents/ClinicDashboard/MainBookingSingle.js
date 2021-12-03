@@ -47,11 +47,12 @@ const MainBookingSingle = () => {
     shiftEndMeridiem: "",
   })
   const [state, dispatch] = useContext(UserContext)
-  const { user, profile } = state
+  const { user, profile, token } = state
   const userId = user.id
 
   const getBookingFromServer = async () => {
     const currentBooking = await getCurrentBooking(
+      token,
       userId,
       dispatch,
       currentBookingId
@@ -65,7 +66,7 @@ const MainBookingSingle = () => {
 
   // On page load get the user profile from server. //
   const getUpToDateProfile = async () => {
-    await getProfile(userId, dispatch)
+    await getProfile(token, userId, dispatch)
   }
 
   useEffect(() => {
@@ -121,7 +122,7 @@ const MainBookingSingle = () => {
   }
 
   const handleCancelBooking = async () => {
-    await putCancelBooking(dispatch, profile, currentBooking)
+    await putCancelBooking(token, dispatch, profile, currentBooking)
     await getBookingFromServer()
     await getProfile(userId, dispatch)
   }

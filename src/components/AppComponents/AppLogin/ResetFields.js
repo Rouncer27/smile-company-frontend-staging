@@ -70,14 +70,11 @@ const ResetFields = props => {
           code: code,
           password: formData.password.trim(),
           passwordConfirmation: formData.password2.trim(),
-        },
-        {
-          withCredentials: true,
         }
       )
 
-      const { user } = response.data
-      dispatch({ type: "USER_LOGIN", payload: { user } })
+      const { user, token } = response.data
+      dispatch({ type: "USER_LOGIN", payload: { token: token, user } })
 
       if (user.role.type === "dental_clinics") {
         navigate("/app/clinic-dashboard", { replace: true })

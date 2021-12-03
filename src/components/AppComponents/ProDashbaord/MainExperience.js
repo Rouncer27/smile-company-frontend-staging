@@ -26,7 +26,7 @@ import {
 const MainExperience = () => {
   const [needToSave, setNeedToSave] = useState(false)
   const [state, dispatch] = useContext(UserContext)
-  const { user, profile } = state
+  const { user, profile, token } = state
   const userId = user.id
   const profileId = profile && profile.id
   const [formData, setFormData] = useState({
@@ -71,7 +71,7 @@ const MainExperience = () => {
 
   const handleOnSubmit = async event => {
     event.preventDefault()
-    await putExperience(profileId, dispatch, formData)
+    await putExperience(token, profileId, dispatch, formData)
   }
 
   const updateFormFields = () => {
@@ -101,7 +101,7 @@ const MainExperience = () => {
   }
 
   const handleGetProfileOnMount = async () => {
-    await getUserProfile(userId, state.user.confirmed, dispatch)
+    await getUserProfile(token, userId, state.user.confirmed, dispatch)
     updateFormFields()
   }
 

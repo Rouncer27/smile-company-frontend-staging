@@ -16,6 +16,7 @@ const PayPal = ({ productType }) => {
     terms: "",
     active: false,
   })
+  const token = state.token
   const userId = state.user._id
   const paypalRef = useRef(null)
 
@@ -73,7 +74,9 @@ const PayPal = ({ productType }) => {
       const reponse = await axios.get(
         `${process.env.GATSBY_API_URL}/booking-packages`,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
 
@@ -195,7 +198,9 @@ const PayPal = ({ productType }) => {
         `${process.env.GATSBY_API_URL}/invoices/paypal`,
         { order, productType },
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
       dispatch({ type: "USER_LOADING_COMPLETE" })
@@ -221,7 +226,9 @@ const PayPal = ({ productType }) => {
       const response = await axios.get(
         `${process.env.GATSBY_API_URL}/clinic-profiles/my-profile/${userId}`,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
       dispatch({
