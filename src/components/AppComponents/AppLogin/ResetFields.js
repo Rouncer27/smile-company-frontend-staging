@@ -70,8 +70,13 @@ const ResetFields = props => {
           code: code,
           password: formData.password.trim(),
           passwordConfirmation: formData.password2.trim(),
+        },
+        {
+          withCredentials: true,
         }
       )
+
+      console.log("RESET PASSWORD RESONSE: ", response)
 
       const { user, token } = response.data
       dispatch({ type: "USER_LOGIN", payload: { token: token, user } })
